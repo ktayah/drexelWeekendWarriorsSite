@@ -1,0 +1,43 @@
+{
+  "connection": "default",
+  "collectionName": "trips",
+  "info": {
+    "name": "trip",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "ticketSales": {
+      "unique": true,
+      "required": true,
+      "type": "date"
+    },
+    "tripDate": {
+      "required": true,
+      "type": "date"
+    },
+    "tripName": {
+      "type": "string"
+    },
+    "tripDescription": {
+      "required": true,
+      "type": "text"
+    },
+    "tripPhoto": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": true
+    },
+    "users": {
+      "collection": "user",
+      "via": "trips",
+      "dominant": true,
+      "plugin": "users-permissions"
+    }
+  }
+}
