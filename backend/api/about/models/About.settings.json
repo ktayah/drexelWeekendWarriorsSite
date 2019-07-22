@@ -1,0 +1,26 @@
+{
+  "connection": "default",
+  "collectionName": "abouts",
+  "info": {
+    "name": "about",
+    "description": "About us page information"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "clubName": {
+      "type": "string"
+    },
+    "clubDescription": {
+      "required": true,
+      "type": "text"
+    },
+    "featuredTrips": {
+      "collection": "trip",
+      "via": "featuredTrip"
+    }
+  }
+}

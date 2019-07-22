@@ -1,0 +1,26 @@
+{
+  "connection": "default",
+  "collectionName": "forms",
+  "info": {
+    "name": "form",
+    "description": "The ticket forms for each user used for trips"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "trip": {
+      "model": "trip"
+    },
+    "user": {
+      "model": "user",
+      "via": "forms",
+      "plugin": "users-permissions"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "collectionName": "users-permissions_user",
   "connection": "default",
+  "collectionName": "users-permissions_user",
   "info": {
     "name": "user",
     "description": ""
@@ -59,6 +59,28 @@
     "trips": {
       "collection": "trip",
       "via": "users"
+    },
+    "forms": {
+      "collection": "form",
+      "via": "user"
+    },
+    "phoneNumber": {
+      "type": "integer"
+    },
+    "emergencyContactName": {
+      "type": "string"
+    },
+    "emergencyContactNumber": {
+      "type": "integer"
+    },
+    "gender": {
+      "enum": [
+        "Male",
+        "Female",
+        "Other",
+        ""
+      ],
+      "type": "enumeration"
     }
   }
 }
