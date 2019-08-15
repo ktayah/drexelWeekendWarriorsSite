@@ -18,6 +18,8 @@ To close the website, close the command prompt.
 
 If any more questions, talk to Kevin.
 
+## Extra information
+
 License: MIT
 
 Author: Kevin Tayah
