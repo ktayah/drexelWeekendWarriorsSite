@@ -1,20 +1,24 @@
 import Layout from '../components/Layout';
+import TripList from '../components/TripList';
 
 const Trips = (props) => (
-	<div>
-		<Layout title={props.title}>
-			<div className="container">
-				<div className="row">
-					PLACEHOLDER TEXT -- TRIPS PAGE
-				</div>
+	<Layout title={props.title}>
+		<div className="container">
+			<div className="row">
+				<h1>Join us on our Trips!</h1>
+				<br /><br /><br />
+				<TripList trip={['stuff']} />
 			</div>
-		</Layout>
-	</div>
+		</div>
+	</Layout>
 );
 
-Trips.getInitialProps = async function() {
-    return {
-		title: 'Weekend Warriors'
+Trips.getInitialProps = ({store, isServer, pathname, query}) => {
+	// const trips = axios.get(...);
+
+	return {
+		title: 'Weekend Warriors',
+		trips: []
     };
 }
 

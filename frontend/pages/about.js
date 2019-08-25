@@ -1,15 +1,13 @@
 import Layout from '../components/Layout';
 
 const About = (props) => (
-	<div>
-		<Layout title={props.title}>
-			<div className="container">
-				<div className="row">
-					PLACEHOLDER TEXT -- ABOUT PAGE
-				</div>
+	<Layout title={props.title}>
+		<div className="container">
+			<div className="row">
+				PLACEHOLDER TEXT -- ABOUT PAGE
 			</div>
-		</Layout>
-	</div>
+		</div>
+	</Layout>
 );
 
 About.getInitialProps = async function() {
