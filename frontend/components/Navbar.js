@@ -4,6 +4,8 @@ import authenticate from '../actions/index';
 import logOut from '../actions/index';
 import { connect } from 'react-redux';
 
+import { authenticatePOC } from '../actions'
+
 class Navbar extends Component {
 
     static async getInitialProps({store, isServer, pathname, query}) {
@@ -13,6 +15,7 @@ class Navbar extends Component {
         return { store: store, title: title }
     }
     render() {
+        const {onLogin} = this.props
         console.log('Navbar props', this.props);
         return (
             <div>
@@ -57,7 +60,7 @@ class Navbar extends Component {
                                             </div>
                                         </div>
                                         <br/>
-                                        <button type="submit" className="btn btn-primary" onClick={() => this.props.onLogin('ktayah@yahoo.com', 'test123')}>Sign in</button>
+                                        <button type="submit" className="btn btn-primary" onClick={() => onLogin('ktayah@yahoo.com', 'QWE#rty6EsT')}>Sign in</button>
                                     </div>
                                     <div className="dropdown-divider"></div>
                                     <a className="dropdown-item" href="#">New around here? Sign up</a>
@@ -141,12 +144,10 @@ class Navbar extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: action,
+        onLogin: (userName, password) => dispatch(authenticatePOC(userName, password)),
         onLogout: () => dispatch(logOut())
     };
 }
-
-const action = (userName, password) => dispatch(authenticate(userName, password));
 
 const mapStateToProps = state => {
     console.log('Index mapStateToProps', state);

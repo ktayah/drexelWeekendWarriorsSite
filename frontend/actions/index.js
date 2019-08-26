@@ -12,6 +12,14 @@ const logOut = () => {
  * @param {String} userName The user's userName
  * @param {String} password The user's password
  */
+export const authenticatePOC = (userName, password) => {
+    return {
+        type: "HIT_POC_AUTH",
+        userName,
+        password
+    };
+}
+
 const authenticate = (userName, password) => {
     return async dispatch => {
         dispatch(authenticateStarted());
