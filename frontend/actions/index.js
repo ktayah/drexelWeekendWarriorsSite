@@ -20,29 +20,27 @@ export const authenticatePOC = (userName, password) => {
     };
 }
 
-const authenticate = (userName, password) => {
-    return async dispatch => {
-        dispatch(authenticateStarted());
-        const apiUrl = config.development ? config.apiDevelopment : config.api;
-        axios.post(`${apiUrl}/auth/local`, {
-            identifier: userName,
-            password: password
-        }).then(res => {
-            console.log('res', res);
-            dispatch(authenticateSuccess(res.data));
-        }).catch(err => {
-            dispatch(authenticateError(err));
-        });
-    }
+const authenticate = (userName, password) => dispatch => {
+    dispatch(authenticateStarted());
+    const apiUrl = config.development ? config.apiDevelopment : config.api;
+    axios.post(`${apiUrl}/auth/local`, {
+        identifier: userName,
+        password: password
+    }).then(res => {
+        console.log('res', res);
+        dispatch(authenticateSuccess(res.data));
+    }).catch(err => {
+        dispatch(authenticateError(err));
+    });
 }
 
-const authenticateStarted = function() {
+const authenticateStarted = () => {
     return {
         type: "AUTHENTICATE_STARTED"
     }
 };
 
-const authenticateSuccess = function(userData) {
+const authenticateSuccess = (userData) => {
     return {
         type: "AUTHENTICATE_SUCCESS",
         payload: {
@@ -51,7 +49,7 @@ const authenticateSuccess = function(userData) {
     }
 };
 
-const authenticateError = function(error) {
+const authenticateError = (error) => {
     return {
         type: "AUTHENTICATE_ERROR",
         payload: {

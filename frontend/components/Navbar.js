@@ -15,7 +15,7 @@ class Navbar extends Component {
         return { store: store, title: title }
     }
     render() {
-        const {onLogin} = this.props
+        const { onLogin } = this.props
         console.log('Navbar props', this.props);
         return (
             <div>
@@ -31,10 +31,10 @@ class Navbar extends Component {
                             <Link href='/index'><a className="nav-link">Home</a></Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/about"><a className="nav-link">About Us</a></Link>                
+                            <Link href="/trips"><a className="nav-link">Trips</a></Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/trips"><a className="nav-link">Trips</a></Link>
+                            <Link href="/faq"><a className="nav-link">FAQ</a></Link>
                         </li>
                         </ul>
                         <form className="form-inline my-1 my-lg-0">
@@ -144,7 +144,7 @@ class Navbar extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: (userName, password) => dispatch(authenticatePOC(userName, password)),
+        onLogin: (userName, password) => dispatch(authenticate(userName, password)),
         onLogout: () => dispatch(logOut())
     };
 }
