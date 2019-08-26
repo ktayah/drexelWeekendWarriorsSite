@@ -9,7 +9,7 @@ class Navbar extends Component {
     static async getInitialProps({store, isServer, pathname, query}) {
         // console.log('isServer', isServer);
         console.log('Navbar Store', store);
-        store.dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'));
+        store.dispatch(authenticate('ktayah@yahoo.com', 'test123'));
         return { store: store, title: title }
     }
     render() {
@@ -57,7 +57,7 @@ class Navbar extends Component {
                                             </div>
                                         </div>
                                         <br/>
-                                        <button type="submit" className="btn btn-primary" onClick={() => this.props.onLogin('ktayah@yahoo.com', 'QWE#rty6EsT')}>Sign in</button>
+                                        <button type="submit" className="btn btn-primary" onClick={() => this.props.onLogin('ktayah@yahoo.com', 'test123')}>Sign in</button>
                                     </div>
                                     <div className="dropdown-divider"></div>
                                     <a className="dropdown-item" href="#">New around here? Sign up</a>
@@ -76,8 +76,8 @@ class Navbar extends Component {
 // const Navbar = (/*{title, authenticate, onLogin, onLogout}*/props) => (
 //     <div>
 //         {console.log('Navbar Props', props)}
-//         {/* {props.dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'))} */}
-//         {/* {props.dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'))} */}
+//         {/* {props.dispatch(authenticate('ktayah@yahoo.com', 'test123'))} */}
+//         {/* {props.dispatch(authenticate('ktayah@yahoo.com', 'test123'))} */}
 //         <nav className="navbar navbar-expand-lg navbar-light bg-light">
 //             <Link href="/index"><a className="navbar-brand">{props.title}</a></Link>
 //             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,7 +119,7 @@ class Navbar extends Component {
 //                                     </div>
 //                                 </div>
 //                                 <br/>
-//                                 <button type="submit" className="btn btn-primary" onClick={() => props.onLogin('ktayah@yahoo.com', 'QWE#rty6EsT')}>Sign in</button>
+//                                 <button type="submit" className="btn btn-primary" onClick={() => props.onLogin('ktayah@yahoo.com', 'test123')}>Sign in</button>
 //                             </div>
 //                             <div className="dropdown-divider"></div>
 //                             <a className="dropdown-item" href="#">New around here? Sign up</a>
@@ -135,7 +135,7 @@ class Navbar extends Component {
 // Navbar.getInitialProps = ({store, isServer, pathname, query}) => {
 //     console.log(store, isServer, pathname, query);
 //     // console.log('Navbar Store', store, store.getState());
-//     // store.dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'));
+//     // store.dispatch(authenticate('ktayah@yahoo.com', 'test123'));
 //     // return { title: title }
 // }
 

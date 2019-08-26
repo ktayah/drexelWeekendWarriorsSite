@@ -18,7 +18,7 @@ export default initializeStore;
 //     const apiUrl = config.development ? config.apiDevelopment : config.api;
 //     return await axios.post(`${apiUrl}/auth/local`, {
 //         identifier: 'ktayah@yahoo.com',
-//         password: 'QWE#rty6EsT'
+//         password: 'test123'
 //     }).catch(err => {
 //         console.error(err);
 //     });

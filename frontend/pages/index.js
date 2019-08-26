@@ -7,9 +7,9 @@ import authenticate from '../actions/index';
 const Index = (props) => (
 	<Layout title={props.title}>
 		{console.log('Index Props', props)}
-		{/* {props.dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'))} */}
-		{/* <button onClick={() => props.dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'))} >Test Button</button> */}
-		{/* <button onClick={() => props.onLogin('ktayah@yahoo.com', 'QWE#rty6EsT')} >Test Button</button> */}
+		{/* {props.dispatch(authenticate('ktayah@yahoo.com', 'test123'))} */}
+		{/* <button onClick={() => props.dispatch(authenticate('ktayah@yahoo.com', 'test123'))} >Test Button</button> */}
+		{/* <button onClick={() => props.onLogin('ktayah@yahoo.com', 'test123')} >Test Button</button> */}
 		<div className="container">
 			<div id="carousel" className="row">
 				<div className="col"><Carousel /></div>
@@ -40,7 +40,7 @@ const Index = (props) => (
 
 Index.getInitialProps = ({store, isServer, pathname, query}) => {
 	// console.log(store);
-	// dispatch(authenticate('ktayah@yahoo.com', 'QWE#rty6EsT'));
+	// dispatch(authenticate('ktayah@yahoo.com', 'test123'));
 	// return {custom: 'custom'};
 	return {
 		...store.getState(),
