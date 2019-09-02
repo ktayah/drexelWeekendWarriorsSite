@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import Navbar from './Navbar';
+import Footer from './Footer'
 import { connect } from 'react-redux';
 // import { Provider } from 'react-redux';
 // import store from '../store';
 
 const Layout = ({children, title}) => (
-    <div>
+    <main className="d-flex flex-column h-100">
         <Head>
             <title>{title}</title>
             <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css"/>
@@ -25,7 +26,8 @@ const Layout = ({children, title}) => (
         <div className="container">
             {children}
         </div>
-    </div>
+        <Footer />
+    </main>
 );
 
 export default connect()(Layout);
