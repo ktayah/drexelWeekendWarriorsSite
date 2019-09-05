@@ -44,11 +44,17 @@ class Navbar extends Component {
                                 <Link href="/faq"><a className="nav-link">FAQ</a></Link>
                             </li>
                         </ul>
-                        <div className="form-inline my-1 my-lg-0 mr-4">
-                            <ion-icon name="logo-facebook" size="large" />
-                            <ion-icon name="logo-instagram" size="large" />
-                            <img src="https://dragonlink.drexel.edu/favicon.ico" className="pl-1" style={{maxWidth: 28}} />
-                            
+                        <div className="form-inline py-1 my-lg-0 mr-4">
+                            {/* TODO: add selection boxes */}
+                            <a href="https://www.facebook.com/DrexelWeekendWarriors">
+                                <ion-icon name="logo-facebook" size="large" />
+                            </a>
+                            <a href="https://www.instagram.com/DrexelWeekendWarriors" className="mx-2">
+                                <ion-icon name="logo-instagram" size="large" />
+                            </a>
+                            <a href="https://dragonlink.drexel.edu/organization/drexelweekendwarriors">
+                                <img src="https://dragonlink.drexel.edu/favicon.ico" className="pl-1 pb-1" style={{maxWidth: 28}} />
+                            </a>
                         </div>
                         <form className="form-inline my-1 my-lg-0">
                             <div className="dropdown">
