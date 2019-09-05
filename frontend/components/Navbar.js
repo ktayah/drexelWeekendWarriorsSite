@@ -21,22 +21,35 @@ class Navbar extends Component {
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <Link href="/index"><a className="navbar-brand">{this.props.title}</a></Link>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <button 
+                        className="navbar-toggler" 
+                        type="button" 
+                        data-toggle="collapse" 
+                        data-target="#navbarTogglerDemo02" 
+                        aria-controls="navbarTogglerDemo02" 
+                        aria-expanded="false" 
+                        aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
     
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <li className="nav-item active">
-                            <Link href='/index'><a className="nav-link">Home</a></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href="/trips"><a className="nav-link">Trips</a></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href="/faq"><a className="nav-link">FAQ</a></Link>
-                        </li>
+                            <li className="nav-item active">
+                                <Link href='/index'><a className="nav-link">Home</a></Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href="/trips"><a className="nav-link">Trips</a></Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href="/faq"><a className="nav-link">FAQ</a></Link>
+                            </li>
                         </ul>
+                        <div className="form-inline my-1 my-lg-0 mr-4">
+                            <ion-icon name="logo-facebook" size="large" />
+                            <ion-icon name="logo-instagram" size="large" />
+                            <img src="https://dragonlink.drexel.edu/favicon.ico" className="pl-1" style={{maxWidth: 28}} />
+                            
+                        </div>
                         <form className="form-inline my-1 my-lg-0">
                             <div className="dropdown">
                             <button className="btn dropdown-toggle btn-outline-success my-2 my-sm-0" data-toggle="dropdown" type="button">Sign in</button>
