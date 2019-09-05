@@ -1,0 +1,7 @@
+.img-hover-border {
+    border: 1px solid transparent
+} 
+.img-hover-border:hover {
+   border-color: black; 
+   border-width: 1px;
+}
