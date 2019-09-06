@@ -10,7 +10,7 @@ class Navbar extends Component {
 
     static async getInitialProps({store, isServer, pathname, query}) {
         console.log('Navbar Store', store);
-        store.dispatch(authenticate('ktayah@yahoo.com', 'test123'));
+        store.dispatch(authenticate('user@test.com', 'testpass'));
         return { store: store, title: title }
     }
     render() {
@@ -24,14 +24,14 @@ class Navbar extends Component {
                         className="navbar-toggler" 
                         type="button" 
                         data-toggle="collapse" 
-                        data-target="#navbarTogglerDemo02" 
-                        aria-controls="navbarTogglerDemo02" 
+                        data-target="#navbarToggler" 
+                        aria-controls="navbarToggler" 
                         aria-expanded="false" 
                         aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
     
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <div className="collapse navbar-collapse" id="navbarToggler">
                         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                             <li className="nav-item active">
                                 <Link href='/index'><a className="nav-link">Home</a></Link>
@@ -63,12 +63,12 @@ class Navbar extends Component {
                                 <div className="dropdown-menu dropdown-menu-left">
                                     <div className="px-4 py-3">
                                         <div className="form-group">
-                                            <label htmlFor="exampleDropdownFormEmail1">Email address</label>
-                                            <input type="email" className="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com" />
+                                            <label htmlFor="dropdownFormEmail">Email address</label>
+                                            <input type="email" className="form-control" id="dropdownFormEmail" placeholder="email@example.com" />
                                         </div>
                                         <div className="form-group">
-                                            <label htmlFor="exampleDropdownFormPassword1">Password</label>
-                                            <input type="password" className="form-control" id="exampleDropdownFormPassword1" placeholder="Password" />
+                                            <label htmlFor="dropdownFormPassword">Password</label>
+                                            <input type="password" className="form-control" id="dropdownFormPassword" placeholder="Password" />
                                         </div>
                                         <br/>
                                         <div className="form-group">
@@ -80,7 +80,7 @@ class Navbar extends Component {
                                             </div>
                                         </div>
                                         <br/>
-                                        <button type="submit" className="btn btn-primary" onClick={() => onLogin('ktayah@yahoo.com', 'QWE#rty6EsT')}>Sign in</button>
+                                        <button type="submit" className="btn btn-primary" onClick={() => onLogin('user@test.com', 'testpass')}>Sign in</button>
                                     </div>
                                     <div className="dropdown-divider"></div>
                                     <a className="dropdown-item" href="#">New around here? Sign up</a>
