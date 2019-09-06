@@ -51,7 +51,7 @@ class NavbarSocialIcons extends Component {
 class NavbarSignInDropdownContent extends Component {
     render() {
         return (
-            <div className="dropdown-menu dropdown-menu-left">
+            <div className="dropdown-menu dropdown-menu-both">
                 <div className="px-4 py-3">
                     <div className="form-group">
                         <label htmlFor="dropdownFormEmail">Email address</label>
@@ -115,7 +115,6 @@ class NavbarSignInDropdown extends Component {
 
 
 class Navbar extends Component {
-
     static async getInitialProps({store, isServer, pathname, query}) {
         console.log('Navbar Store', store);
         store.dispatch(authenticate('user@test.com', 'testpass'));
@@ -126,7 +125,7 @@ class Navbar extends Component {
         console.log('Navbar props', this.props);
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-md navbar-light bg-light">
                     <Link href="/index"><a className="navbar-brand">{this.props.title}</a></Link>
                     <button 
                         className="navbar-toggler" 
