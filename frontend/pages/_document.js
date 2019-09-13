@@ -2,6 +2,10 @@ import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 
 class DocumentFlexFullHeight extends Document {
+    static async getInitialProps(ctx) {
+        const initialProps = await Document.getInitialProps(ctx);
+        return {...initialProps}
+    }
     render() {
         return (
             <html lang="en-US" className="h-100">
