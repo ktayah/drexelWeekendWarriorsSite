@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import authenticate from '../actions/index';
 
 const Index = (props) => (
-	<Layout title={props.title}>
-		{console.log('Index Props', props)}
+	<Layout title={props.title} activePage='index'>
 		<div className="container">
 			<CarouselWithThumbnails featuredTrips={props.featuredTrips}/>
 			<div className="row" id="aboutUsText">
@@ -44,18 +43,19 @@ Index.getInitialProps = ({store, isServer, pathname, query}) => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogin: (userName, password) => { dispatch(authenticate(userName, password)) },
-        //onLogin: (userName, password) => bindActionCreators(authenticate(userName, password), dispatch),
-        onLogout: () => dispatch(logOut())
-    };
-}
+export default Index;
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         onLogin: (userName, password) => { dispatch(authenticate(userName, password)) },
+//         //onLogin: (userName, password) => bindActionCreators(authenticate(userName, password), dispatch),
+//         onLogout: () => dispatch(logOut())
+//     };
+// }
 
-const mapStateToProps = state => {
-    return { ...state };
-    // const { jwt, user } = state.userData;
-    // return { jwt, user }
-}
+// const mapStateToProps = state => {
+//     return { ...state };
+//     // const { jwt, user } = state.userData;
+//     // return { jwt, user }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+// export default connect(mapStateToProps, mapDispatchToProps)(Index);

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import { Provider } from 'react-redux';
 // import store from '../store';
 
-const Layout = ({children, title}) => (
+const Layout = ({children, title, activePage}) => (
     <main className="d-flex flex-column h-100">
         <Head>
             <title>{title}</title>
@@ -24,7 +24,7 @@ const Layout = ({children, title}) => (
             <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
             <script noModule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         </Head>
-        <Navbar title={title} />
+        <Navbar title={title} activePage={activePage}/>
         <br/>
         <div className="container">
             {children}
@@ -32,5 +32,5 @@ const Layout = ({children, title}) => (
         <Footer />
     </main>
 );
-
-export default connect()(Layout);
+export default Layout;
+// export default connect()(Layout);

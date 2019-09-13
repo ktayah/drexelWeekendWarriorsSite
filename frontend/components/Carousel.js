@@ -1,5 +1,5 @@
 const Carousel = (props) => {
-    console.log(props)
+    // console.log(props)
     let indicatorRows = [];
     for (let i = 0; i < 3; i++) {
         indicatorRows.push(<li data-target="#trips" data-slide-to={i} className={i == 0 ? "active" : ""}/>);

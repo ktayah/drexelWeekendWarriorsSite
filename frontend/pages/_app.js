@@ -8,7 +8,7 @@ class MyApp extends App {
 
     static async getInitialProps({Component, ctx}) {
         const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-        console.log('_app.js: ', pageProps);
+        // console.log('_app.js: ', pageProps);
         return { pageProps }
     }
 

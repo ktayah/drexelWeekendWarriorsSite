@@ -4,27 +4,29 @@ import authenticate from '../actions/index';
 import logOut from '../actions/index';
 import { connect } from 'react-redux';
 
-import { authenticatePOC } from '../actions'
-
-
 class NavbarNavigationLinks extends Component {
+    isActive = (activePage, navLink) => {
+        if (activePage === navLink) 
+            return true;
+        return false;
+    }
     render() {
+        const { activePage } = this.props;
         return (
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li className="nav-item active">
+                <li className={`nav-item ${this.isActive(activePage, 'index') ? 'active' : ''}`}>
                     <Link href='/index'><a className="nav-link">Home</a></Link>
                 </li>
-                <li className="nav-item">
+                <li className={`nav-item ${this.isActive(activePage, 'trips') ? 'active' : ''}`}>
                     <Link href="/trips"><a className="nav-link">Trips</a></Link>
                 </li>
-                <li className="nav-item">
+                <li className={`nav-item ${this.isActive(activePage, 'faq') ? 'active' : ''}`}>
                     <Link href="/faq"><a className="nav-link">FAQ</a></Link>
                 </li>
             </ul>
         )
     }
 }
-
 
 class NavbarSocialIcons extends Component {
     render() {
@@ -46,7 +48,6 @@ class NavbarSocialIcons extends Component {
         )
     }
 }
-
 
 class NavbarSignInDropdownContent extends Component {
     render() {
@@ -94,7 +95,6 @@ class NavbarSignInDropdownContent extends Component {
     }
 }
 
-
 class NavbarSignInDropdown extends Component {
     render() {
         return (
@@ -113,16 +113,13 @@ class NavbarSignInDropdown extends Component {
     }
 }
 
-
 class Navbar extends Component {
     static async getInitialProps({store, isServer, pathname, query}) {
-        console.log('Navbar Store', store);
-        store.dispatch(authenticate('user@test.com', 'testpass'));
-        return { store: store, title: title }
+        // ('Navbar Store', store);
+        // store.dispatch(authenticate('user@test.com', 'testpass'));
+        // return { store: store, title: title }
     }
     render() {
-        const { onLogin } = this.props
-        console.log('Navbar props', this.props);
         return (
             <div>
                 <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -139,9 +136,9 @@ class Navbar extends Component {
                     </button>
     
                     <div className="collapse navbar-collapse" id="navbarToggler">
-                        <NavbarNavigationLinks />
+                        <NavbarNavigationLinks activePage={this.props.activePage} />
                         <NavbarSocialIcons />
-                        <NavbarSignInDropdown />
+                        {/* <NavbarSignInDropdown /> */}
                     </div>
                 </nav>
             </div>
@@ -149,17 +146,17 @@ class Navbar extends Component {
     }
 }
 
+export default Navbar;
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         onLogin: (userName, password) => dispatch(authenticate(userName, password)),
+//         onLogout: () => dispatch(logOut())
+//     };
+// }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogin: (userName, password) => dispatch(authenticate(userName, password)),
-        onLogout: () => dispatch(logOut())
-    };
-}
+// const mapStateToProps = state => {
+//     console.log('Index mapStateToProps', state);
+//     return {...state};
+// }
 
-const mapStateToProps = state => {
-    console.log('Index mapStateToProps', state);
-    return {...state};
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+// export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

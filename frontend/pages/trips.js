@@ -2,7 +2,7 @@ import Layout from '../components/Layout';
 import TripList from '../components/TripList';
 
 const Trips = (props) => (
-	<Layout title={props.title}>
+	<Layout title={props.title} activePage='trips'>
 		<div className="container">
 			<div className="row">
 				<h1>Join us on our Trips!</h1>

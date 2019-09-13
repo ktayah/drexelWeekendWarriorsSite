@@ -27,7 +27,6 @@ const authenticate = (userName, password) => dispatch => {
         identifier: userName,
         password: password
     }).then(res => {
-        console.log('res', res);
         dispatch(authenticateSuccess(res.data));
     }).catch(err => {
         dispatch(authenticateError(err));
