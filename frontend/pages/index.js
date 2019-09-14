@@ -1,5 +1,5 @@
 import Layout from '../components/Layout';
-import React, {Component} from "react";
+import React, {Component} from 'react';
 import CarouselWithThumbnails from '../components/Carousel';
 import config from '../config';
 import axios from 'axios';
@@ -14,11 +14,13 @@ const getDescription = async () => {
 
 const Index = (props) => (
 	<Layout title={props.title} activePage='index'>
-		<div className="container">
+		<div className='container'>
+			<h1 className='display-5 text-center'>Our Upcoming Trips</h1>
 			<CarouselWithThumbnails featuredTrips={props.featuredTrips}/>
-			<div className="row" id="aboutUsText">
-				<h1 className="h" id="header">About Us</h1>
-				<p className="">{props.aboutUs}</p>
+			<hr class='my-4' />
+			<div className='row' id='aboutUsText'>
+				<h1 className='display-5 text-center'>About Us</h1>
+				<p className="py-1">{props.aboutUs}</p>
 			</div>
 		</div>
 	</Layout>
@@ -35,16 +37,16 @@ Index.getInitialProps = async ({store, isServer, pathname, query}) => {
 		title: 'Weekend Warriors',
 		featuredTrips: [
             {
-                'name': "Surfing",
-                'img': "static/images/carousel/surf.jpg"
+                'name': 'Surfing',
+                'img': 'static/images/carousel/surf.jpg'
             },
             {
-                'name': "Paddleboarding",
-                'img': "static/images/carousel/sup.jpg"
+                'name': 'Paddleboarding',
+                'img': 'static/images/carousel/sup.jpg'
             },
             {
-                'name': "Mt. Minsi Hike",
-                'img': "static/images/carousel/minsi.jpg"
+                'name': 'Mt. Minsi Hike',
+                'img': 'static/images/carousel/minsi.jpg'
             },
         ],
     }
