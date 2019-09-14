@@ -15,17 +15,19 @@ const TripCard = ({props}) => (
             {console.log(props)}
             <img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" />
             <div className="card-body">
-                <h3 className="card-title">{props.tripName}</h3>
+                <h3 className="card-title text-nowrap">{props.tripName}</h3>
                 <span className="card-text small">{props.tripLocation} {getDateTime(props.tripDate)}</span>
+                <hr className="display-4" /> 
                 <p className="card-text pt-2">{props.tripDescription}</p>
-                <hr className="display-4" />
+            </div>
+            <div className="card-footer">
                 {props.isOnlineSale ? (
                     <div>
-                        <p className="card-text">Tickets will be sold online. Link will be posted on {getDateTime(props.ticketSales)}</p>
+                        <p className="card-text">Tickets will be sold online. Link will be posted here on {getDateTime(props.ticketSales)}</p>
                     </div>
                 ): (
                     <div>
-                        <p className="card-text">Tickets will be sold in-person at {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
+                        <p className="card-text">Tickets will be sold in-person at the {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
                     </div>
                 )}
             </div>
