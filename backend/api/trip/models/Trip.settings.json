@@ -54,6 +54,9 @@
     "isOnlineSale": {
       "required": true,
       "type": "boolean"
+    },
+    "ticketLink": {
+      "type": "string"
     }
   }
 }

@@ -12,7 +12,6 @@ const getDateTime = (dateString) => {
 const TripCard = ({props}) => (
     // <Link href="/"> Dynamically link to trip pages, for another Issue
         <div className="card w-50 m-1" id="tripCard">
-            {console.log(props)}
             <img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" />
             <div className="card-body">
                 <h3 className="card-title text-nowrap">{props.tripName}</h3>
@@ -22,14 +21,13 @@ const TripCard = ({props}) => (
             </div>
             <div className="card-footer">
                 {props.isOnlineSale ? (
-                    <div>
-                        <p className="card-text">Tickets will be sold online. Link will be posted here on {getDateTime(props.ticketSales)}</p>
-                    </div>
+                    <p className="card-text">Tickets will be sold online. Link will be posted here on {getDateTime(props.ticketSales)}</p>
                 ): (
-                    <div>
-                        <p className="card-text">Tickets will be sold in-person at the {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
-                    </div>
+                    <p className="card-text">Tickets will be sold in-person at the {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
                 )}
+                {props.ticketLink ? (
+                    <a href={props.ticketLink}>Click here to buy a ticket</a>
+                ): ""}
             </div>
         <style jsx>{`
             #tripCard {
