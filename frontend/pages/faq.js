@@ -13,7 +13,7 @@ const Faq = (props) => {
     return (
         <Layout title={props.title}>
             <div className="container">
-                <h3 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Frequently Asked Questions</h3>
+                <h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Frequently Asked Questions</h1>
                 <ul>
                 <hr style={{padding:'0.25em'}}/>
                 {
