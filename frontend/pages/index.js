@@ -14,13 +14,25 @@ const getAboutUs = async () => {
 
 const Index = ({title, upcomingTrips, aboutUs}) => (
 	<Layout title={title} activePage='index'>
-		<h1 className='display-4 text-center shadow-lg bg-white rounded p-3 mx-5'>Our Upcoming Trips</h1>
+		<h1 className='display-4 text-center shadow-lg bg-white rounded p-3 mx-5'>Our Upcoming Trips</h1> {/* Need to fix this since it causes problems on smaller screens*/}
 		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingTrips}/>
 		<div className='container'>
 			<hr className='my-4' />
 			<h1 className='display-5 text-center'>About Us</h1>
 			<p className="py-3">{aboutUs}</p>
 		</div>
+		{/* <style jsx>{` This might be a solution
+			@include media-breakpoint-up(sm) {
+				html {
+					font-size: 2rem;
+				}
+			}
+			@include media-breakpoint-up(md) {
+				html {
+					font-size: 2.2rem;
+				}
+			}
+		`}</style> */}
 	</Layout>
 );
 
