@@ -12,15 +12,15 @@ const getAboutUs = async () => {
 	return res.data[0];
 }
 
-const Index = (props) => (
-	<Layout title={props.title} activePage='index'>
+const Index = ({title, featuredTrips, aboutUs}) => (
+	<Layout title={title} activePage='index'>
 		<div className='container'>
 			<h1 className='display-5 text-center'>Our Upcoming Trips</h1>
-			<CarouselWithThumbnails featuredTrips={props.featuredTrips}/>
+			<CarouselWithThumbnails featuredTrips={featuredTrips}/>
 			<hr class='my-4' />
 			<div className='row' id='aboutUsText'>
 				<h1 className='display-5 text-center'>About Us</h1>
-				<p className="py-1">{props.aboutUs}</p>
+				<p className="py-1">{aboutUs}</p>
 			</div>
 		</div>
 	</Layout>

@@ -20,6 +20,9 @@ class NavbarNavigationLinks extends Component {
                 <li className={`nav-item ${this.isActive(activePage, 'trips') ? 'active' : ''}`}>
                     <Link href="/trips"><a className="nav-link">Trips</a></Link>
                 </li>
+                <li className={`nav-item ${this.isActive(activePage, 'contact') ? 'active' : ''}`}>
+                    <Link href="/contact"><a className="nav-link">Contact Us</a></Link>
+                </li>
                 <li className={`nav-item ${this.isActive(activePage, 'faq') ? 'active' : ''}`}>
                     <Link href="/faq"><a className="nav-link">FAQ</a></Link>
                 </li>
