@@ -56,10 +56,6 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "trips": {
-      "collection": "trip",
-      "via": "users"
-    },
     "forms": {
       "collection": "form",
       "via": "user"
@@ -81,6 +77,10 @@
         ""
       ],
       "type": "enumeration"
+    },
+    "trips": {
+      "collection": "trip",
+      "via": "users"
     }
   }
 }

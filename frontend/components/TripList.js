@@ -15,7 +15,7 @@ const TripCards = ({trips}) => (
 );
 
 const TripList = ({trips}) => (
-    <div className="trips">
+    <div className="trips mb-4">
         {trips.length > 0 ? (
             <TripCards trips={trips} />
         ) : (

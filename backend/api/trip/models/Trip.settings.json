@@ -24,7 +24,8 @@
       "type": "date"
     },
     "tripName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "tripDescription": {
       "required": true,
@@ -42,9 +43,17 @@
     },
     "users": {
       "collection": "user",
-      "dominant": true,
       "via": "trips",
+      "dominant": true,
       "plugin": "users-permissions"
+    },
+    "ticketLocation": {
+      "default": "Rec Center Lobby",
+      "type": "string"
+    },
+    "isOnlineSale": {
+      "required": true,
+      "type": "boolean"
     }
   }
 }
