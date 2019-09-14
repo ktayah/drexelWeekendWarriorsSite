@@ -18,7 +18,7 @@
       "required": true,
       "type": "text"
     },
-    "featuredTrips": {
+    "upcomingTrips": {
       "collection": "trip",
       "via": "featuredTrip"
     }

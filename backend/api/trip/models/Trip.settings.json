@@ -40,7 +40,7 @@
     },
     "featuredTrip": {
       "model": "about",
-      "via": "featuredTrips"
+      "via": "upcomingTrips"
     },
     "users": {
       "collection": "user",

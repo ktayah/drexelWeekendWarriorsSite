@@ -12,11 +12,11 @@ const getAboutUs = async () => {
 	return res.data[0];
 }
 
-const Index = ({title, featuredTrips, aboutUs}) => (
+const Index = ({title, upcomingTrips, aboutUs}) => (
 	<Layout title={title} activePage='index'>
 		<div className='container'>
 			<h1 className='display-5 text-center'>Our Upcoming Trips</h1>
-			<CarouselWithThumbnails featuredTrips={featuredTrips}/>
+			<CarouselWithThumbnails upcomingTrips={upcomingTrips}/>
 			<hr class='my-4' />
 			<div className='row' id='aboutUsText'>
 				<h1 className='display-5 text-center'>About Us</h1>
@@ -27,26 +27,12 @@ const Index = ({title, featuredTrips, aboutUs}) => (
 );
 
 Index.getInitialProps = async ({store, isServer, pathname, query}) => {
-	const { clubDescription, featuredTrips} = await getAboutUs();
-	// Change featuredTrips to ajax requested one
+	const { clubDescription, upcomingTrips} = await getAboutUs();
 	return {
 		...store.getState(),
 		aboutUs: clubDescription,
 		title: 'Weekend Warriors',
-		featuredTrips: [
-            {
-                'name': 'Surfing',
-                'img': 'static/images/carousel/surf.jpg'
-            },
-            {
-                'name': 'Paddleboarding',
-                'img': 'static/images/carousel/sup.jpg'
-            },
-            {
-                'name': 'Mt. Minsi Hike',
-                'img': 'static/images/carousel/minsi.jpg'
-            },
-        ],
+		upcomingTrips: upcomingTrips
     }
 }
 

@@ -1,6 +1,9 @@
-const Carousel = (props) => {
-    // console.log(props)
-    let indicatorRows = [];
+import config from '../config';
+
+const apiUrl = config.development ? config.apiDevelopment : config.api;
+
+const Carousel = ({upcomingTrips}) => {
+    const indicatorRows = [];
     for (let i = 0; i < 3; i++) {
         indicatorRows.push(<li data-target="#trips" data-slide-to={i} className={i == 0 ? "active" : ""}/>);
     }
@@ -12,10 +15,10 @@ const Carousel = (props) => {
             </ol>
             <div className="carousel-inner">
             {
-                props.featuredTrips.map((trip, i) => {
+                upcomingTrips.map((trip, i) => {
                     return (
                         <div className={"carousel-item" + (i == 0 ? " active" : "")}>
-                            <img className="d-block img-fluid" src={trip['img']} alt={trip['name']} />
+                            <img className="d-block img-fluid" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
                         </div>
                     );
                 })
@@ -38,14 +41,14 @@ const Carousel = (props) => {
     )
 }
 
-const CarouselThumbnails = (props) => (
+const CarouselThumbnails = ({upcomingTrips}) => (
     <div id="carousel_pictures" className="row">
     {
-        props.featuredTrips.map((trip) => {
+        upcomingTrips.map(trip => {
             return (
                 <div id="column" className="col-sm">
-                    <h1 className='h5'>{trip['name']}</h1>
-                    <img src={trip['img']} alt={trip['name']} width="100%"/>
+                    <h1 className='h5'>{trip.tripName}</h1>
+                    <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
                 </div>
             );
         })
@@ -53,14 +56,14 @@ const CarouselThumbnails = (props) => (
     </div>
 )
 
-const CarouselWithThumbnails = (props) => (
+const CarouselWithThumbnails = ({upcomingTrips}) => (
     <div className="m-3">
         <div id="carousel" className="row mb-4">
             <div className="col">
-                <Carousel featuredTrips={props.featuredTrips} />
+                <Carousel upcomingTrips={upcomingTrips} />
             </div>
         </div>
-        <CarouselThumbnails featuredTrips={props.featuredTrips} />
+        <CarouselThumbnails upcomingTrips={upcomingTrips} />
     </div>   
 )
 
