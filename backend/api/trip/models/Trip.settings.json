@@ -48,7 +48,7 @@
       "plugin": "users-permissions"
     },
     "ticketLocation": {
-      "default": "Rec Center Lobby",
+      "default": "DAC Lobby",
       "type": "string"
     },
     "isOnlineSale": {
