@@ -104,4 +104,5 @@ Faq.getInitialProps = ({store, isServer, pathname, query}) => {
         }]
     }
 }
+
 export default Faq;
