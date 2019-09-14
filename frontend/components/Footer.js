@@ -1,5 +1,5 @@
 const Footer = () => (
-    <footer sticky className="mt-auto mx-0 py-3 px-3 bg-primary row justify-content-between">
+    <footer className="mt-auto mx-0 py-3 px-3 bg-primary row justify-content-between">
         {/* TODO: add tiny ww logo */}
         <span className="col-auto pr-0 pl-4 my-auto">
             <img src="static/images/logo-tiny.png" alt="logo-tiny" className="img-fluid" style={{maxHeight: "3em"}}/>

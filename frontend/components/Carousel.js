@@ -5,7 +5,7 @@ const apiUrl = config.development ? config.apiDevelopment : config.api;
 const Carousel = ({upcomingTrips}) => {
     const indicatorRows = [];
     for (let i = 0; i < 3; i++) {
-        indicatorRows.push(<li data-target="#trips" data-slide-to={i} className={i == 0 ? "active" : ""}/>);
+        indicatorRows.push(<li key={i} data-target="#trips" data-slide-to={i} className={i == 0 ? "active" : ""}/>);
     }
 
     return (
@@ -17,7 +17,7 @@ const Carousel = ({upcomingTrips}) => {
             {
                 upcomingTrips.map((trip, i) => {
                     return (
-                        <div className={"carousel-item" + (i == 0 ? " active" : "")}>
+                        <div key={trip.id} className={"carousel-item" + (i == 0 ? " active" : "")}>
                             <img className="d-block img-fluid" className="w-100" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
                         </div>
                     );
@@ -46,7 +46,7 @@ const CarouselThumbnails = ({upcomingTrips}) => (
     {
         upcomingTrips.map(trip => {
             return (
-                <div id="column" className="col-sm">
+                <div key={trip.id} id="column" className="col-sm">
                     <h1 className='h5'>{trip.tripName}</h1>
                     <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
                 </div>
