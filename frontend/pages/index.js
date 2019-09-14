@@ -1,8 +1,16 @@
 import Layout from '../components/Layout';
 import React, {Component} from "react";
 import CarouselWithThumbnails from '../components/Carousel';
+import config from '../config';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import authenticate from '../actions/index';
+
+const getDescription = async () => {
+    const apiUrl = config.development ? config.apiDevelopment : config.api;
+	const res = await axios.get(`${apiUrl}/abouts`);
+	return res.data[0];
+}
 
 const Index = (props) => (
 	<Layout title={props.title} activePage='index'>
@@ -10,21 +18,20 @@ const Index = (props) => (
 			<CarouselWithThumbnails featuredTrips={props.featuredTrips}/>
 			<div className="row" id="aboutUsText">
 				<h1 className="h" id="header">About Us</h1>
-				<p className="">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel malesuada dui. Nunc efficitur tristique mauris. Aenean luctus nisi est, at ultricies odio hendrerit condimentum. Nullam turpis quam, vehicula quis blandit non, placerat at libero. Quisque condimentum posuere odio. Proin purus nulla, congue vel nulla ut, pretium iaculis sem. Fusce nec scelerisque leo. Aenean tristique eget urna quis finibus.
-					Sed ullamcorper enim nec urna facilisis volutpat. Pellentesque rutrum gravida diam, at eleifend ex pharetra ut. Vestibulum odio felis, imperdiet vel semper at, volutpat imperdiet magna. In tortor ipsum, faucibus a finibus non, eleifend non arcu. Pellentesque quam enim, efficitur rutrum hendrerit in, sodales eget urna. Cras odio augue, lacinia vel elit eu, condimentum consectetur diam. Quisque tristique nibh orci, quis malesuada lectus imperdiet non. Donec vehicula lacinia maximus. Aenean sit amet orci sed eros fermentum dignissim eget at leo. Sed blandit rhoncus odio, placerat efficitur enim rutrum eget. Ut faucibus nisl neque, in vehicula tellus faucibus a. Nam eu sapien et turpis pulvi
-				</p>
+				<p className="">{props.aboutUs}</p>
 			</div>
 		</div>
 	</Layout>
 );
 
-Index.getInitialProps = ({store, isServer, pathname, query}) => {
+Index.getInitialProps = async ({store, isServer, pathname, query}) => {
 	// console.log(store);
 	// dispatch(authenticate('ktayah@yahoo.com', 'test123'));
 	// return {custom: 'custom'};
+	const { clubDescription } = await getDescription();
 	return {
 		...store.getState(),
+		aboutUs: clubDescription,
 		title: 'Weekend Warriors',
 		featuredTrips: [
             {
