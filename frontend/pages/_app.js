@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import App from "next/app";
 import initializeStore from '../store';
 
+// Remaining dead code for redux expansion in next milestone
 class MyApp extends App {
 
     static async getInitialProps({Component, ctx}) {

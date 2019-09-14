@@ -115,6 +115,7 @@ class NavbarSignInDropdown extends Component {
 
 class Navbar extends Component {
     static async getInitialProps({store, isServer, pathname, query}) {
+        // Remaining dead code for redux expansion in next milestone
         // ('Navbar Store', store);
         // store.dispatch(authenticate('user@test.com', 'testpass'));
         // return { store: store, title: title }
@@ -147,6 +148,7 @@ class Navbar extends Component {
 }
 
 export default Navbar;
+// Remaining dead code for redux expansion in next milestone
 // const mapDispatchToProps = dispatch => {
 //     return {
 //         onLogin: (userName, password) => dispatch(authenticate(userName, password)),

@@ -33,4 +33,5 @@ const Layout = ({children, title, activePage}) => (
     </main>
 );
 export default Layout;
+// Remaining dead code for redux expansion in next milestone
 // export default connect()(Layout);

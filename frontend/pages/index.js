@@ -51,6 +51,7 @@ Index.getInitialProps = async ({store, isServer, pathname, query}) => {
 }
 
 export default Index;
+// Remaining dead code for redux expansion in next milestone
 // const mapDispatchToProps = dispatch => {
 //     return {
 //         onLogin: (userName, password) => { dispatch(authenticate(userName, password)) },
