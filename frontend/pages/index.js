@@ -14,14 +14,12 @@ const getAboutUs = async () => {
 
 const Index = ({title, upcomingTrips, aboutUs}) => (
 	<Layout title={title} activePage='index'>
+		<h1 className='display-4 text-center shadow-lg bg-white rounded p-1 mx-5'>Our Upcoming Trips</h1>
+		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingTrips}/>
 		<div className='container'>
-			<h1 className='display-5 text-center'>Our Upcoming Trips</h1>
-			<CarouselWithThumbnails upcomingTrips={upcomingTrips}/>
 			<hr class='my-4' />
-			<div className='row' id='aboutUsText'>
-				<h1 className='display-5 text-center'>About Us</h1>
-				<p className="py-1">{aboutUs}</p>
-			</div>
+			<h1 className='display-5 text-center'>About Us</h1>
+			<p className="py-3">{aboutUs}</p>
 		</div>
 	</Layout>
 );

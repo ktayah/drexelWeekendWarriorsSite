@@ -12,15 +12,17 @@ const FaqCard = (props) => (
 const Faq = (props) => {
     return (
         <Layout title={props.title}>
-            <h3>Frequently Asked Questions</h3>
-            <ul>
-            <hr style={{padding:'0.25em'}}/>
-            {
-                props.questions.map((faq) => {
-                    return <li><FaqCard question={faq['question']} answer={faq['answer']} /></li>
-                })
-            }
-            </ul>
+            <div className="container">
+                <h3 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Frequently Asked Questions</h3>
+                <ul>
+                <hr style={{padding:'0.25em'}}/>
+                {
+                    props.questions.map((faq) => {
+                        return <li><FaqCard question={faq['question']} answer={faq['answer']} /></li>
+                    })
+                }
+                </ul>
+            </div>
         </Layout>
     );
 }
