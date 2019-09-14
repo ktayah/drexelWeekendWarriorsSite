@@ -24,7 +24,9 @@
       "type": "date"
     },
     "tripName": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "maxLength": 14
     },
     "tripDescription": {
       "required": true,
@@ -42,9 +44,20 @@
     },
     "users": {
       "collection": "user",
-      "dominant": true,
       "via": "trips",
+      "dominant": true,
       "plugin": "users-permissions"
+    },
+    "ticketLocation": {
+      "default": "DAC Lobby",
+      "type": "string"
+    },
+    "isOnlineSale": {
+      "required": true,
+      "type": "boolean"
+    },
+    "ticketLink": {
+      "type": "string"
     }
   }
 }
