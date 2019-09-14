@@ -6,7 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import authenticate from '../actions/index';
 
-const getDescription = async () => {
+const getAboutUs = async () => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
 	const res = await axios.get(`${apiUrl}/abouts`);
 	return res.data[0];
@@ -27,10 +27,8 @@ const Index = (props) => (
 );
 
 Index.getInitialProps = async ({store, isServer, pathname, query}) => {
-	// console.log(store);
-	// dispatch(authenticate('ktayah@yahoo.com', 'test123'));
-	// return {custom: 'custom'};
-	const { clubDescription } = await getDescription();
+	const { clubDescription, featuredTrips} = await getAboutUs();
+	// Change featuredTrips to ajax requested one
 	return {
 		...store.getState(),
 		aboutUs: clubDescription,
