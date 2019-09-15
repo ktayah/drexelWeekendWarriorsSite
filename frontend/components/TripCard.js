@@ -11,7 +11,7 @@ const getDateTime = (dateString) => {
 
 const TripCard = ({props}) => (
     // <Link href="/"> Dynamically link to trip pages, for another Issue
-        <div className="card w-50 m-4" id="tripCard">
+        <div className="card w-50 m-3" id="tripCard">
             <img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" />
             <div className="card-body">
                 <h3 className="card-title text-nowrap">{props.tripName}</h3>

@@ -1,25 +1,25 @@
 import Layout from "../components/Layout";
 
-const FaqCard = (props) => (
+const FaqCard = ({question, answer}) => (
     <div className="FaqCard" style={{padding:'1em'}}>
-        <h5>{props.question}</h5>
+        <h5>{question}</h5>
         <p style={{color:'#717a81'}}>
-            {props.answer}
+            {answer}
         </p>
     </div>
 );
 
-const Faq = (props) => {
+const Faq = ({title, questions}) => {
     return (
-        <Layout title={props.title}>
+        <Layout title={title}>
             <div className="container">
                 <br />
                 <h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Frequently Asked Questions</h1>
                 <ul>
                 <hr style={{padding:'0.25em'}}/>
                 {
-                    props.questions.map((faq) => {
-                        return <li><FaqCard question={faq['question']} answer={faq['answer']} /></li>
+                    questions.map(faq => {
+                        return <li><FaqCard question={faq.question} answer={faq.answer} /></li>
                     })
                 }
                 </ul>

@@ -37,7 +37,7 @@ const Contact = ({title}) => (
     <Layout title={title} activePage='contact'>
         <div className="container">
             <br />
-            <h1 className='display-5 text-center'>Send us an email.</h1>
+            <h1 className='display-5 text-center'>Send us an email</h1>
             <hr className="my-4" />
             <ContactForm />
         </div>
