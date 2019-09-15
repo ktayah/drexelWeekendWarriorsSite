@@ -49,7 +49,7 @@
       "plugin": "users-permissions"
     },
     "ticketLocation": {
-      "default": "DAC Lobby",
+      "default": "Rec Lobby",
       "type": "string"
     },
     "isOnlineSale": {

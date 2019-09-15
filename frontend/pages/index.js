@@ -14,7 +14,6 @@ const getAboutUs = async () => {
 
 const Index = ({title, upcomingTrips, aboutUs}) => (
 	<Layout title={title} activePage='index'>
-		<h1 className='display-4 text-center shadow-lg bg-white rounded p-3 mx-5'>Our Upcoming Trips</h1> {/* Need to fix this since it causes problems on smaller screens*/}
 		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingTrips}/>
 		<div className='container'>
 			<hr className='my-4' />

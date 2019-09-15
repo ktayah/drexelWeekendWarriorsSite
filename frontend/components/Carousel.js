@@ -9,7 +9,7 @@ const Carousel = ({upcomingTrips}) => {
     }
 
     return (
-        <div id="trips" className="carousel slide" data-ride="carousel">
+        <div id="trips" className="carousel slide" data-interval="4000" data-ride="carousel">
             <ol className="carousel-indicators">
                 {indicatorRows}
             </ol>
@@ -58,11 +58,11 @@ const CarouselThumbnails = ({upcomingTrips}) => (
 
 const CarouselWithThumbnails = ({upcomingTrips}) => (
     <div className="m-3">
-        <div id="carousel" className="row mb-4">
-            <div className="col">
-                <Carousel upcomingTrips={upcomingTrips} />
-            </div>
+        <div className="row mb-4 d-none d-sm-block">
+            <Carousel upcomingTrips={upcomingTrips} />
         </div>
+        <h1 className='display-5 text-center rounded mx-5'>Take a look at our upcoming trips</h1> {/* Need to fix this since it causes problems on smaller screens*/}
+        <hr className="mx-5" />
         <CarouselThumbnails upcomingTrips={upcomingTrips} />
     </div>   
 )

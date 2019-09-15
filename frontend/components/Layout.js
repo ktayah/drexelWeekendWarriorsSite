@@ -25,7 +25,6 @@ const Layout = ({children, title, activePage}) => (
             <script noModule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         </Head>
         <Navbar title={title} activePage={activePage}/>
-        <br />
         {children}
         <Footer />
     </main>
