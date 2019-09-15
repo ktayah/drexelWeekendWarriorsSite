@@ -1,5 +1,9 @@
 import Layout from "../components/Layout";
 
+const sendEmail = (data) => {
+    
+}
+
 const ContactForm = () => (
     <form>
         <div className="form-row">
@@ -28,6 +32,11 @@ const ContactForm = () => (
             <div className="form-group col-md-12">
                 <label for="inputMessage">Message</label>
                 <textarea className="form-control" id="inputMessage" placeholder="Enter your Message" rows="5" />
+            </div>
+        </div>
+        <div className="form-row">
+            <div className="form-group col-md-12">
+               <button class="btn btn-primary" type="Submit" onclick={sendEmail()}>Send an Email</button>
             </div>
         </div>
     </form>
