@@ -26,8 +26,6 @@ class ContactForm extends React.Component {
     sendEmail = async () => {
         const apiUrl = config.development ? config.apiDevelopment : config.api;
         return await axios.post(`${apiUrl}/email`, {
-            // firstName: this.state.firstName,
-            // lastName: this.state.lastName,
             to: 'ktayah@yahoo.com',
             from: this.state.email,
             replyTo: 'ktayah@yahoo.com',
