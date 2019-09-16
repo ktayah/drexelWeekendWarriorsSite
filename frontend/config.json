@@ -2,5 +2,5 @@
     "logActions": true,
     "apiDevelopment": "http://localhost:1337",
     "api": "http://drexelww.com:1337",
-    "development": true
+    "development": false
 }
