@@ -58,9 +58,9 @@ const CarouselThumbnails = ({upcomingTrips}) => (
 
 const CarouselWithThumbnails = ({upcomingTrips}) => (
     <div className="m-3">
-        <div className="row mb-4 d-none d-sm-block">
+        {/* <div className="row mb-4 d-none d-sm-block"> // Temporaly removed until backend connection fixed
             <Carousel upcomingTrips={upcomingTrips} />
-        </div>
+        </div> */}
         <h1 className='display-5 text-center rounded mx-5'>Take a look at our upcoming trips</h1> {/* Need to fix this since it causes problems on smaller screens*/}
         <hr className="mx-5" />
         <CarouselThumbnails upcomingTrips={upcomingTrips} />
