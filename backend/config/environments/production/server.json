@@ -1,5 +1,5 @@
 {
-  "host": "drexelww.com",
+  "host": "http://www.drexelww.com",
   "port": "${process.env.PORT || 1337}",
   "production": true,
   "proxy": {
@@ -9,7 +9,6 @@
     "enabled": false
   },
   "admin": {
-    "path": "/dashboard",
-    "autoOpen": false
+    "autoOpen": true
   }
 }
