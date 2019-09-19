@@ -3,7 +3,10 @@
   "port": 1337,
   "production": true,
   "proxy": {
-    "enabled": false
+    "enabled": true,
+    "ssl": true,
+    "host": "drexelww.com/api",
+    "port": 1337
   },
   "cron": {
     "enabled": false
