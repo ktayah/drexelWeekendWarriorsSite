@@ -1,11 +1,11 @@
 {
-  "host": "localhost",
-  "port": 1337,
+  "host": "api.drexelww.com",
+  "port": "${process.env.PORT || 1337}",
   "production": true,
   "proxy": {
     "enabled": true,
     "ssl": true,
-    "host": "drexelww.com/api",
+    "host": "api.drexelww.com",
     "port": 1337
   },
   "cron": {
