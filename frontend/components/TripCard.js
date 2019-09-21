@@ -1,13 +1,10 @@
 import config from '../config';
 import Link from 'next/link';
+import moment from 'moment';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
-const getDateTime = (dateString) => {
-    const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
-}
+const getDateTime = dateString => moment(dateString).format("dddd, MMMM Do YYYY, h:mm a");
 
 const TripCard = ({props}) => (
     // <Link href="/"> Dynamically link to trip pages, for another Issue
