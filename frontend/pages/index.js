@@ -15,7 +15,7 @@ const getAboutUs = async () => {
 			tripName: 'Fall Trips',
 			id : 1,
 			tripPhoto: {
-				url: '/static/images/fallquarter.jpg'
+				url: '/fallquarter.jpg'
 			}
 		}],
 		clubDescription: 'Weekend Warriors is a group dedicated to providing the Drexel community with exciting opportunities to engage with the outdoor world. Everyone needs to take a break sometimes. Be it by relaxing on a leisurely hike or feeling the exhiliration of whitewater rafting, Weekend Warriors provides students with a change from the pressures of schoolwork. Our mission is to make the outdoors as accessible as possible for Drexel students and to train responsible and capable Trip Leaders to keep our trips safe, but fun. It is our mission to bring the outdoors to students that have never before realized the benefits that nature can bring.'
