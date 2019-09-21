@@ -21,10 +21,10 @@ const Trips = (props) => (
 );
 
 Trips.getInitialProps = async ({store, isServer, pathname, query}) => {
-	// const trips = await getTrips();
+	const trips = await getTrips();
 	return {
 		title: 'Weekend Warriors',
-		trips: false //trips
+		trips: trips
     }
 }
 
