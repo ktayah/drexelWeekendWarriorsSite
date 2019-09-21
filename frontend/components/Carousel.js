@@ -18,7 +18,7 @@ const Carousel = ({upcomingTrips}) => {
                 upcomingTrips.map((trip, i) => {
                     return (
                         <div key={trip.id} className={"carousel-item" + (i == 0 ? " active" : "")}>
-                            <img className="d-block img-fluid" className="w-100" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
+                            <img className="d-block img-fluid" className="h-auto w-100" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
                         </div>
                     );
                 })
