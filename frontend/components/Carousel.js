@@ -49,6 +49,7 @@ const CarouselThumbnails = ({upcomingTrips}) => (
                 <div key={trip.id} id="column" className="col-sm">
                     <h1 className='h5'>{trip.tripName}</h1>
                     <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
+                    <p className="text-center">{trip.tripDescription}</p>
                 </div>
             );
         })
