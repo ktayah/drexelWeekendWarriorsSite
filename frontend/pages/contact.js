@@ -27,7 +27,7 @@ class ContactForm extends React.Component {
         const apiUrl = config.development ? config.apiDevelopment : config.api;
         return await axios({
             method: 'post',
-            url: `${apiUrl}/email`,
+            url: `https://api.sendgrid.com/v3/mail/send`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${config.sendGridKey}`
