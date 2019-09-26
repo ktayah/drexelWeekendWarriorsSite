@@ -1,0 +1,2 @@
+# Removes the app enviroment variables like SendGrid API Key
+app.env

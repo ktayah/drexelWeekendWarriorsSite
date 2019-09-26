@@ -25,13 +25,34 @@ class ContactForm extends React.Component {
     }
     sendEmail = async () => {
         const apiUrl = config.development ? config.apiDevelopment : config.api;
-        return await axios.post(`${apiUrl}/email`, {
-            to: 'ktayah@yahoo.com',
-            from: this.state.email,
-            replyTo: 'ktayah@yahoo.com',
-            subject: this.state.subject,
-            text: this.state.message,
-            html: this.state.message
+        return await axios({
+            method: 'post',
+            url: `${apiUrl}/email`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${config.sendGridKey}`
+            },
+            data: {
+                personalizations: [{
+                    to: [{
+                        email: "drexelweekendwarriors@gmail.com",
+                        name: "Drexel Weekend Warriors"
+                    }],
+                    subject: `From Drexelww.com - ${this.state.subject}`
+                }],
+                content: [{
+                    type: "text/plain",
+                    value: this.state.message
+                }],
+                from: {
+                    email: this.state.email,
+                    name: `${this.state.firstName} ${this.state.lastName}`
+                },
+                reply_to: {
+                    email: this.state.email,
+                    name: `${this.state.firstName} ${this.state.lastName}`
+                }
+            }
         });
     }
 
