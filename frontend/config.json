@@ -1,6 +1,0 @@
-{
-    "logActions": true,
-    "apiDevelopment": "http://localhost:3000",
-    "api": "http://drexelww.com/api",
-    "development": false
-}
