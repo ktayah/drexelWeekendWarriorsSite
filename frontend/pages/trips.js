@@ -14,7 +14,7 @@ const Trips = (props) => (
 		<div className='container'>
 			<br />
 			<h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Join us on our Trips!</h1>
-			<hr class='my-4' />
+			<hr className='my-4' />
 			<TripList trips={props.trips} />
 		</div>
 	</Layout>

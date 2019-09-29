@@ -6,6 +6,8 @@ const apiUrl = config.development ? config.apiDevelopment : config.api;
 
 const getDateTime = dateString => moment(dateString).format("dddd, MMMM Do YYYY, h:mm a");
 
+const ticketsAvail = ticketSales => moment(ticketSales) < moment();
+
 const TripCard = ({props}) => (
     // <Link href="/"> Dynamically link to trip pages, for another Issue
         <div className="card w-50 m-3" id="tripCard">
@@ -22,7 +24,8 @@ const TripCard = ({props}) => (
                 ): (
                     <p className="card-text">Tickets will be sold in-person at the {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
                 )}
-                {props.ticketLink ? (
+                {console.log(ticketsAvail(props.ticketSales))}
+                {props.ticketLink && ticketsAvail(props.ticketSales) ? (
                     <a href={props.ticketLink}>Click here to buy a ticket</a>
                 ): ""}
             </div>
