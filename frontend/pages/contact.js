@@ -34,7 +34,7 @@ class ContactForm extends React.Component {
             data: {
                 personalizations: [{
                     to: [{
-                        email: "drexelweekendwarriors@gmail.com",
+                        email: "trips@drexelww.com",
                         name: "Drexel Weekend Warriors"
                     }],
                     subject: `From Drexelww.com - ${this.state.subject}`
