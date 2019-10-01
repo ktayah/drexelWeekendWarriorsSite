@@ -38,10 +38,6 @@
       "plugin": "upload",
       "required": true
     },
-    "featuredTrip": {
-      "model": "about",
-      "via": "upcomingTrips"
-    },
     "users": {
       "collection": "user",
       "via": "trips",
@@ -58,6 +54,10 @@
     },
     "ticketLink": {
       "type": "string"
+    },
+    "featuredTrip": {
+      "model": "about",
+      "via": "upcomingTrips"
     }
   }
 }

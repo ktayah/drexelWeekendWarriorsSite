@@ -13,10 +13,10 @@ const getAboutUs = async () => {
 	return res.data[0];
 }
 
-const Index = ({title, upcomingTrips, aboutUs, announcmentMessage}) => (
+const Index = ({title, upcomingTrips, aboutUs, announcementMessage}) => (
 	<Layout title={title} activePage='index'>
-		{announcmentMessage && 
-			<Announcment announcmentMessage={announcmentMessage} />
+		{announcementMessage && 
+			<Announcment announcmentMessage={announcementMessage} />
 		}
 		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingTrips}/>
 		<div className='container'>
@@ -40,13 +40,13 @@ const Index = ({title, upcomingTrips, aboutUs, announcmentMessage}) => (
 );
 
 Index.getInitialProps = async ({store, isServer, pathname, query}) => {
-	const { clubDescription, upcomingTrips, announcmentMessage} = await getAboutUs();
+	const { clubDescription, upcomingTrips, announcementMessage} = await getAboutUs();
 	return {
 		...store.getState(),
 		aboutUs: clubDescription,
 		title: 'Weekend Warriors',
 		upcomingTrips: upcomingTrips,
-		announcmentMessage: announcmentMessage
+		announcementMessage: announcementMessage
     }
 }
 
