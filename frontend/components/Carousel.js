@@ -58,7 +58,7 @@ const CarouselThumbnails = ({upcomingTrips}) => (
 )
 
 const CarouselWithThumbnails = ({upcomingTrips}) => (
-    <div className="m-3">
+    <div>
         <div className="row mb-4 d-none d-sm-block">
             <Carousel upcomingTrips={upcomingTrips} />
         </div>
