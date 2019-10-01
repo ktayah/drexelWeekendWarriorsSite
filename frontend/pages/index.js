@@ -5,6 +5,7 @@ import config from '../config';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import authenticate from '../actions/index';
+import Announcment from '../components/Announcment';
 
 const getAboutUs = async () => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
@@ -12,8 +13,11 @@ const getAboutUs = async () => {
 	return res.data[0];
 }
 
-const Index = ({title, upcomingTrips, aboutUs}) => (
+const Index = ({title, upcomingTrips, aboutUs, announcmentMessage}) => (
 	<Layout title={title} activePage='index'>
+		{announcmentMessage && 
+			<Announcment announcmentMessage={announcmentMessage} />
+		}
 		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingTrips}/>
 		<div className='container'>
 			<hr className='my-4' />
@@ -36,12 +40,13 @@ const Index = ({title, upcomingTrips, aboutUs}) => (
 );
 
 Index.getInitialProps = async ({store, isServer, pathname, query}) => {
-	const { clubDescription, upcomingTrips} = await getAboutUs();
+	const { clubDescription, upcomingTrips, announcmentMessage} = await getAboutUs();
 	return {
 		...store.getState(),
 		aboutUs: clubDescription,
 		title: 'Weekend Warriors',
-		upcomingTrips: upcomingTrips
+		upcomingTrips: upcomingTrips,
+		announcmentMessage: announcmentMessage
     }
 }
 
