@@ -47,7 +47,7 @@ const CarouselThumbnails = ({upcomingTrips}) => (
         upcomingTrips.map(trip => {
             return (
                 <div key={trip.id} id="column" className="col-sm">
-                    <h1 className='h5'>{trip.tripName}</h1>
+                    <h1 className='h5 text-center'>{trip.tripName}</h1>
                     <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
                     <p className="text-center p-3">{trip.tripDescription}</p>
                 </div>
