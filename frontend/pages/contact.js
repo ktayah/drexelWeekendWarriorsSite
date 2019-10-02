@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import axios from 'axios';
+import sgMail from '@sendgrid/mail';
 import config from '../config';
 
 class ContactForm extends React.Component {
@@ -24,35 +25,43 @@ class ContactForm extends React.Component {
         });
     }
     sendEmail = async () => {
-        return await axios({
-            method: 'post',
-            url: `https://api.sendgrid.com/v3/mail/send`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${config.sendGridKey}`
-            },
-            data: {
-                personalizations: [{
-                    to: [{
-                        email: "trips@drexelww.com",
-                        name: "Drexel Weekend Warriors"
-                    }],
-                    subject: `From Drexelww.com - ${this.state.subject}`
-                }],
-                content: [{
-                    type: "text/plain",
-                    value: this.state.message
-                }],
-                from: {
-                    email: this.state.email,
-                    name: `${this.state.firstName} ${this.state.lastName}`
-                },
-                reply_to: {
-                    email: this.state.email,
-                    name: `${this.state.firstName} ${this.state.lastName}`
-                }
-            }
-        });
+        sgMail.setApiKey(config.sendGridKey);
+        const msg = {
+            to: 'trips@drexelww.com',
+            from: this.state.email,
+            subject: this.state.subject,
+            text: this.state.message
+        }
+        sgMail.send(msg);
+        // return await axios({
+        //     method: 'post',
+        //     url: `https://api.sendgrid.com/v3/mail/send`,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${config.sendGridKey}`
+        //     },
+        //     data: {
+        //         personalizations: [{
+        //             to: [{
+        //                 email: "trips@drexelww.com",
+        //                 name: "Drexel Weekend Warriors"
+        //             }],
+        //             subject: `From Drexelww.com - ${this.state.subject}`
+        //         }],
+        //         content: [{
+        //             type: "text/plain",
+        //             value: this.state.message
+        //         }],
+        //         from: {
+        //             email: this.state.email,
+        //             name: `${this.state.firstName} ${this.state.lastName}`
+        //         },
+        //         reply_to: {
+        //             email: this.state.email,
+        //             name: `${this.state.firstName} ${this.state.lastName}`
+        //         }
+        //     }
+        // });
     }
 
     render() {
