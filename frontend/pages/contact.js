@@ -1,6 +1,5 @@
 import Layout from "../components/Layout";
 import axios from 'axios';
-import sgMail from '@sendgrid/mail';
 import config from '../config';
 
 class ContactForm extends React.Component {
@@ -13,8 +12,6 @@ class ContactForm extends React.Component {
             subject: null,
             message: null
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.sendEmail = this.sendEmail.bind(this);
     }
     handleChange = (event) => {
         const target = event.target;
@@ -25,43 +22,22 @@ class ContactForm extends React.Component {
         });
     }
     sendEmail = async () => {
-        sgMail.setApiKey(config.sendGridKey);
-        const msg = {
-            to: 'trips@drexelww.com',
-            from: this.state.email,
-            subject: this.state.subject,
-            text: this.state.message
-        }
-        sgMail.send(msg);
-        // return await axios({
-        //     method: 'post',
-        //     url: `https://api.sendgrid.com/v3/mail/send`,
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${config.sendGridKey}`
-        //     },
-        //     data: {
-        //         personalizations: [{
-        //             to: [{
-        //                 email: "trips@drexelww.com",
-        //                 name: "Drexel Weekend Warriors"
-        //             }],
-        //             subject: `From Drexelww.com - ${this.state.subject}`
-        //         }],
-        //         content: [{
-        //             type: "text/plain",
-        //             value: this.state.message
-        //         }],
-        //         from: {
-        //             email: this.state.email,
-        //             name: `${this.state.firstName} ${this.state.lastName}`
-        //         },
-        //         reply_to: {
-        //             email: this.state.email,
-        //             name: `${this.state.firstName} ${this.state.lastName}`
-        //         }
-        //     }
-        // });
+        const apiUrl = config.development ? config.apiDevelopment : config.api;
+        const { firstName, lastName, email, subject, message } = this.state;
+        return await axios({
+            method: 'post',
+            url: `${apiUrl}/sendEmail`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                email,
+                firstName,
+                lastName,
+                subject,
+                message
+            }
+        });
     }
 
     render() {
@@ -97,7 +73,7 @@ class ContactForm extends React.Component {
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-12">
-                    <button className="btn btn-primary" type="Submit" onClick={this.sendEmail()}>Send an Email</button>
+                    <button className="btn btn-primary" type="Submit" onClick={this.sendEmail}>Send an Email</button>
                     </div>
                 </div>
             </form>
