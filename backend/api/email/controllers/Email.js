@@ -41,10 +41,15 @@ module.exports = {
           }
         }
       });
-      await ctx.send(res.status);
+      await ctx.send({
+        status: res.status,
+      });
     } catch(err) {
       console.error(err);
-      ctx.send(404);
+      ctx.send({
+        status: 404,
+        err: err
+      });
     }
   }
 };
