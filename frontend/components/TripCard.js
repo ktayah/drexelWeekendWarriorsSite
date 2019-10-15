@@ -6,7 +6,15 @@ const apiUrl = config.development ? config.apiDevelopment : config.api;
 
 const getDateTime = dateString => moment(dateString).format("dddd, MMMM Do YYYY, h:mm a");
 
-const ticketsAvail = ticketSales => moment(ticketSales) < moment();
+const ticketsReleased = ticketSales => moment(ticketSales) < moment();
+
+const ticketsExpired = ticketSales => moment(ticketSales).add(10, 'd') < moment();
+
+const ticketsAvailable = ticketSales => ticketsReleased(ticketSales) && !ticketsExpired(ticketSales);
+
+const onlineTicketSalesPrompt = ticketSales => ticketsExpired(ticketSales) ? 'Tickets were sold out!' : `Tickets will be sold online. Link will be posted here on ${getDateTime(ticketSales)}`;
+
+const inPersonTicketSalesPrompt = (ticketSales, ticketLocation) => ticketsExpired(ticketSales) ? 'Tickets were sold out!' : `Tickets will be sold in-person at the ${ticketLocation} on ${getDateTime(ticketSales)}`;
 
 const TripCard = ({props}) => (
     // <Link href="/"> Dynamically link to trip pages, for another Issue
@@ -20,11 +28,11 @@ const TripCard = ({props}) => (
             </div>
             <div className="card-footer">
                 {props.isOnlineSale ? (
-                    <p className="card-text">Tickets will be sold online. Link will be posted here on {getDateTime(props.ticketSales)}</p>
+                    <p className="card-text">{onlineTicketSalesPrompt(props.ticketSales)}</p>
                 ): (
-                    <p className="card-text">Tickets will be sold in-person at the {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
+                    <p className="card-text">{inPersonTicketSalesPrompt(props.ticketSales, props.ticketLocation)}</p>
                 )}
-                {props.ticketLink && ticketsAvail(props.ticketSales) ? (
+                {props.ticketLink && ticketsAvailable(props.ticketSales) ? (
                     <a href={props.ticketLink}>Click here to buy a ticket</a>
                 ): ""}
             </div>
