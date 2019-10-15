@@ -24,7 +24,6 @@ const TripCard = ({props}) => (
                 ): (
                     <p className="card-text">Tickets will be sold in-person at the {props.ticketLocation} on {getDateTime(props.ticketSales)}</p>
                 )}
-                {console.log(ticketsAvail(props.ticketSales))}
                 {props.ticketLink && ticketsAvail(props.ticketSales) ? (
                     <a href={props.ticketLink}>Click here to buy a ticket</a>
                 ): ""}

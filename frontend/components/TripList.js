@@ -1,17 +1,19 @@
 import TripCard from './TripCard';
 
 const NoTripsScreen = () => (
-    <div>
+    <div className='container'>
         <h1>No Trips available, check at another time.</h1>
     </div>
 );
 
 const TripCards = ({trips}) => (
-    <div className='card-deck'>
-        {trips.map(trip => 
-            <TripCard props={trip} key={trip.id} />
-        )}
-    </div>
+    <center>
+        <div className='card-deck'>
+            {trips.map(trip => 
+                <TripCard props={trip} key={trip.id} />
+            )}
+        </div>
+    </center>
 );
 
 const TripList = ({trips}) => (
