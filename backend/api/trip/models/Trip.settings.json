@@ -25,8 +25,7 @@
     },
     "tripName": {
       "type": "string",
-      "required": true,
-      "maxLength": 14
+      "required": true
     },
     "tripDescription": {
       "required": true,
