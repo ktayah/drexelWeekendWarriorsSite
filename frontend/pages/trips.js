@@ -6,7 +6,12 @@ import axios from 'axios';
 const getTrips = async () => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
 	const res = await axios.get(`${apiUrl}/trips`);
-	return res.data;
+	const orderedTrips = res.data.sort((tripA, tripB) => {
+		const dateA = new Date(tripA.tripDate).getTime();
+		const dateB = new Date(tripB.tripDate).getTime();
+		return dateA - dateB;
+	});
+	return orderedTrips;
 }
 
 const Trips = (props) => (

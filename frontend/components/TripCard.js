@@ -21,7 +21,7 @@ const TripCard = ({props}) => (
         <div className="card w-50 m-3" id="tripCard">
             <img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" />
             <div className="card-body">
-                <h3 className="card-title text-nowrap">{props.tripName}</h3>
+                <h3 className="card-title text-wrap">{props.tripName}</h3>
                 <span className="card-text small">{props.tripLocation} {getDateTime(props.tripDate)}</span>
                 <hr className="display-4" /> 
                 <p className="card-text pt-2">{props.tripDescription}</p>
