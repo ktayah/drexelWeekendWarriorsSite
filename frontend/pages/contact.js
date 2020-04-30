@@ -81,7 +81,8 @@ class ContactForm extends React.Component {
     }
 }
 
-const Contact = ({title}) => (<Layout title={title} activePage='contact'>
+const Contact = () => (
+    <Layout activePage='contact'>
         <div className="container">
             <br />
             <h1 className='display-5 text-center'>Send us an email</h1>
@@ -93,7 +94,6 @@ const Contact = ({title}) => (<Layout title={title} activePage='contact'>
 
 Contact.getInitialProps = () => {
     return {
-        title: 'Weekend Warriors',
     }
 }
 

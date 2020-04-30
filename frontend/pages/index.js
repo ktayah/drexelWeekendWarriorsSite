@@ -1,5 +1,5 @@
 import Layout from '../components/Layout';
-import React, {Component} from 'react';
+import React from 'react';
 import CarouselWithThumbnails from '../components/Carousel';
 import config from '../config';
 import axios from 'axios';
@@ -13,8 +13,8 @@ const getAboutUs = async () => {
 	return res.data[0];
 }
 
-const Index = ({title, upcomingTrips, aboutUs, announcementMessage, announcementLink}) => (
-	<Layout title={title} activePage='index'>
+const Index = ({upcomingTrips, aboutUs, announcementMessage, announcementLink}) => (
+	<Layout activePage='index'>
 		{announcementMessage && 
 			<Announcment announcementMessage={announcementMessage} announcementLink={announcementLink} />
 		}
@@ -44,7 +44,6 @@ Index.getInitialProps = async ({store, isServer, pathname, query}) => {
 	return {
 		...store.getState(),
 		aboutUs: clubDescription,
-		title: 'Weekend Warriors',
 		upcomingTrips,
 		announcementMessage,
 		announcementLink

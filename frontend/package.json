@@ -12,17 +12,17 @@
   "author": "Kevin Tayah",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "js-cookie": "^2.2.1",
     "moment": "^2.24.0",
-    "next": "^9.0.4",
+    "next": "^9.3.6",
     "next-redux-wrapper": "^3.0.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-redux": "^7.1.0",
-    "redux": "^4.0.4",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "redux-logger": "3.0.6"
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8"

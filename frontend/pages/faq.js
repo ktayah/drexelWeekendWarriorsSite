@@ -11,7 +11,7 @@ const FaqCard = ({question, answer}) => (
 
 const Faq = ({title, questions}) => {
     return (
-        <Layout title={title}>
+        <Layout activePage='faq'>
             <div className="container">
                 <br />
                 <h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Frequently Asked Questions</h1>
@@ -31,7 +31,6 @@ const Faq = ({title, questions}) => {
 Faq.getInitialProps = ({store, isServer, pathname, query}) => {
 	return {
         ...store,
-		title: 'Weekend Warriors',
         questions: [
         {
             question: "Can you buy tickets in advance?",

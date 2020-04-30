@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import config from '../config';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
@@ -17,9 +18,11 @@ const Carousel = ({upcomingTrips}) => {
             {
                 upcomingTrips.map((trip, i) => {
                     return (
-                        <div key={trip.id} className={"carousel-item" + (i == 0 ? " active" : "")}>
-                            <img className="d-block img-fluid" className="h-auto w-100" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
-                        </div>
+                        <Link key={trip.id} href='/trips/[trip]' as={`/trips/${trip.id}`}>
+                            <a className={"carousel-item" + (i == 0 ? " active" : "")}>
+                                <img className="d-block img-fluid" className="h-auto w-100" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
+                            </a>
+                        </Link>
                     );
                 })
             }
@@ -44,16 +47,21 @@ const Carousel = ({upcomingTrips}) => {
 const CarouselThumbnails = ({upcomingTrips}) => (
     <div id="carousel_pictures" className="row">
     {
-        upcomingTrips.map(trip => {
-            return (
-                <div key={trip.id} id="column" className="col-sm">
+        upcomingTrips.map(trip => (
+            <Link key={trip.id} href='/trips/[trip]' as={`/trips/${trip.id}`}>
+                <a key={trip.id} className="col-sm" id='tripThumbnail'>
                     <h1 className='h5 text-center'>{trip.tripName}</h1>
                     <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
                     <p className="text-center p-3">{trip.tripDescription}</p>
-                </div>
-            );
-        })
+                </a>
+            </Link>
+        ))
     }
+    <style jsx>{`
+            #tripThumbnail {
+                text-decoration: none;
+            }
+          `}</style>
     </div>
 )
 

@@ -5,20 +5,20 @@ import { connect } from 'react-redux';
 // import { Provider } from 'react-redux';
 // import store from '../store';
 
-const Layout = ({children, title, activePage}) => (
+const Layout = ({children, activePage}) => (
     <main className="d-flex flex-column h-100">
         <Head>
-            <title>{title}</title>
+            <title>Weekend Warriors</title>
             <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css"/>
-            <link rel="stylesheet" href="static/styles/wwstyles.css"/>
-            <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png" />
-            <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png" />
-            <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png" />
-            <link rel="manifest" href="/static/favicon/site.webmanifest" />
-            <link rel="mask-icon" href="/static/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+            <link rel="stylesheet" href="/styles/wwstyles.css"/>
+            <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+            <link rel="manifest" href="/favicon/site.webmanifest" />
+            <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5" />
             <meta name="msapplication-TileColor" content="#00aba9" />
             <meta name="theme-color" content="#ffffff" />
-            <meta property="og:image" content="/static/favicon/favicon-32x32.png" />
+            <meta property="og:image" content="/favicon/favicon-32x32.png" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="drexelww.com" />
             <meta property="og:title" content="Drexel Weekend Warriors" />
@@ -29,11 +29,12 @@ const Layout = ({children, title, activePage}) => (
             <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
             <script noModule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         </Head>
-        <Navbar title={title} activePage={activePage}/>
+        <Navbar title="Weekend Warriors" activePage={activePage}/>
         {children}
         <Footer />
     </main>
 );
+
 export default Layout;
 // Remaining dead code for redux expansion in next milestone
 // export default connect()(Layout);

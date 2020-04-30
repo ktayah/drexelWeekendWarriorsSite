@@ -1,7 +1,7 @@
 import Layout from '../components/Layout';
 
 const About = (props) => (
-	<Layout title={props.title}>
+	<Layout>
 		<div className="container">
 			<div className="row">
 				PLACEHOLDER TEXT -- ABOUT PAGE
@@ -12,7 +12,6 @@ const About = (props) => (
 
 About.getInitialProps = async function() {
     return {
-		title: 'Weekend Warriors'
     };
 }
 

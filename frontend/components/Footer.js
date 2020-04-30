@@ -2,7 +2,7 @@ const Footer = () => (
     <footer className="p-3 mt-auto text-center bg-primary">
         {/* TODO: add tiny ww logo */}
         <span className="col-auto pr-0 pl-4 my-auto">
-            <img src="static/images/logo-tiny.png" alt="logo-tiny" className="img-fluid" style={{maxHeight: "3em"}}/>
+            <img src="/images/logo-tiny.png" alt="logo-tiny" className="img-fluid" style={{maxHeight: "3em"}}/>
         </span>
         <span className="col-auto" />
         <a href="http://lists.drexel.edu/cgi-bin/wa?SUBED1=WEEKEND-WARRIORS-ANNOUNCE-L&A=1" 

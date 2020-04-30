@@ -14,13 +14,13 @@ const getTrips = async () => {
 	return orderedTrips;
 }
 
-const Trips = (props) => (
-	<Layout title={props.title} activePage='trips'>
+const Trips = ({trips}) => (
+	<Layout activePage='trips'>
 		<div className='container'>
 			<br />
 			<h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Join us on our Trips!</h1>
 			<hr className='my-4' />
-			<TripList trips={props.trips} />
+			<TripList trips={trips} />
 		</div>
 	</Layout>
 );
@@ -28,7 +28,6 @@ const Trips = (props) => (
 Trips.getInitialProps = async ({store, isServer, pathname, query}) => {
 	const trips = await getTrips();
 	return {
-		title: 'Weekend Warriors',
 		trips: trips
     }
 }
