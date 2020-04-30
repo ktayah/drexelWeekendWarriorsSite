@@ -3,8 +3,6 @@ import React from 'react';
 import CarouselWithThumbnails from '../components/Carousel';
 import config from '../config';
 import axios from 'axios';
-import { connect } from 'react-redux';
-import authenticate from '../actions/index';
 import Announcment from '../components/Announcment';
 
 const getAboutUs = async () => {
@@ -51,19 +49,3 @@ Index.getInitialProps = async ({store, isServer, pathname, query}) => {
 }
 
 export default Index;
-// Remaining dead code for redux expansion in next milestone
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         onLogin: (userName, password) => { dispatch(authenticate(userName, password)) },
-//         //onLogin: (userName, password) => bindActionCreators(authenticate(userName, password), dispatch),
-//         onLogout: () => dispatch(logOut())
-//     };
-// }
-
-// const mapStateToProps = state => {
-//     return { ...state };
-//     // const { jwt, user } = state.userData;
-//     // return { jwt, user }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Index);

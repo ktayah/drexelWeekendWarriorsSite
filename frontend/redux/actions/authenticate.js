@@ -1,34 +1,24 @@
 import axios from 'axios';
-import config from '../config';
+import config from '../../config';
 
-const logOut = () => {
+export const logOut = () => {
     // Add Log out code
     return {
         type: 'LOGOUT'
     }
 }
-/**
- * Action to log in user
- * @param {String} userName The user's userName
- * @param {String} password The user's password
- */
-export const authenticatePOC = (userName, password) => {
-    return {
-        type: "HIT_POC_AUTH",
-        userName,
-        password
-    };
-}
 
-const authenticate = (userName, password) => dispatch => {
-    dispatch(authenticateStarted());
+export const authenticate = (userName, password) => dispatch => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
+    dispatch(authenticateStarted());
     axios.post(`${apiUrl}/auth/local`, {
         identifier: userName,
         password: password
     }).then(res => {
+        console.log('Success', res.data);
         dispatch(authenticateSuccess(res.data));
     }).catch(err => {
+        console.log('Error', err);
         dispatch(authenticateError(err));
     });
 }
@@ -56,5 +46,3 @@ const authenticateError = (error) => {
         }
     }
 };
-
-export default { authenticate, logOut };

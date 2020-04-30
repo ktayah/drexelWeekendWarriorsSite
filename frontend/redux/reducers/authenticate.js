@@ -1,5 +1,11 @@
-const authenticate = (state = {}, action) => {
-    switch(action.type) {
+const initialState = {
+    loading: false,
+    error: null,
+    userData: null
+}
+
+const authenticate = (state = initialState, action) => {
+    switch (action.type) {
         case 'AUTHENTICATE_STARTED':
             return {
                 ...state,
