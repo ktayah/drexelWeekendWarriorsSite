@@ -138,7 +138,8 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarToggler">
                         <NavbarNavigationLinks activePage={activePage} />
                         <NavbarSocialIcons />
-                        <NavbarSignInDropdown onLogin={onLogin} onLogout={onLogout}/>
+                        {/* Add NavBarSignIn later */}
+                        {/* <NavbarSignInDropdown onLogin={onLogin} onLogout={onLogout}/> */}
                     </div>
                 </nav>
             </div>
