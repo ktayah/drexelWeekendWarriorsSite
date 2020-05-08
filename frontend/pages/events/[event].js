@@ -22,25 +22,33 @@ const Event = ({eventData}) => {
                 {console.log(eventData)}
                 <div className='row'>
                     <div className='col'>
-                        <img className='card-img-top' src={`${apiUrl + tripPhoto.url}`} alt='trip image cap' />
+                        <img className='img-fluid' src={`${apiUrl + tripPhoto.url}`} alt='trip image cap' />
                     </div>
                     <div className='col'>
                         <h1>{tripName}</h1>
-                        <p>{tripDescription}</p>
                         <p>{getDateTime(tripDate)}</p>
+                        <p>{ticketSales && 
+                            <>
+                            <span>Ticket sales: </span> 
+                            {getDateTime(ticketSales)}
+                            </>
+                        }</p>
+                        <p>{tripDescription}</p>
                     </div>
                 </div>
                 <br />
                 <div className='row'>
                     <div className='col'>
-                        {/* {importantDocuments &&  */}
+                        {importantDocuments.length ?
                             <>
                                 <h1 className='text-center'>Important Documents for Trip Participants</h1>
                                 <div>
 
                                 </div>
-                            </>                    
-                        {/* } */}
+                            </>
+                            :
+                            <div></div>               
+                        }
                     </div>
                 </div>
             </div>

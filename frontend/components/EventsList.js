@@ -2,7 +2,7 @@ import EventCard from './EventCard';
 
 const NoEventsScreen = () => (
     <div className='container'>
-        <h1>No Trips available, check at another time.</h1>
+        <h1>No Events available, check at another time.</h1>
     </div>
 );
 
