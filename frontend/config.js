@@ -1,8 +1,8 @@
 const config = {
-    "logActions": true,
+    "logActions": false,
     "apiDevelopment": "http://localhost:1337",
     "api": "http://api.drexelww.com",
-    "development": true
+    "development": false
 }
 
 export default config;
