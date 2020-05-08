@@ -1,35 +1,29 @@
 {
-  "connection": "default",
+  "kind": "singleType",
   "collectionName": "abouts",
   "info": {
-    "name": "about",
-    "description": "About us page information"
+    "name": "About"
   },
   "options": {
     "increments": true,
-    "timestamps": [
-      "created_at",
-      "updated_at"
-    ],
-    "comment": ""
+    "timestamps": true
   },
   "attributes": {
     "clubName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "clubDescription": {
-      "required": true,
       "type": "text"
     },
-    "upcomingTrips": {
-      "collection": "trip",
-      "via": "featuredTrip"
-    },
     "announcementMessage": {
-      "type": "string"
+      "type": "text"
     },
     "announcementLink": {
       "type": "string"
+    },
+    "upcomingTrips": {
+      "collection": "trip"
     }
   }
 }

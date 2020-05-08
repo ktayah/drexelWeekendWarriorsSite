@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // import store from '../store';
 
 const Layout = ({children, activePage}) => (
-    <main className="d-flex flex-column h-100">
+    <main className="d-flex flex-column overflow-hidden h-100">
         <Head>
             <title>Weekend Warriors</title>
             <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css"/>
@@ -30,11 +30,16 @@ const Layout = ({children, activePage}) => (
             <script noModule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         </Head>
         <Navbar title="Weekend Warriors" activePage={activePage}/>
-        {children}
+        <div id="children">
+            {children}
+        </div>
         <Footer />
+        <style jsx>{`
+            #children {
+                min-height: 81.8vh;
+            }
+        `}</style>
     </main>
 );
 
 export default Layout;
-// Remaining dead code for redux expansion in next milestone
-// export default connect()(Layout);

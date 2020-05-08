@@ -1,5 +1,5 @@
 const Footer = () => (
-    <footer className="p-3 mt-auto text-center bg-primary">
+    <footer id="footer" className="p-3 mt-auto text-center bg-primary">
         {/* TODO: add tiny ww logo */}
         <span className="col-auto pr-0 pl-4 my-auto">
             <img src="/images/logo-tiny.png" alt="logo-tiny" className="img-fluid" style={{maxHeight: "3em"}}/>
@@ -9,7 +9,7 @@ const Footer = () => (
             className="text-secondary text-center font-weight-light col-5 p-0 my-auto">
             Wanna stay updated on all of our trips? <u>Subscribe to our mailing list!</u>
         </a>
-        <span className="col-3 text-right px-0 mr-2 my-auto">© Weekend Warriors <small><b>{new Date().getFullYear()}</b></small></span>
+        <span className="col-3 text-right px-0 mr-2 my-auto"> © Weekend Warriors <small><b>{new Date().getFullYear()}</b></small></span>
     </footer>
 )
 

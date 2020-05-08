@@ -6,9 +6,9 @@ import axios from 'axios';
 import Announcment from '../components/Announcment';
 
 const getAboutUs = async () => {
-    const apiUrl = config.development ? config.apiDevelopment : config.api;
-	const res = await axios.get(`${apiUrl}/abouts`);
-	return res.data[0];
+	const apiUrl = config.development ? config.apiDevelopment : config.api;
+	const res = await axios.get(`${apiUrl}/about`);
+	return res.data;
 }
 
 const Index = ({upcomingTrips, aboutUs, announcementMessage, announcementLink}) => (

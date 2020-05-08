@@ -21,4 +21,4 @@ class MyApp extends App {
     }
 }
 
-export default withReduxCookiePersist(makeStore, {debug: true})(MyApp);
+export default withReduxCookiePersist(makeStore)(MyApp);

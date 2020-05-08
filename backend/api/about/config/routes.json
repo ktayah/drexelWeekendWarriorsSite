@@ -2,48 +2,24 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/abouts",
-      "handler": "About.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/abouts/count",
-      "handler": "About.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/abouts/:id",
-      "handler": "About.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/abouts",
-      "handler": "About.create",
+      "path": "/about",
+      "handler": "about.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/abouts/:id",
-      "handler": "About.update",
+      "path": "/about",
+      "handler": "about.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/abouts/:id",
-      "handler": "About.delete",
+      "path": "/about",
+      "handler": "about.delete",
       "config": {
         "policies": []
       }

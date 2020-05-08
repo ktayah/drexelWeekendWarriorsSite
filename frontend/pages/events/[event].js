@@ -1,26 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '../../components/Layout';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import moment from 'moment';
 import config from '../../config';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
-const getTripData = async (tripId) => {
-	const res = await axios.get(`${apiUrl}/trips/${tripId}`);
+const getEventData = async (eventId) => {
+	const res = await axios.get(`${apiUrl}/trips/${eventId}`);
     return res.data;
 }
 
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
-const Trip = ({tripData}) => {
-    const { tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = tripData;
+const Event = ({eventData}) => {
+    const { tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = eventData;
     return(
-        <Layout activePage='trips'>
+        <Layout activePage='events'>
             <br />
             <div className='container'>
-                {console.log(tripData)}
+                {console.log(eventData)}
                 <div className='row'>
                     <div className='col'>
                         <img className='card-img-top' src={`${apiUrl + tripPhoto.url}`} alt='trip image cap' />
@@ -49,11 +48,11 @@ const Trip = ({tripData}) => {
     );
 }
 
-Trip.getInitialProps = async ({query}) => {
-    const tripData = await getTripData(query.trip);
+Event.getInitialProps = async ({query}) => {
+    const eventData = await getEventData(query.event);
     return {
-        tripData
+        eventData
     }
 }
 
-export default Trip;
+export default Event;

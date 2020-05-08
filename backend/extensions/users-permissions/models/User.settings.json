@@ -1,4 +1,5 @@
 {
+  "kind": "collectionType",
   "connection": "default",
   "collectionName": "users-permissions_user",
   "info": {
@@ -79,8 +80,8 @@
       "type": "enumeration"
     },
     "trips": {
-      "collection": "trip",
-      "via": "users"
+      "via": "users",
+      "collection": "trip"
     }
   }
 }

@@ -18,20 +18,20 @@ const Carousel = ({upcomingTrips}) => {
             {
                 upcomingTrips.map((trip, i) => {
                     return (
-                        <Link key={trip.id} href='/trips/[trip]' as={`/trips/${trip.id}`}>
+                        <Link key={trip.id} href='/events/[event]' as={`/events/${trip.id}`}>
                             <a className={"carousel-item" + (i == 0 ? " active" : "")}>
-                                <img className="d-block img-fluid" className="h-auto w-100" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
+                                <img id="carousel-img" className="d-block mx-auto" src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
                             </a>
                         </Link>
                     );
                 })
             }
             </div>
-            <a className="carousel-control-prev" href="#trips" role="button" data-slide="prev">
+            <a id="carousel-controller" className="carousel-control-prev bg-dark" href="#trips" role="button" data-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span className="sr-only">Previous</span>
             </a>
-            <a className="carousel-control-next" href="#trips" role="button" data-slide="next">
+            <a id="carousel-controller" className="carousel-control-next bg-dark" href="#trips" role="button" data-slide="next">
                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
                 <span className="sr-only">Next</span>
             </a>
@@ -39,16 +39,22 @@ const Carousel = ({upcomingTrips}) => {
             #trips {
               width: 100%;
             }
+            #carousel-img {
+                width: 65%;
+            }
+            #carousel-controller {
+                width: 17.5%;
+            }
           `}</style>
         </div>
     )
 }
 
 const CarouselThumbnails = ({upcomingTrips}) => (
-    <div id="carousel_pictures" className="row">
+    <div id="carousel_pictures" className="row mx-auto">
     {
         upcomingTrips.map(trip => (
-            <Link key={trip.id} href='/trips/[trip]' as={`/trips/${trip.id}`}>
+            <Link key={trip.id} href='/events/[event]' as={`/events/${trip.id}`}>
                 <a key={trip.id} className="col-sm" id='tripThumbnail'>
                     <h1 className='h5 text-center'>{trip.tripName}</h1>
                     <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
@@ -70,7 +76,7 @@ const CarouselWithThumbnails = ({upcomingTrips}) => (
         <div className="row mb-4 d-none d-sm-block">
             <Carousel upcomingTrips={upcomingTrips} />
         </div>
-        <h1 className='display-5 my-3 text-center rounded mx-5'>Take a look at our upcoming trips</h1> {/* Need to fix this since it causes problems on smaller screens*/}
+        <h1 className='display-5 my-3 text-center rounded mx-5'>Take a look at our upcoming events</h1> {/* Need to fix this since it causes problems on smaller screens*/}
         <hr className="mx-5" />
         <CarouselThumbnails upcomingTrips={upcomingTrips} />
     </div>   
