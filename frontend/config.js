@@ -1,5 +1,5 @@
 const config = {
-    "logActions": true,
+    "logActions": false,
     "apiDevelopment": "https://localhost:1337",
     "api": "https://api.drexelww.com",
     "development": false

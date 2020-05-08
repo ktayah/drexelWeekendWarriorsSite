@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import Link from 'next/link';
-import authenticate from '../actions/index';
-import logOut from '../actions/index';
+import { authenticate, logOut } from '../redux/actions/authenticate';
 import { connect } from 'react-redux';
 
 class NavbarNavigationLinks extends Component {
@@ -17,8 +16,8 @@ class NavbarNavigationLinks extends Component {
                 <li className={`nav-item ${this.isActive(activePage, 'index') ? 'active' : ''}`}>
                     <Link href='/index'><a className="nav-link">Home</a></Link>
                 </li>
-                <li className={`nav-item ${this.isActive(activePage, 'trips') ? 'active' : ''}`}>
-                    <Link href="/trips"><a className="nav-link">Trips</a></Link>
+                <li className={`nav-item ${this.isActive(activePage, 'events') ? 'active' : ''}`}>
+                    <Link href="/events"><a className="nav-link">Events</a></Link>
                 </li>
                 <li className={`nav-item ${this.isActive(activePage, 'contact') ? 'active' : ''}`}>
                     <Link href="/contact"><a className="nav-link">Contact Us</a></Link>
@@ -54,6 +53,7 @@ class NavbarSocialIcons extends Component {
 
 class NavbarSignInDropdownContent extends Component {
     render() {
+        const { onLogin } = this.props;
         return (
             <div className="dropdown-menu dropdown-menu-both">
                 <div className="px-4 py-3">
@@ -84,15 +84,15 @@ class NavbarSignInDropdownContent extends Component {
                     </div>
                     <br/>
                     <button 
-                        type="submit" 
+                        type="button" 
                         className="btn btn-primary" 
                         onClick={() => onLogin('user@test.com', 'testpass')}>
                         Sign in
                     </button>
                 </div>
                 <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">New around here? Sign up</a>
-                <a className="dropdown-item" href="#">Forgot password?</a>
+                <a className="dropdown-item">New around here? Sign up</a>
+                <a className="dropdown-item">Forgot password?</a>
             </div>
         )
     }
@@ -100,6 +100,7 @@ class NavbarSignInDropdownContent extends Component {
 
 class NavbarSignInDropdown extends Component {
     render() {
+        const { onLogin, onLogout } = this.props;
         return (
             <form className="form-inline my-1 my-lg-0">
                 <div className="dropdown">
@@ -109,7 +110,7 @@ class NavbarSignInDropdown extends Component {
                         type="button">
                         Sign in
                     </button>
-                    <NavbarSignInDropdownContent />
+                    <NavbarSignInDropdownContent onLogin={onLogin} onLogout={onLogout} />
                 </div>
             </form>
         )
@@ -117,17 +118,12 @@ class NavbarSignInDropdown extends Component {
 }
 
 class Navbar extends Component {
-    static async getInitialProps({store, isServer, pathname, query}) {
-        // Remaining dead code for redux expansion in next milestone
-        // ('Navbar Store', store);
-        // store.dispatch(authenticate('user@test.com', 'testpass'));
-        // return { store: store, title: title }
-    }
     render() {
+        const { title, activePage, onLogin, onLogout } = this.props;
         return (
             <div>
                 <nav className="navbar navbar-expand-md navbar-light bg-light">
-                    <Link href="/index"><a className="navbar-brand">{this.props.title}</a></Link>
+                    <Link href="/index"><a className="navbar-brand">{title}</a></Link>
                     <button 
                         className="navbar-toggler" 
                         type="button" 
@@ -140,9 +136,10 @@ class Navbar extends Component {
                     </button>
     
                     <div className="collapse navbar-collapse" id="navbarToggler">
-                        <NavbarNavigationLinks activePage={this.props.activePage} />
+                        <NavbarNavigationLinks activePage={activePage} />
                         <NavbarSocialIcons />
-                        {/* <NavbarSignInDropdown /> */}
+                        {/* Add NavBarSignIn later */}
+                        {/* <NavbarSignInDropdown onLogin={onLogin} onLogout={onLogout}/> */}
                     </div>
                 </nav>
             </div>
@@ -150,18 +147,13 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
-// Remaining dead code for redux expansion in next milestone
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         onLogin: (userName, password) => dispatch(authenticate(userName, password)),
-//         onLogout: () => dispatch(logOut())
-//     };
-// }
+const mapDispatchToProps = dispatch => ({
+    onLogin: (userName, password) => dispatch(authenticate(userName, password)),
+    onLogout: () => dispatch(logOut())
+});
 
-// const mapStateToProps = state => {
-//     console.log('Index mapStateToProps', state);
-//     return {...state};
-// }
+const mapStateToProps = state => {
+    return {...state};
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

@@ -16,9 +16,9 @@ const onlineTicketSalesPrompt = ticketSales => ticketsExpired(ticketSales) ? 'Ti
 
 const inPersonTicketSalesPrompt = (ticketSales, ticketLocation) => ticketsExpired(ticketSales) ? 'Tickets were sold out!' : `Tickets will be sold in-person at the ${ticketLocation} on ${getDateTime(ticketSales)}`;
 
-const TripCard = ({props}) => (
-    // <Link href="/"> Dynamically link to trip pages, for another Issue
-        <div className="card w-50 m-3" id="tripCard">
+const EventCard = ({props}) => (
+    <Link href="/events/[event]" as={`/events/${props.id}`}>
+        <a className="card w-50 m-3" id="tripCard">
             <img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" />
             <div className="card-body">
                 <h3 className="card-title text-wrap">{props.tripName}</h3>
@@ -39,10 +39,11 @@ const TripCard = ({props}) => (
         <style jsx>{`
             #tripCard {
                 min-width: 18rem;
+                text-decoration: none;
             }
         `}</style>
-        </div>
-    // </Link>
+        </a>
+    </Link>
 );
 
-export default TripCard;
+export default EventCard;

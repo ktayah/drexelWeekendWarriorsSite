@@ -4,4 +4,5 @@ import authenticate from './authenticate';
 const rootReducer = combineReducers({
     authenticate
 });
-export default rootReducer
+
+export default rootReducer;

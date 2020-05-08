@@ -1,4 +1,5 @@
 {
+  "kind": "collectionType",
   "connection": "default",
   "collectionName": "trips",
   "info": {
@@ -16,12 +17,12 @@
   "attributes": {
     "ticketSales": {
       "unique": true,
-      "required": true,
-      "type": "date"
+      "required": false,
+      "type": "datetime"
     },
     "tripDate": {
       "required": true,
-      "type": "date"
+      "type": "datetime"
     },
     "tripName": {
       "type": "string",
@@ -38,10 +39,10 @@
       "required": true
     },
     "users": {
+      "plugin": "users-permissions",
       "collection": "user",
       "via": "trips",
-      "dominant": true,
-      "plugin": "users-permissions"
+      "dominant": true
     },
     "ticketLocation": {
       "default": "Rec Lobby",
@@ -54,9 +55,16 @@
     "ticketLink": {
       "type": "string"
     },
-    "featuredTrip": {
-      "model": "about",
-      "via": "upcomingTrips"
+    "importantDocuments": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
