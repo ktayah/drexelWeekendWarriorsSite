@@ -10,7 +10,10 @@ if (config.logActions)
     middleware.push(logger);
     
 const makeStore = (initialState) => {
-    return createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+    if (config.development) {
+        return createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+    }
+    return createStore(rootReducer, initialState, applyMiddleware(...middleware));
 }
  
 export default makeStore;
