@@ -3,11 +3,11 @@ import config from '../config';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
-const Carousel = ({upcomingTrips}) => {
-    const indicatorRows = [];
-    for (let i = 0; i < 3; i++) {
-        indicatorRows.push(<li key={i} data-target="#trips" data-slide-to={i} className={i == 0 ? "active" : ""}/>);
-    }
+const CarouselSlider = ({upcomingTrips}) => {
+
+    const indicatorRows = upcomingTrips.map((trip, i) => (
+        <li key={trip.id} data-target="#trips" data-slide-to={i} className={i == 0 ? "active" : ""}/>
+    ));
 
     return (
         <div id="trips" className="carousel slide" data-interval="4000" data-ride="carousel">
@@ -50,36 +50,35 @@ const Carousel = ({upcomingTrips}) => {
     )
 }
 
-const CarouselThumbnails = ({upcomingTrips}) => (
-    <div id="carousel_pictures" className="row mx-auto">
-    {
-        upcomingTrips.map(trip => (
-            <Link key={trip.id} href='/events/[event]' as={`/events/${trip.id}`}>
-                <a key={trip.id} className="col-sm" id='tripThumbnail'>
-                    <h1 className='h5 text-center'>{trip.tripName}</h1>
-                    <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
-                    <p className="text-center p-3">{trip.tripDescription}</p>
-                </a>
-            </Link>
-        ))
-    }
-    <style jsx>{`
-            #tripThumbnail {
-                text-decoration: none;
-            }
-          `}</style>
+// Unused code, commented out for safe keeping
+// const CarouselThumbnails = ({upcomingTrips}) => (
+//     <div id="carousel_pictures" className="row mx-auto">
+//     {
+//         upcomingTrips.map(trip => (
+//             <Link key={trip.id} href='/events/[event]' as={`/events/${trip.id}`}>
+//                 <a key={trip.id} className="col-sm" id='tripThumbnail'>
+//                     <h1 className='h5 text-center'>{trip.tripName}</h1>
+//                     <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
+//                     <p className="text-center p-3">{trip.tripDescription}</p>
+//                 </a>
+//             </Link>
+//         ))
+//     }
+//     <style jsx>{`
+//             #tripThumbnail {
+//                 text-decoration: none;
+//             }
+//           `}</style>
+//     </div>
+// )
+
+/* <h1 className='display-5 my-3 text-center rounded mx-5'>Take a look at our upcoming events</h1> Need to fix this since it causes problems on smaller screens */
+/* <hr className="mx-5" /> */
+/* <CarouselThumbnails upcomingTrips={upcomingTrips} /> */
+const Carousel = ({upcomingTrips}) => (
+    <div className="row mb-4 d-none d-sm-block">
+        <CarouselSlider upcomingTrips={upcomingTrips} />
     </div>
-)
+);
 
-const CarouselWithThumbnails = ({upcomingTrips}) => (
-    <div>
-        <div className="row mb-4 d-none d-sm-block">
-            <Carousel upcomingTrips={upcomingTrips} />
-        </div>
-        <h1 className='display-5 my-3 text-center rounded mx-5'>Take a look at our upcoming events</h1> {/* Need to fix this since it causes problems on smaller screens*/}
-        <hr className="mx-5" />
-        <CarouselThumbnails upcomingTrips={upcomingTrips} />
-    </div>   
-)
-
-export default CarouselWithThumbnails;
+export default Carousel;

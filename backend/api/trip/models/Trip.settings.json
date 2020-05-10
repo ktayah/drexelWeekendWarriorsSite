@@ -28,10 +28,6 @@
       "type": "string",
       "required": true
     },
-    "tripDescription": {
-      "required": true,
-      "type": "text"
-    },
     "tripPhoto": {
       "model": "file",
       "via": "related",
@@ -50,10 +46,12 @@
     },
     "isOnlineSale": {
       "required": true,
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "ticketLink": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "importantDocuments": {
       "collection": "file",
@@ -64,6 +62,15 @@
         "videos"
       ],
       "plugin": "upload",
+      "required": false
+    },
+    "tripDescription": {
+      "type": "richtext",
+      "required": true
+    },
+    "isOnlineEvent": {
+      "type": "boolean",
+      "default": false,
       "required": false
     }
   }
