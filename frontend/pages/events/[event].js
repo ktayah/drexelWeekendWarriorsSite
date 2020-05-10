@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import axios from 'axios';
 import moment from 'moment';
+import ReactMarkdown from 'react-markdown';
 import config from '../../config';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
@@ -19,7 +20,6 @@ const Event = ({eventData}) => {
         <Layout activePage='events'>
             <br />
             <div className='container'>
-                {console.log(eventData)}
                 <div className='row'>
                     <div className='col'>
                         <img className='img-fluid' src={`${apiUrl + tripPhoto.url}`} alt='trip image cap' />
@@ -33,7 +33,7 @@ const Event = ({eventData}) => {
                             {getDateTime(ticketSales)}
                             </>
                         }</p>
-                        <p>{tripDescription}</p>
+                        <ReactMarkdown source={tripDescription} />
                     </div>
                 </div>
                 <br />

@@ -1,6 +1,7 @@
 import config from '../config';
 import Link from 'next/link';
 import moment from 'moment';
+import ReactMarkdown from 'react-markdown';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
@@ -29,7 +30,7 @@ const EventCard = ({props}) => (
             <h3 className="card-title text-wrap">{props.tripName}</h3>
             <span className="card-text small">{props.tripLocation} {getDateTime(props.tripDate)}</span>
             <hr className="display-4" /> 
-            <p className="card-text pt-2">{props.tripDescription}</p>
+            <p className="card-text pt-2"><ReactMarkdown source={props.tripDescription} /></p>
         </div>
         <div className="card-footer">
             {props.isOnlineSale ? (
