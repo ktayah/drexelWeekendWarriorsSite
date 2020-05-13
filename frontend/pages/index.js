@@ -1,9 +1,10 @@
 import Layout from '../components/Layout';
 import React from 'react';
-import CarouselWithThumbnails from '../components/Carousel';
-import config from '../config';
 import axios from 'axios';
+import CarouselWithThumbnails from '../components/Carousel';
 import Announcment from '../components/Announcment';
+import config from '../config';
+import { orderEventsByTripDate } from '../utils/tripUtils';
 
 const getAboutUs = async () => {
 	const apiUrl = config.development ? config.apiDevelopment : config.api;
@@ -11,12 +12,12 @@ const getAboutUs = async () => {
 	return res.data;
 }
 
-const Index = ({upcomingTrips, aboutUs, announcementMessage, announcementLink}) => (
+const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink}) => (
 	<Layout activePage='index'>
 		{announcementMessage && 
 			<Announcment announcementMessage={announcementMessage} announcementLink={announcementLink} />
 		}
-		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingTrips}/>
+		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingEvents}/>
 		<div className='container'>
 			<hr className='my-4' />
 			<h1 className='display-5 text-center'>About Us</h1>
@@ -39,10 +40,11 @@ const Index = ({upcomingTrips, aboutUs, announcementMessage, announcementLink}) 
 
 Index.getInitialProps = async ({store, isServer, pathname, query}) => {
 	const { clubDescription, upcomingTrips, announcementMessage, announcementLink} = await getAboutUs();
+	const orderedEvents = orderEventsByTripDate(upcomingTrips);
 	return {
 		...store.getState(),
 		aboutUs: clubDescription,
-		upcomingTrips,
+		upcomingEvents: orderedEvents,
 		announcementMessage,
 		announcementLink
     }

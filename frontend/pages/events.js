@@ -1,16 +1,13 @@
 import Layout from '../components/Layout';
 import EventList from '../components/EventsList';
 import config from '../config';
+import { orderEventsByTripDate } from '../utils/tripUtils';
 import axios from 'axios';
 
 const getEvents = async () => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
 	const res = await axios.get(`${apiUrl}/trips`);
-	const orderedEvents = res.data.sort((eventA, eventB) => {
-		const dateA = new Date(eventA.tripDate).getTime();
-		const dateB = new Date(eventB.tripDate).getTime();
-		return dateA - dateB;
-	});
+	const orderedEvents = orderEventsByTripDate(res.data);
 	return orderedEvents;
 }
 
