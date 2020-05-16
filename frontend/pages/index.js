@@ -1,7 +1,7 @@
 import Layout from '../components/Layout';
 import React from 'react';
 import axios from 'axios';
-import CarouselWithThumbnails from '../components/Carousel';
+import Carousel from '../components/Carousel';
 import Announcment from '../components/Announcment';
 import config from '../config';
 import { orderEventsByTripDate } from '../utils/tripUtils';
@@ -17,7 +17,7 @@ const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink})
 		{announcementMessage && 
 			<Announcment announcementMessage={announcementMessage} announcementLink={announcementLink} />
 		}
-		<CarouselWithThumbnails id="carousel" upcomingTrips={upcomingEvents}/>
+		<Carousel id="carousel" upcomingTrips={upcomingEvents}/>
 		<div className='container'>
 			<hr className='my-4' />
 			<h1 className='display-5 text-center'>About Us</h1>

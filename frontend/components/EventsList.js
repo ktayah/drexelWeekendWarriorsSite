@@ -17,7 +17,7 @@ const EventCards = ({events}) => (
 );
 
 const EventsList = ({events}) => (
-    <div className="trips mb-4">
+    <div className="mb-4">
         {events.length > 0 ? (
             <EventCards events={events} />
         ) : (

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import config from '../config';
 import { useMediaQuery } from 'react-responsive';
+import ReactMarkdown from 'react-markdown';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
@@ -52,32 +53,46 @@ const CarouselSlider = ({upcomingTrips}) => {
 }
 
 const CarouselThumbnails = ({upcomingTrips}) => (
-    <div id="carousel_pictures" className="row mx-4">
+    <div id="carousel_pictures" className="row mx-5">
+    {/** Adapt below to a card element to provide even displaying */}
     {
-        upcomingTrips.map(trip => (
-            <Link key={trip.id} href='/events/[event]' as={`/events/${trip.id}`}>
-                <a key={trip.id} className="col-sm" id='tripThumbnail'>
-                    {/** Adapt below to a card element to provide even displaying */}
-                    <h1 className='h5 text-center'>{trip.tripName}</h1>
-                    <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} width="100%"/>
-                    <p className="text-center p-3">{trip.tripDescription}</p>
-                </a>
-            </Link>
-        ))
+        upcomingTrips.map(trip =>
+            <div className="eventThumbnail">
+                <Link key={trip.id} href='/events/[event]' as={`/events/${trip.id}`}>
+                    <a key={trip.id} className="col-sm mx-auto">
+                        <h1 className='h3 text-center'>{trip.tripName}</h1>
+                        <img src={`${apiUrl + trip.tripPhoto.url}`} alt={trip.tripName} />
+                    </a>
+                </Link>
+                <div className="m-4">
+                    <ReactMarkdown id="description" classname="text-center" source={trip.tripDescription} />
+                </div>
+            </div>
+        )
     }
     <style jsx>{`
-            #tripThumbnail {
+            .eventThumbnail {
                 text-decoration: none;
+                width: inherit;
+                right: 4%;
+                padding-left: 4%;
+                padding-right: 4%;
             }
-          `}</style>
+            img {
+                width: inherit;
+            }
+            #description {
+                font-size: medium;
+            }
+        `}</style>
     </div>
 )
 
 const Carousel = ({upcomingTrips}) => {
-    const isDesktopOrLaptop = useMediaQuery({query: '(min-device-width: 1224px)'});
-    const isMobileOrTablet = useMediaQuery({query: '(max-device-width: 1224px)'});
+    const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'});
+    const isMobileOrTablet = useMediaQuery({query: '(max-width: 1224px)'});
     return (
-        <div className="row mb-4 d-none d-sm-block">
+        <div className="row mb-4 d-sm-block">
             {isDesktopOrLaptop && 
                 <CarouselSlider upcomingTrips={upcomingTrips} />
             }
