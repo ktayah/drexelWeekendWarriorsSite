@@ -9,9 +9,13 @@ const NoEventsScreen = () => (
 const EventCards = ({events}) => (
     <center>
         <div className='card-deck'>
-            {events.map(event => 
-                <EventCard props={event} key={event.id} />
-            )}
+            <div className='row row-cols-1 row row-cols-2'>
+                {events.map(event => 
+                    <div className='col mb-3'>
+                        <EventCard props={event} key={event.id} />
+                    </div>
+                )}
+            </div>
         </div>
     </center>
 );

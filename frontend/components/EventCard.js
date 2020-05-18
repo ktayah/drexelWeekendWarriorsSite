@@ -1,6 +1,7 @@
 import config from '../config';
 import Link from 'next/link';
 import moment from 'moment';
+import ShowMore from 'react-show-more';
 import ReactMarkdown from 'react-markdown';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
@@ -22,7 +23,7 @@ const onlineEventPrompt = (tripDate, ticketLink) => moment() > moment(tripDate).
     : 'Zoom link will be posted 24 hours before event';
 
 const EventCard = ({props}) => (
-    <div className="card w-50 m-3" id="tripCard">
+    <div className="card h-100" id="tripCard">
         <Link href="/events/[event]" as={`/events/${props.id}`}>
             <a><img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" /></a>
         </Link>
@@ -33,23 +34,23 @@ const EventCard = ({props}) => (
             <p className="card-text pt-2"><ReactMarkdown source={props.tripDescription} /></p>
         </div>
         <div className="card-footer">
-            {props.isOnlineSale ? (
+            {/* {props.isOnlineSale ? (
                 <p className="card-text">{onlineTicketSalesPrompt(props.ticketSales)}</p>
             ): props.ticketSales && (
                 <p className="card-text">{inPersonTicketSalesPrompt(props.ticketSales, props.ticketLocation)}</p>
-            )}
-            {props.ticketLink && ticketsAvailable(props.ticketSales) && (
+            )} */}
+            {/* {props.ticketLink && ticketsAvailable(props.ticketSales) && (
                 <a href={props.ticketLink}>Click here to buy a ticket</a>
-            )}
-            {props.isOnlineEvent && 
+            )} */}
+            {props.isOnlineEvent && props.ticketLink && 
                 // <p className="card-text">{onlineEventPrompt(props.tripDate, props.ticketLink)}</p>
                 <p className='card-text'>Registration link: <a href={props.ticketLink}>{props.ticketLink}</a></p>
             }
         </div>
+        {/**min-width might not be neccassary */}
         <style jsx>{`
             #tripCard {
                 min-width: 18rem;
-                text-decoration: none;
             }
         `}</style>
     </div>
