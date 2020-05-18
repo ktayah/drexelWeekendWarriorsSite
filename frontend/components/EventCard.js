@@ -42,7 +42,8 @@ const EventCard = ({props}) => (
                 <a href={props.ticketLink}>Click here to buy a ticket</a>
             )}
             {props.isOnlineEvent && 
-                <p className="card-text">{onlineEventPrompt(props.tripDate, props.ticketLink)}</p>
+                // <p className="card-text">{onlineEventPrompt(props.tripDate, props.ticketLink)}</p>
+                <p className='card-text'>Registration link: <a href={props.ticketLink}>{props.ticketLink}</a></p>
             }
         </div>
         <style jsx>{`

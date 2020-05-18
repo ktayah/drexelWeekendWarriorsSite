@@ -15,7 +15,7 @@ const getEventData = async (eventId) => {
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
 const Event = ({eventData}) => {
-    const { tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = eventData;
+    const { tripName, tripDescription, ticketLink, tripDate, ticketSales, importantDocuments, tripPhoto, isOnlineEvent } = eventData;
     return(
         <Layout activePage='events'>
             <br />
@@ -29,10 +29,13 @@ const Event = ({eventData}) => {
                         <p>{getDateTime(tripDate)}</p>
                         <p>{ticketSales && 
                             <>
-                            <span>Ticket sales: </span> 
-                            {getDateTime(ticketSales)}
+                                <span>Ticket sales: </span> 
+                                {getDateTime(ticketSales)}
                             </>
                         }</p>
+                        {isOnlineEvent && ticketLink && 
+                            <p>Registration link: <a href={ticketLink}>{ticketLink}</a></p>
+                        }
                         <ReactMarkdown source={tripDescription} />
                     </div>
                 </div>
