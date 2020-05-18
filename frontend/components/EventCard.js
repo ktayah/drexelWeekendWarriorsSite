@@ -1,7 +1,6 @@
 import config from '../config';
 import Link from 'next/link';
 import moment from 'moment';
-import ShowMore from 'react-show-more';
 import ReactMarkdown from 'react-markdown';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
