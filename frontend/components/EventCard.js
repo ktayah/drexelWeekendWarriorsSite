@@ -22,7 +22,7 @@ const onlineEventPrompt = (tripDate, ticketLink) => moment() > moment(tripDate).
     : 'Zoom link will be posted 24 hours before event';
 
 const EventCard = ({props}) => (
-    <div className="card h-100" id="tripCard">
+    <div className="card h-100 w-100" id="tripCard">
         <Link href="/events/[event]" as={`/events/${props.id}`}>
             <a><img className="card-img-top" src={`${apiUrl + props.tripPhoto.url}`} alt="trip image cap" /></a>
         </Link>
@@ -46,12 +46,6 @@ const EventCard = ({props}) => (
                 <p className='card-text'>Registration link: <a href={props.ticketLink}>{props.ticketLink}</a></p>
             }
         </div>
-        {/**min-width might not be neccassary */}
-        <style jsx>{`
-            #tripCard {
-                min-width: 18rem;
-            }
-        `}</style>
     </div>
 );
 
