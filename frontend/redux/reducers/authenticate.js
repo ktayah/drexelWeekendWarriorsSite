@@ -1,7 +1,8 @@
 const initialState = {
     loading: false,
     error: null,
-    userData: null
+    jwt: null,
+    user: null
 }
 
 const authenticate = (state = initialState, action) => {
@@ -16,7 +17,8 @@ const authenticate = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: null,
-                userData: action.payload
+                jwt: action.payload.jwt,
+                user: action.payload.user
             };
         case 'AUTHENTICATE_ERROR':
             return {
@@ -24,12 +26,8 @@ const authenticate = (state = initialState, action) => {
                 loading: false,
                 error: action.payload.error
             };
-        case 'LOGOUT_SUCCESS':
-            return {
-                ...state,
-                loading: false,
-                userData: null
-            }
+        case 'LOGOUT':
+            return initialState;
         default:
             return state;
     }

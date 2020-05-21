@@ -1,12 +1,10 @@
 import axios from 'axios';
 import config from '../../config';
 
-export const logOut = () => {
-    // Add Log out code
-    return {
+export const logOut = () => dispatch =>
+    dispatch({
         type: 'LOGOUT'
-    }
-}
+    });
 
 export const authenticate = (userName, password) => dispatch => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
 import axios from 'axios';
 import moment from 'moment';
@@ -53,6 +54,11 @@ const Event = ({eventData}) => {
                             <div></div>               
                         }
                     </div>
+                    <div className='col'>
+                        {(userPrivilege === 'leader' || userPrivilege === 'admin') && <div>
+                            Leader Stuff
+                        </div>}
+                    </div>
                 </div>
             </div>
         </Layout>
@@ -66,4 +72,8 @@ Event.getInitialProps = async ({query}) => {
     }
 }
 
-export default Event;
+const mapStateToProps = state => ({
+    userPrivilege: state.authenticate.user?.role.type
+});
+
+export default connect(mapStateToProps)(Event);
