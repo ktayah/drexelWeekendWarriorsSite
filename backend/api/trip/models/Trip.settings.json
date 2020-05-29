@@ -72,6 +72,10 @@
       "type": "boolean",
       "default": false,
       "required": false
+    },
+    "forms": {
+      "via": "trip",
+      "collection": "form"
     }
   }
 }
