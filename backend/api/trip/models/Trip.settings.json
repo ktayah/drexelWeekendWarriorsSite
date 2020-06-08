@@ -73,7 +73,7 @@
       "default": false,
       "required": false
     },
-    "forms": {
+    "participantForms": {
       "via": "trip",
       "collection": "form"
     }

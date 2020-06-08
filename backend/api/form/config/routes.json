@@ -47,6 +47,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/forms/getFormToken",
+      "handler": "Form.getFormToken",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/forms/checkFormToken",
+      "handler": "Form.checkFormToken",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

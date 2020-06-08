@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_forms_trip_participant_medical_infos",
+  "info": {
+    "name": "Trip Participant Medical Info",
+    "icon": "ambulance"
+  },
+  "options": {},
+  "attributes": {
+    "insuranceNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "preexistingConditions": {
+      "type": "json"
+    },
+    "prexistingConditionsElaborate": {
+      "type": "string"
+    },
+    "epiPen": {
+      "type": "boolean"
+    },
+    "medication": {
+      "type": "string"
+    },
+    "medicationAllergic": {
+      "type": "string"
+    },
+    "medicationOther": {
+      "type": "string"
+    }
+  }
+}

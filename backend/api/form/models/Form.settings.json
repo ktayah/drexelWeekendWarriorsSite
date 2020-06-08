@@ -17,11 +17,31 @@
   "attributes": {
     "trip": {
       "model": "trip",
-      "via": "forms"
+      "via": "participantForms"
     },
-    "user": {
+    "tripLeaders": {
       "plugin": "users-permissions",
-      "model": "user"
+      "collection": "user",
+      "via": "participantForms",
+      "dominant": true
+    },
+    "participantInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "forms.trip-participant-info",
+      "required": true
+    },
+    "participantMedicalInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "forms.trip-participant-medical-info",
+      "required": true
+    },
+    "hashCode": {
+      "type": "string",
+      "private": true,
+      "required": true,
+      "default": "hashCode"
     }
   }
 }

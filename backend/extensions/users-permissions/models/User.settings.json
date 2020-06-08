@@ -78,6 +78,10 @@
     "trips": {
       "via": "users",
       "collection": "trip"
+    },
+    "participantForms": {
+      "via": "tripLeaders",
+      "collection": "form"
     }
   }
 }

@@ -1,0 +1,61 @@
+{
+  "collectionName": "components_forms_trip_participant_infos",
+  "info": {
+    "name": "Trip Participant Info",
+    "icon": "address-card"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "emergencyContactName": {
+      "type": "string",
+      "required": true
+    },
+    "emergencyContactNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "firstTrip": {
+      "type": "boolean"
+    },
+    "firstActivity": {
+      "type": "boolean"
+    },
+    "class": {
+      "type": "enumeration",
+      "enum": [
+        "freshman",
+        "sophomore",
+        "preJunior",
+        "junior",
+        "senior",
+        "graduateStudent"
+      ]
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "male",
+        "female",
+        "other"
+      ]
+    },
+    "internationalStudent": {
+      "type": "boolean"
+    },
+    "howYouFoundUs": {
+      "type": "json"
+    }
+  }
+}
