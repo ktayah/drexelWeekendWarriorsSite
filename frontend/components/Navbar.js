@@ -48,7 +48,6 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
     const [emailAddress, setEmailAddress] = useState(null);
     const [password, setPassword] = useState(null);
     const login = useCallback(() => {
-        console.log(emailAddress, password);
         if (emailAddress && password) {
             onLogin(emailAddress, password);
         }
