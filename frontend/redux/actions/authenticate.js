@@ -1,9 +1,15 @@
 import axios from 'axios';
+import {
+    AUTHENTICATE_STARTED,
+    AUTHENTICATE_SUCCESS,
+    AUTHENTICATE_ERROR,
+    LOGOUT
+} from '../types/authenticate'; 
 import config from '../../config';
 
 export const logOut = () => dispatch =>
     dispatch({
-        type: 'LOGOUT'
+        type: LOGOUT
     });
 
 export const authenticate = (userName, password) => dispatch => {
@@ -23,13 +29,13 @@ export const authenticate = (userName, password) => dispatch => {
 
 const authenticateStarted = () => {
     return {
-        type: "AUTHENTICATE_STARTED"
+        type: AUTHENTICATE_STARTED
     }
 };
 
 const authenticateSuccess = (userData) => {
     return {
-        type: "AUTHENTICATE_SUCCESS",
+        type: AUTHENTICATE_SUCCESS,
         payload: {
             ...userData
         }
@@ -38,7 +44,7 @@ const authenticateSuccess = (userData) => {
 
 const authenticateError = (error) => {
     return {
-        type: "AUTHENTICATE_ERROR",
+        type: AUTHENTICATE_ERROR,
         payload: {
             error
         }
