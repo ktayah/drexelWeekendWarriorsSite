@@ -15,8 +15,9 @@ const getEventData = async (eventId) => {
 
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
-const Event = ({eventData}) => {
-    const { tripName, tripDescription, ticketLink, tripDate, ticketSales, importantDocuments, tripPhoto, isOnlineEvent } = eventData;
+const Event = ({eventData, userPrivilege}) => {
+    const { tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = eventData;
+    console.log(userPrivilege);
     return(
         <Layout activePage='events'>
             <br />
