@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useRouter } from 'next/router'
 import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
 import axios from 'axios';
@@ -15,10 +16,33 @@ const getEventData = async (eventId) => {
 
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
-const Event = ({eventData, userPrivilege}) => {
-    const { tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = eventData;
-    console.log(userPrivilege);
-    return(
+const Event = ({eventData, userPrivilege, userName, userJwt}) => {
+    const { id: tripId, tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = eventData;
+    const tripLeaders = eventData.tripLeaders.map(leader => leader.username);
+    const router = useRouter();
+
+    const openForm = useCallback(
+        async (isMultiSignUp) => {
+            try {
+                const formTokenRes = await axios.post(`${apiUrl}/forms/getFormToken`, {
+                    isMultiSignUp,
+                    tripId
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${userJwt}`
+                    }
+                });
+                const formToken = formTokenRes.data.formToken;
+                router.push('/forms/[form]', `/forms/${formToken}`);
+            } catch (err) {
+                console.error(err);
+                return null;
+            }
+        },
+        [tripId, userJwt],
+    )
+
+    return (
         <Layout activePage='events'>
             <br />
             <div className='container'>
@@ -53,9 +77,11 @@ const Event = ({eventData, userPrivilege}) => {
                         }
                     </div>
                     <div className='col'>
-                        {(userPrivilege === 'leader' || userPrivilege === 'admin') && <div>
-                            Leader Stuff
-                        </div>}
+                            {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
+                             <div>
+                                <button className='btn btn-primary' type='button' onClick={() => openForm(false)}>Generate Single Sign Up Form</button>
+                                <button className='btn btn-primary mx-4' type='button' onClick={() => openForm(true)}>Generate Multi-sign Up Form</button>
+                            </div>}
                     </div>
                 </div>
             </div>
@@ -71,7 +97,9 @@ Event.getInitialProps = async ({query}) => {
 }
 
 const mapStateToProps = state => ({
-    userPrivilege: state.authenticate.user?.role.type
+    userPrivilege: state.authenticate.user?.role.type,
+    userName: state.authenticate.user?.username,
+    userJwt: state.authenticate.jwt,
 });
 
 export default connect(mapStateToProps)(Event);
