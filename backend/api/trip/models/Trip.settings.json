@@ -34,7 +34,7 @@
       "plugin": "upload",
       "required": true
     },
-    "leaders": {
+    "tripLeaders": {
       "plugin": "users-permissions",
       "collection": "user",
       "via": "trips",

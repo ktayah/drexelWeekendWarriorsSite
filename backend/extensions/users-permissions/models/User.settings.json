@@ -80,7 +80,7 @@
       "collection": "form"
     },
     "trips": {
-      "via": "leaders",
+      "via": "tripLeaders",
       "collection": "trip"
     }
   }
