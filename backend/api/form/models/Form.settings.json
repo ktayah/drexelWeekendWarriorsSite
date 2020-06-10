@@ -16,8 +16,8 @@
   },
   "attributes": {
     "trip": {
-      "model": "trip",
-      "via": "participantForms"
+      "via": "participantForms",
+      "model": "trip"
     },
     "tripLeaders": {
       "plugin": "users-permissions",

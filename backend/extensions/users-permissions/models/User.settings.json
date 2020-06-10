@@ -75,13 +75,13 @@
       ],
       "type": "enumeration"
     },
-    "trips": {
-      "via": "users",
-      "collection": "trip"
-    },
     "participantForms": {
       "via": "tripLeaders",
       "collection": "form"
+    },
+    "trips": {
+      "via": "leaders",
+      "collection": "trip"
     }
   }
 }

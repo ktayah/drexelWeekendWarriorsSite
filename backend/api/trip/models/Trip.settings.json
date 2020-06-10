@@ -34,7 +34,7 @@
       "plugin": "upload",
       "required": true
     },
-    "users": {
+    "leaders": {
       "plugin": "users-permissions",
       "collection": "user",
       "via": "trips",
@@ -74,8 +74,28 @@
       "required": false
     },
     "participantForms": {
-      "via": "trip",
-      "collection": "form"
+      "collection": "form",
+      "via": "trip"
+    },
+    "tripType": {
+      "type": "enumeration",
+      "enum": [
+        "hiking",
+        "kayaking_canoeing",
+        "cross_country_skiing",
+        "deep_sea_fishing",
+        "horseback_riding",
+        "paintballing",
+        "skiing_snowboarding",
+        "surfing",
+        "waterskiing",
+        "whitewater_rafting",
+        "climbing",
+        "caving",
+        "high_ropes_course",
+        "trail_biking",
+        "mountain_biking"
+      ]
     }
   }
 }
