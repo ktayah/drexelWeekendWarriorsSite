@@ -109,29 +109,28 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
 
 const NavbarSignInDropdown = ({ onLogin, onLogout, authenticate}) => (
     <form className="form-inline my-1 my-lg-0">
-        {console.log(authenticate)}
-            <div className="dropdown">
-                {authenticate.jwt 
-                    ? <div>
-                        <button 
-                            className="btn btn-outline-danger my-2 my-sm-0" 
-                            type="button"
-                            onClick={onLogout}>
-                            Sign Out
-                        </button>
-                    </div> 
-                    : <div>
-                        <button 
-                            className="btn dropdown-toggle btn-outline-success my-2 my-sm-0" 
-                            data-toggle="dropdown" 
-                            type="button">
-                            Sign in
-                        </button>
-                        <NavbarSignInDropdownContent isLoading={authenticate.loading} onLogin={onLogin} onLogout={onLogout} />
-                    </div> 
-                }
-            </div>
-        </form>
+        <div className="dropdown">
+            {authenticate.jwt 
+                ? <div>
+                    <button 
+                        className="btn btn-outline-danger my-2 my-sm-0" 
+                        type="button"
+                        onClick={onLogout}>
+                        Sign Out
+                    </button>
+                </div> 
+                : <div>
+                    <button 
+                        className="btn dropdown-toggle btn-outline-success my-2 my-sm-0" 
+                        data-toggle="dropdown" 
+                        type="button">
+                        Sign in
+                    </button>
+                    <NavbarSignInDropdownContent isLoading={authenticate.loading} onLogin={onLogin} onLogout={onLogout} />
+                </div> 
+            }
+        </div>
+    </form>
 );
 
 const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => (
