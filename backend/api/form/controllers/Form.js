@@ -39,7 +39,6 @@ module.exports = {
 			const cryptr = new Cryptr(process.env.FORM_GENERATE_HASH_TOKEN);
 			const formQuery = await strapi.query('form').findOne({hashCode});
 			const { signUpType } = JSON.parse(cryptr.decrypt(hashCode));
-			console.log(formQuery, signUpType);
 
 			const isValidForm = (signUpType === 'single' && formQuery === null) || signUpType === 'multi';
 			await ctx.send({
@@ -59,7 +58,6 @@ module.exports = {
 		try {
 			const { hashCode } = ctx.request.body;
 			const cryptr = new Cryptr(process.env.FORM_GENERATE_HASH_TOKEN);
-			console.log(hashCode, cryptr.decrypt(hashCode));
 			const { signUpType } = JSON.parse(cryptr.decrypt(hashCode));
       
 			// eslint-disable-next-line no-undef
@@ -73,7 +71,7 @@ module.exports = {
 			const entity = await strapi.services.form.create(ctx.request.body);
 			return sanitizeEntity(entity, { model: strapi.models.form });
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 			await ctx.send({
 				status: 404,
 				err: err
