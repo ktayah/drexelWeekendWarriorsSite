@@ -1,0 +1,83 @@
+{
+    "hiking": {
+        "questions": [{
+            "question": "What is your hiking experience?",
+            "answers": ["This will be my first time", "I’ve hiked a few times before", "I hike regularly", "I’m an expert"]
+        }]
+    },
+    "kayaking_canoeing": {
+        "questions": [{
+            "question": "What is your kayaking/canoeing experience?",
+            "answers": ["This will be my first time", "I’ve done it a few times before", "I do it regularly", "I’m an expert"]
+        }, {
+            "question": "To go on this trip you will need to pass a swim test including swimming 50 yards (2 lengths of Drexel’s pool) without touching the bottom of the pool AND treading water for 1 minute (without touching the bottom). Are you a confident swimmer?",
+            "answers": ["Yes", "No"]
+        }]
+    },
+    "cross_country_skiing": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "deep_sea_fishing": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "horseback_riding": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "paintballing": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "skiing_snowboarding": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "surfing": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "waterskiing": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "whitewater_rafting": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "climbing": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "caving": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "high_ropes_course": {
+        "questions": [{
+            "answers": [""]
+        }]
+    },
+    "trail_biking": {
+        "questions": [{
+            "answers": [""]
+        }]
+
+    },
+    "mountain_biking": {
+        "questions": [{
+            "answers": [""]
+        }]
+    }
+}

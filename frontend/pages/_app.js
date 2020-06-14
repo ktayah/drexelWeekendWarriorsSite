@@ -21,4 +21,8 @@ class MyApp extends App {
     }
 }
 
-export default withReduxCookiePersist(makeStore)(MyApp);
+export default withReduxCookiePersist(makeStore, {
+    persistConfig: {
+        whitelist: [],
+    }
+})(MyApp);

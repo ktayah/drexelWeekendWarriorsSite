@@ -19,7 +19,7 @@ export const authenticate = (userName, password) => async dispatch => {
         const res = await axios.post(`${apiUrl}/auth/local`, {
             identifier: userName,
             password: password
-        }); // Get timeout functionality working
+        });
         dispatch(authenticateSuccess(res.data));
     } catch (err) {
         console.error('Error', err);

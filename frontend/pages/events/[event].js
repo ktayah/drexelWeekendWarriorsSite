@@ -32,7 +32,7 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                         Authorization: `Bearer ${userJwt}`
                     }
                 });
-                const formToken = formTokenRes.data.formToken;
+                const { formToken } = formTokenRes.data;
                 router.push('/forms/[form]', `/forms/${formToken}`);
             } catch (err) {
                 console.error(err);
