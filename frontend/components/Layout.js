@@ -27,7 +27,10 @@ const Layout = ({children, activePage, showNavBar = true}) => (
             <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
             <script noModule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         </Head>
-        {showNavBar && <Navbar title="Weekend Warriors" activePage={activePage}/>}
+        {showNavBar ? 
+            <Navbar title="Weekend Warriors" activePage={activePage}/>
+            : <img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' />
+        }
         <div id="children">
             {children}
         </div>
@@ -35,6 +38,10 @@ const Layout = ({children, activePage, showNavBar = true}) => (
         <style jsx>{`
             #children {
                 min-height: 81.8vh;
+            }
+            img {
+                width: 64px;
+                height: 64px;
             }
         `}</style>
     </main>
