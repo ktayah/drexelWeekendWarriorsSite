@@ -74,8 +74,8 @@
       "required": false
     },
     "participantForms": {
-      "collection": "form",
-      "via": "trip"
+      "via": "trip",
+      "collection": "form"
     },
     "tripType": {
       "type": "enumeration",

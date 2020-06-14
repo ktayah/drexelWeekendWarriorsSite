@@ -75,10 +75,6 @@
       ],
       "type": "enumeration"
     },
-    "participantForms": {
-      "via": "tripLeaders",
-      "collection": "form"
-    },
     "trips": {
       "via": "tripLeaders",
       "collection": "trip"

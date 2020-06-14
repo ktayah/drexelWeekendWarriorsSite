@@ -16,14 +16,8 @@
   },
   "attributes": {
     "trip": {
-      "via": "participantForms",
-      "model": "trip"
-    },
-    "tripLeaders": {
-      "plugin": "users-permissions",
-      "collection": "user",
-      "via": "participantForms",
-      "dominant": true
+      "model": "trip",
+      "via": "participantForms"
     },
     "participantInfo": {
       "type": "component",
@@ -37,7 +31,7 @@
       "component": "forms.trip-participant-medical-info",
       "required": true
     },
-    "hashCode": {
+    "formToken": {
       "type": "string",
       "private": true,
       "required": true,

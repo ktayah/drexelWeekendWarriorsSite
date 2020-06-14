@@ -35,15 +35,17 @@ module.exports = {
 	// POST /checkFormToken
 	checkFormToken: async ctx => {
 		try {
-			const { hashCode } = ctx.request.body;
+			const { formToken } = ctx.request.body;
 			const cryptr = new Cryptr(process.env.FORM_GENERATE_HASH_TOKEN);
-			const formQuery = await strapi.query('form').findOne({hashCode});
-			const { signUpType } = JSON.parse(cryptr.decrypt(hashCode));
+			const formQuery = await strapi.query('form').findOne({formToken});
+			const { signUpType, tripId } = JSON.parse(cryptr.decrypt(formToken));
+			const event = await strapi.query('trip').findOne({id: tripId});
 
 			const isValidForm = (signUpType === 'single' && formQuery === null) || signUpType === 'multi';
 			await ctx.send({
 				status: 200,
-				isValid: isValidForm
+				event,
+				isValid: isValidForm,
 			});
 		} catch(err) {
 			console.error(err);
@@ -56,12 +58,12 @@ module.exports = {
 	// POST /forms
 	create: async ctx => {
 		try {
-			const { hashCode } = ctx.request.body;
+			const { formToken } = ctx.request.body;
 			const cryptr = new Cryptr(process.env.FORM_GENERATE_HASH_TOKEN);
-			const { signUpType } = JSON.parse(cryptr.decrypt(hashCode));
+			const { signUpType } = JSON.parse(cryptr.decrypt(formToken));
       
 			// eslint-disable-next-line no-undef
-			if (signUpType === 'single' && await strapi.query('form').findOne({hashCode})) {
+			if (signUpType === 'single' && await strapi.query('form').findOne({formToken})) {
 				return await ctx.send({
 					status: 401,
 					err: 'Unauthorized request, did not submit form'
