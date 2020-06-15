@@ -13,11 +13,8 @@
     "preexistingConditions": {
       "type": "json"
     },
-    "prexistingConditionsElaborate": {
+    "preexistingConditionsElaborate": {
       "type": "string"
-    },
-    "epiPen": {
-      "type": "boolean"
     },
     "other": {
       "type": "string"
@@ -41,6 +38,13 @@
         "female",
         "intersex",
         "other"
+      ]
+    },
+    "epiPen": {
+      "type": "enumeration",
+      "enum": [
+        "yes",
+        "no"
       ]
     }
   }

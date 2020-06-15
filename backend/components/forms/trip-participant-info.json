@@ -18,16 +18,13 @@
       "type": "integer",
       "required": true
     },
-    "emergencyContactName": {
+    "emergencyName": {
       "type": "string",
       "required": true
     },
-    "emergencyContactNumber": {
+    "emergencyNumber": {
       "type": "integer",
       "required": true
-    },
-    "firstTrip": {
-      "type": "boolean"
     },
     "class": {
       "type": "enumeration",
@@ -50,6 +47,13 @@
     },
     "lastName": {
       "type": "string"
+    },
+    "firstTrip": {
+      "type": "enumeration",
+      "enum": [
+        "yes",
+        "no"
+      ]
     }
   }
 }
