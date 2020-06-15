@@ -22,6 +22,7 @@ const initialFormValues = {
         internationalStudent: false,
         firstTrip: false,
         firstActivity: false,
+        tripRelatedQuestions: [],
         howYouFoundUs: {
             email: false, 
             facebook: false, 
@@ -38,7 +39,7 @@ const initialFormValues = {
         allergies: '',
         sex: '',
         sexElaborate: '',
-        prexisitingConditions: {
+        preexistingConditions: {
             asthma: false,
             brokenBones: false,
             diabetes: false,
@@ -51,18 +52,24 @@ const initialFormValues = {
             stroke: false,
             other: false
         },
-        prexistingConditionsElaborate: '',
+        preexistingConditionsElaborate: '',
         epiPen: false,
         medication: '',
         medicationAllergic: '',
-        other: ''
+        other: '',
+        certified: false,
+        beforeYouPayCertify: false
     },
 }
 
 const validateFunc = values => {
     const errors = {};
     if (values.participantInfo.email !== values.participantInfo.confirmEmail) {
-        errors.email = 'Email\'s do not match';
+        errors.participantInfo.email = 'Email\'s do not match';
+    } else if (!certified) {
+        errors.certified = 'You must check this before submitting';
+    } else if (!beforeYouPayCertify) {
+        errors.beforeYouPayCertify = 'You must check this before submitting';
     }
     return errors;
 }
@@ -78,6 +85,10 @@ const validationSchema = Yup.object({
         emergencyNumber: Yup.number().min(10, 'Not a long enough for a phone number').required('Required'),
         class: Yup.string().required('Required'),
         firstTrip: Yup.string().required('Required'),
+        tripRelatedQuestions: Yup.array().of(Yup.object().shape({
+            question: Yup.string().required('Required'),
+            answer: Yup.string().required('Required')
+        })),
         howYouFoundUs: Yup.object().required('Required').shape({
             email: Yup.boolean(), 
             facebook: Yup.boolean(), 
@@ -111,8 +122,10 @@ const validationSchema = Yup.object({
         epiPen: Yup.boolean().default(false),
         medication: Yup.string(),
         medicationAllergic: Yup.string(),
-        other: Yup.string()
-    })
+        other: Yup.string(),
+        certified: Yup.boolean().required('Required'),
+        beforeYouPayCertify: Yup.boolean().required('Required')
+    }),
 });
 
 const Form = ({formToken, event, isValid, activity = 'INSERT ACTIVITY HERE'}) => {
@@ -136,8 +149,8 @@ const Form = ({formToken, event, isValid, activity = 'INSERT ACTIVITY HERE'}) =>
         <Layout showNavBar={false}>
             {isValid ?
                 <div className='container'>
-                    <div className='jumbotron'>
-                        <h1 className="display-4 text-center">Trip Signup Form</h1>
+                    <div className='jumbotron py-4'>
+                        <h1 className="display-4 text-center h-25">{event.tripName} Signup Form</h1>
                     </div>
                         <Formik
                             initialValues={initialFormValues}
@@ -150,7 +163,7 @@ const Form = ({formToken, event, isValid, activity = 'INSERT ACTIVITY HERE'}) =>
                                     <span className="sr-only">Loading...</span>
                                 </div> : <div>
                                     {console.log(formikProps.values)}
-                                    <ParticipantForm activity={activity} formikProps={formikProps} />
+                                    <ParticipantForm activity={event.tripType} formikProps={formikProps} />
                                     <hr />
                                     <MedicalForm formikProps={formikProps} />
                                     <div className='row mb-4'>
