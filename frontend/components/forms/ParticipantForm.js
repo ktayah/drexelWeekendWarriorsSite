@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import tripSpecificQuestions from './tripSpecificQuestions';
 import { capitalizeFirstLetter } from '../../utils/formUtils';
 import { FieldArray } from 'formik';
@@ -154,25 +154,28 @@ const ParticipantForm = ({activity, formikProps}) => {
                     <div className='row'>
                         {classes.map(studentClass => {
                             const modifiedClass = (studentClass === 'preJunior' && 'Pre-Junior') || studentClass;
+                            const studentClassId = `class-${studentClass}`;
+                            
                             return (
                                 <div className='form-radio form-check d-flex justify-content-center align-items-center mr-2' id='class' key={`class-${studentClass}`}>
                                     <input 
                                         className='form-control form-radio-input' 
                                         type='radio' 
                                         name='participantInfo.class'
-                                        id='radioButton'
-                                        value={modifiedClass} 
+                                        id={studentClassId}
+                                        value={modifiedClass}
+                                        checked={participantInfo.class === studentClass}
                                         onChange={handleChange} 
-                                        onBlur={handleBlur} 
+                                        onBlur={handleBlur}
                                     />
-                                    <label className='form-radio-label ml-1 pt-1' htmlFor='class'>{capitalizeFirstLetter(modifiedClass)}</label>
+                                    <label className='form-radio-label ml-1 pt-1' htmlFor={studentClassId}>{capitalizeFirstLetter(modifiedClass)}</label>
                                 </div>
                             );
                         })}
-                        <small className='form-text text-danger'>
-                            {printError('class')}
-                        </small>
                     </div>
+                    <small className='form-text text-danger'>
+                        {printError('class')}
+                    </small>
                 </div>
             </div>
 
@@ -188,12 +191,13 @@ const ParticipantForm = ({activity, formikProps}) => {
                                     className='form-control form-radio-input'
                                     type='radio' 
                                     name='participantInfo.firstTrip'
-                                    id='radioButton'
-                                    value={option} 
+                                    id={`firstTrip-${option}`}
+                                    value={option}
+                                    checked={participantInfo.firstTrip === option}
                                     onChange={handleChange} 
                                     onBlur={handleBlur} 
                                 />
-                                <label className='form-control-label' htmlFor='firstTrip'>{capitalizeFirstLetter(option)}</label>
+                                <label className='form-control-label' htmlFor={`firstTrip-${option}`}>{capitalizeFirstLetter(option)}</label>
                             </div>
                         )}
                     </div>
@@ -208,7 +212,7 @@ const ParticipantForm = ({activity, formikProps}) => {
             </div>
             {activityRelatedQuestions.map((questionData, questionIndex) => {
                 const { question, answers } = questionData;
-                const questionId = `${activity}SpecificQuestion`;
+                const questionId = `question${questionIndex}`;
                 const questionName = `participantInfo.tripRelatedQuestions[${questionIndex}]`;
                 
                 return (
@@ -222,17 +226,20 @@ const ParticipantForm = ({activity, formikProps}) => {
                                         <label htmlFor={questionId}>{question}</label>
                                     </div>
                                     <div className='row mx-auto'>
-                                        {answers.map(answer => {
+                                        {answers.map((answer, answerIndex) => {
                                             const handleRelatedQuestionChange = () => arrayHelpers.push({question: questionData.question, answer});
-                                            const answerId = `${questionId}-${answer}`;
-
+                                            const answerId = `question${questionIndex}-answer${answerIndex}`;
+                                            const checkedValue = participantInfo.tripRelatedQuestions[questionIndex]
+                                                && participantInfo.tripRelatedQuestions[questionIndex]?.answer === answer;
+                                            
                                             return (
-                                                <div className='form-check d-flex justify-content-center align-items-center mr-2' id={answerId} key={answerId}>
+                                                <div className='form-check d-flex justify-content-center align-items-center mr-2' id='answer' key={answerId}>
                                                     <input 
                                                         className='form-control form-radio-input'
-                                                        type='radio' 
+                                                        type='radio'
                                                         name={questionName}
-                                                        id='radioButton'
+                                                        id={answerId}
+                                                        checked={checkedValue}
                                                         onChange={handleRelatedQuestionChange}
                                                         onBlur={handleBlur} 
                                                     />
@@ -266,6 +273,7 @@ const ParticipantForm = ({activity, formikProps}) => {
                             const text = friendText || capitalizeFirstLetter(wayOfFindUs);
                             const name = `participantInfo.howYouFoundUs.${wayOfFindUs}`;
                             const id = `howYouFoundUs-${wayOfFindUs}`;
+
                             return ( 
                                 <div className='form-control form-checkbox pr-4' id='howYouFoundUs' key={id}>
                                     <input 
@@ -273,6 +281,7 @@ const ParticipantForm = ({activity, formikProps}) => {
                                         type='checkbox'
                                         value={true}
                                         name={name}
+                                        checked={participantInfo.howYouFoundUs[wayOfFindUs]}
                                         id={id}
                                         onChange={handleChange} 
                                         onBlur={handleBlur}
@@ -285,8 +294,8 @@ const ParticipantForm = ({activity, formikProps}) => {
                 </div>
             </div>
             <style jsx>{`
-                #radioButton,
-                #checkboxButton {
+                input[type=radio],
+                input[type=checkbox] {
                     width: 20px;
                 }
             `}</style>

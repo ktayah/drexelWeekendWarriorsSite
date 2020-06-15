@@ -1,11 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router'
+import LoadingOverlay from 'react-loading-overlay';
 import Layout from "../../components/Layout";
 import ParticipantForm from '../../components/forms/ParticipantForm';
 import MedicalForm from '../../components/forms/MedicalForm';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import config from '../../config';
+import Link from 'next/link';
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
@@ -19,23 +22,19 @@ const initialFormValues = {
         emergencyName: '',
         emergencyNumber: '',
         class: '',
-        internationalStudent: false,
-        firstTrip: false,
-        firstActivity: false,
+        firstTrip: '',
         tripRelatedQuestions: [],
         howYouFoundUs: {
             email: false, 
             facebook: false, 
             instagram: false, 
             dragonLink: false, 
-            infonet: false, 
             friend: false, 
-            tripLeader: false, 
             other: false
         }
     },
     medicalInfo: {
-        insuranceNum: '',
+        insuranceNumber: '',
         allergies: '',
         sex: '',
         sexElaborate: '',
@@ -53,7 +52,7 @@ const initialFormValues = {
             other: false
         },
         preexistingConditionsElaborate: '',
-        epiPen: false,
+        epiPen: '',
         medication: '',
         medicationAllergic: '',
         other: '',
@@ -85,7 +84,7 @@ const validationSchema = Yup.object({
         emergencyNumber: Yup.number().min(10, 'Not a long enough for a phone number').required('Required'),
         class: Yup.string().required('Required'),
         firstTrip: Yup.string().required('Required'),
-        tripRelatedQuestions: Yup.array().of(Yup.object().shape({
+        tripRelatedQuestions: Yup.array().required('Required').of(Yup.object().shape({
             question: Yup.string().required('Required'),
             answer: Yup.string().required('Required')
         })),
@@ -101,7 +100,7 @@ const validationSchema = Yup.object({
         })
     }),
     medicalInfo: Yup.object().shape({
-        insuranceNum: Yup.string().required('Required'),
+        insuranceNumber: Yup.string().required('Required'),
         allergies: Yup.string(),
         sex: Yup.string().required('Required'),
         sexElaborate: Yup.string(),
@@ -119,7 +118,7 @@ const validationSchema = Yup.object({
             otherCondition: Yup.boolean().default(false)
         }),
         preexistingConditionsElaborate: Yup.string(),
-        epiPen: Yup.boolean().default(false),
+        epiPen: Yup.string(),
         medication: Yup.string(),
         medicationAllergic: Yup.string(),
         other: Yup.string(),
@@ -128,18 +127,27 @@ const validationSchema = Yup.object({
     }),
 });
 
-const Form = ({formToken, event, isValid, activity = 'INSERT ACTIVITY HERE'}) => {
-    const submitForm = async (values, { setSubmitting }) => {
+const Form = ({formToken, event, isValid}) => {
+    const activity = event.tripType;
+    const router = useRouter();
+    const submitForm = async (values, { setSubmitting, resetForm }) => {
         try {
             setSubmitting(true);
             const apiUrl = config.development ? config.apiDevelopment : config.api;
+            const { certified, beforeYouPayCertify, ...modifiedMedicalInfo } = values.medicalInfo; 
+            const { confirmEmail, ...modifiedParticipantInfo } = values.participantInfo;
             const formData = {
                 formToken,
                 trip: event,
-                ...values
+                participantInfo: modifiedParticipantInfo,
+                medicalInfo: modifiedMedicalInfo
             }
+            console.log(formData);
             await axios.post(`${apiUrl}/forms`, formData);
             setSubmitting(false);
+
+            resetForm();
+            router.push('/forms/[form]', `/forms/${formToken}`);
         } catch (err) {
             console.error(err);
         }
@@ -158,24 +166,30 @@ const Form = ({formToken, event, isValid, activity = 'INSERT ACTIVITY HERE'}) =>
                             validationSchema={validationSchema}
                             onSubmit={submitForm}
                         >
-                            {formikProps => formikProps.isSubmitting ? 
-                                <div className="spinner-border" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div> : <div>
-                                    {console.log(formikProps.values)}
-                                    <ParticipantForm activity={event.tripType} formikProps={formikProps} />
-                                    <hr />
-                                    <MedicalForm formikProps={formikProps} />
-                                    <div className='row mb-4'>
-                                        <button className='btn btn-primary w-50 mx-auto ' type='button'>Submit</button>
+                            {formikProps =>
+                                <LoadingOverlay
+                                    active={formikProps.isSubmitting}
+                                    spinner
+                                    text='Submitting form'
+                                >
+                                    <div>
+                                        <ParticipantForm activity={activity} formikProps={formikProps} />
+                                        <hr />
+                                        <MedicalForm formikProps={formikProps} />
+                                        <div className='row mb-4'>
+                                            <button className='btn btn-primary w-50 mx-auto ' type='button' disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>Submit</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </LoadingOverlay>
                             }
                         </Formik>
                 </div>
                 :
-                <div>
-                    Not valid
+                <div className='container'>
+                    <div className='jumotron py-4 my-5'>
+                        <h1 className='display-4 text-center'>This form link has been submitted</h1>
+                        <p className='lead text-center'>If you think this is an error, please contact Weekend Warriors by email or our website. See <Link href='/'><a>drexelww.com</a></Link> for more information</p>
+                    </div>
                 </div>    
             }
         </Layout>

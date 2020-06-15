@@ -28,17 +28,17 @@ const MedicalForm = ({formikProps}) => {
             <h1 className='display-4'>Medical Info</h1>
             <div className='form-row my-2'>
                 <div className='col form-group'>
-                    <label htmlFor='insuranceNum'>Insurance Policy and Number (If you do not have this information with you, type NA, and be sure to bring it to the pretrip meeting)</label>
+                    <label htmlFor='insuranceNumber'>Insurance Policy and Number (If you do not have this information with you, type NA, and be sure to bring it to the pretrip meeting)</label>
                     <input 
                         type='text'
-                        name='medicalInfo.insuranceNum'
-                        className={validTextInputClassname('insuranceNum')} 
-                        value={medicalInfo.insuranceNum} 
+                        name='medicalInfo.insuranceNumber'
+                        className={validTextInputClassname('insuranceNumber')} 
+                        value={medicalInfo.insuranceNumber} 
                         onChange={handleChange}
                         onBlur={handleBlur}                         
                     />
                     <small className='form-text text-danger'>
-                        {printError('insuranceNum')}
+                        {printError('insuranceNumber')}
                     </small>
                 </div>
             </div>
@@ -54,19 +54,20 @@ const MedicalForm = ({formikProps}) => {
                                 <input 
                                     type='radio'
                                     name='medicalInfo.sex'
-                                    id='radioButton'
+                                    id={`sex-${sex}`}
                                     className='form-control form-radio-input' 
                                     value={sex}
+                                    checked={medicalInfo.sex === sex}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
-                                <label className='form-radio-label ml-1 pt-1' htmlFor='sex'>{formalizeCamelCaseString(sex)}</label>
+                                <label className='form-radio-label ml-1 pt-1' htmlFor={`sex-${sex}`}>{formalizeCamelCaseString(sex)}</label>
                             </div>
                         )}
-                        <small className='form-text text-danger'>
-                            {printError('sex')}
-                        </small>
                     </div>
+                    <small className='form-text text-danger'>
+                        {printError('sex')}
+                    </small>
                 </div>
                 <div className='col form-group'>
                     <div className='row mx-auto'>
@@ -99,6 +100,7 @@ const MedicalForm = ({formikProps}) => {
                                     type='checkbox' 
                                     id={`preexistingConditions-${condition}`}
                                     name={`medicalInfo.preexistingConditions.${condition}`}
+                                    checked={medicalInfo.preexistingConditions.condition}
                                     value={true} 
                                     onChange={handleChange} 
                                     onBlur={handleBlur}
@@ -171,13 +173,15 @@ const MedicalForm = ({formikProps}) => {
                                 <div className='form-radio form-radio-inline mx-1 pr-4' id='epiPen' key={`epiPen-${option}`}>
                                     <input 
                                         className='form-control form-radio-input' 
-                                        type='radio' 
+                                        type='radio'
+                                        id={`epiPen-${option}`}
                                         name='medicalInfo.epiPen'
                                         value={option}
+                                        checked={medicalInfo.epiPen === option}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
-                                    <label className='form-control-label' htmlFor='radioButton'>{capitalizeFirstLetter(option)}</label>
+                                    <label className='form-control-label' htmlFor={`epiPen-${option}`}>{capitalizeFirstLetter(option)}</label>
                                 </div>
                             )}
                             <small className='form-text text-danger'>
@@ -227,9 +231,11 @@ const MedicalForm = ({formikProps}) => {
                     <div className='form-radio form-radio-inline' id='certified'>
                         <input 
                             className='form-radio-input' 
-                            type='checkbox' 
+                            type='checkbox'
+                            id='certified'
                             name='medicalInfo.certified'
                             value={true}
+                            checked={medicalInfo.certified}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
@@ -249,7 +255,9 @@ const MedicalForm = ({formikProps}) => {
                             className='form-radio-input mr-1' 
                             type='checkbox' 
                             name='medicalInfo.beforeYouPayCertify'
+                            id='beforeYouPayCertify'
                             value={true}
+                            checked={medicalInfo.beforeYouPayCertify}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
