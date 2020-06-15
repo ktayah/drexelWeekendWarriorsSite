@@ -34,8 +34,7 @@
     "formToken": {
       "type": "string",
       "private": true,
-      "required": true,
-      "default": "hashCode"
+      "required": true
     }
   }
 }

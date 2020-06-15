@@ -6,7 +6,7 @@
   },
   "options": {},
   "attributes": {
-    "name": {
+    "firstName": {
       "type": "string",
       "required": true
     },
@@ -29,9 +29,6 @@
     "firstTrip": {
       "type": "boolean"
     },
-    "firstActivity": {
-      "type": "boolean"
-    },
     "class": {
       "type": "enumeration",
       "enum": [
@@ -43,19 +40,16 @@
         "graduateStudent"
       ]
     },
-    "gender": {
-      "type": "enumeration",
-      "enum": [
-        "male",
-        "female",
-        "other"
-      ]
-    },
-    "internationalStudent": {
-      "type": "boolean"
-    },
     "howYouFoundUs": {
       "type": "json"
+    },
+    "tripRelatedQuestions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forms.trip-related-question"
+    },
+    "lastName": {
+      "type": "string"
     }
   }
 }

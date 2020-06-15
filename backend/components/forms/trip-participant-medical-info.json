@@ -19,14 +19,29 @@
     "epiPen": {
       "type": "boolean"
     },
-    "medication": {
+    "other": {
       "type": "string"
     },
     "medicationAllergic": {
       "type": "string"
     },
-    "medicationOther": {
+    "medication": {
       "type": "string"
+    },
+    "sexElaborate": {
+      "type": "string"
+    },
+    "allergies": {
+      "type": "string"
+    },
+    "sex": {
+      "type": "enumeration",
+      "enum": [
+        "male",
+        "female",
+        "intersex",
+        "other"
+      ]
     }
   }
 }
