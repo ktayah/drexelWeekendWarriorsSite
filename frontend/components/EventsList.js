@@ -11,8 +11,8 @@ const EventCards = ({events}) => (
         <div className='card-deck'>
             <div className='row row-cols-1 row-cols-md-2'>
                 {events.map(event => 
-                    <div className='col mb-3'>
-                        <EventCard props={event} key={event.id} />
+                    <div className='col mb-3' key={event.id}>
+                        <EventCard props={event} />
                     </div>
                 )}
             </div>
