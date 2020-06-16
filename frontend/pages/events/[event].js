@@ -17,7 +17,7 @@ const getEventData = async (eventId) => {
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
 const Event = ({eventData, userPrivilege, userName, userJwt}) => {
-    const { id: tripId, tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto } = eventData;
+    const { id: tripId, tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto, isOnlineEvent, ticketLink } = eventData;
     const tripLeaders = eventData.tripLeaders.map(leader => leader.username);
     const router = useRouter();
 

@@ -74,8 +74,8 @@
       "required": false
     },
     "participantForms": {
-      "via": "trip",
-      "collection": "form"
+      "collection": "form",
+      "via": "trip"
     },
     "tripType": {
       "type": "enumeration",
@@ -95,7 +95,8 @@
         "high_ropes_course",
         "trail_biking",
         "mountain_biking"
-      ]
+      ],
+      "required": true
     }
   }
 }
