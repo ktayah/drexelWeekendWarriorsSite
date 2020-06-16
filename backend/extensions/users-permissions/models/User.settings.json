@@ -57,10 +57,6 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "forms": {
-      "collection": "form",
-      "via": "user"
-    },
     "phoneNumber": {
       "type": "integer"
     },
@@ -80,7 +76,7 @@
       "type": "enumeration"
     },
     "trips": {
-      "via": "users",
+      "via": "tripLeaders",
       "collection": "trip"
     }
   }

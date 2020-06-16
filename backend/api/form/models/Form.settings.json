@@ -1,4 +1,5 @@
 {
+  "kind": "collectionType",
   "connection": "default",
   "collectionName": "forms",
   "info": {
@@ -15,12 +16,25 @@
   },
   "attributes": {
     "trip": {
-      "model": "trip"
+      "model": "trip",
+      "via": "participantForms"
     },
-    "user": {
-      "model": "user",
-      "via": "forms",
-      "plugin": "users-permissions"
+    "participantInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "forms.trip-participant-info",
+      "required": true
+    },
+    "medicalInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "forms.trip-participant-medical-info",
+      "required": true
+    },
+    "formToken": {
+      "type": "string",
+      "private": true,
+      "required": true
     }
   }
 }

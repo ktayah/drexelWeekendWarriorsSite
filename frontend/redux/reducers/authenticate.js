@@ -1,3 +1,10 @@
+import {
+    AUTHENTICATE_STARTED,
+    AUTHENTICATE_SUCCESS,
+    AUTHENTICATE_ERROR,
+    LOGOUT
+} from '../types/authenticate';
+
 const initialState = {
     loading: false,
     error: null,
@@ -7,12 +14,12 @@ const initialState = {
 
 const authenticate = (state = initialState, action) => {
     switch (action.type) {
-        case 'AUTHENTICATE_STARTED':
+        case AUTHENTICATE_STARTED:
             return {
                 ...state,
                 loading: true
             };
-        case 'AUTHENTICATE_SUCCESS':
+        case AUTHENTICATE_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -20,13 +27,13 @@ const authenticate = (state = initialState, action) => {
                 jwt: action.payload.jwt,
                 user: action.payload.user
             };
-        case 'AUTHENTICATE_ERROR':
+        case AUTHENTICATE_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: action.payload.error
             };
-        case 'LOGOUT':
+        case LOGOUT:
             return initialState;
         default:
             return state;

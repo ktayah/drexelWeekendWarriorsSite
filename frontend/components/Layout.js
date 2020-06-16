@@ -1,11 +1,9 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import Navbar from './Navbar';
 import Footer from './Footer'
-import { connect } from 'react-redux';
-// import { Provider } from 'react-redux';
-// import store from '../store';
 
-const Layout = ({children, activePage}) => (
+const Layout = ({children, activePage, showNavBar = true}) => (
     <main className="d-flex flex-column overflow-hidden h-100">
         <Head>
             <title>Weekend Warriors</title>
@@ -29,7 +27,10 @@ const Layout = ({children, activePage}) => (
             <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
             <script noModule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
         </Head>
-        <Navbar title="Weekend Warriors" activePage={activePage}/>
+        {showNavBar ? 
+            <Navbar title="Weekend Warriors" activePage={activePage}/>
+            : <Link href='/'><a><img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' /></a></Link>
+        }
         <div id="children">
             {children}
         </div>
@@ -37,6 +38,10 @@ const Layout = ({children, activePage}) => (
         <style jsx>{`
             #children {
                 min-height: 81.8vh;
+            }
+            img {
+                width: 64px;
+                height: 64px;
             }
         `}</style>
     </main>

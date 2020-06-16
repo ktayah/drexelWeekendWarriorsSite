@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_forms_trip_related_question_s",
+  "info": {
+    "name": "Trip Related Question ",
+    "icon": "air-freshener"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "answer": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -1,46 +1,46 @@
 import axios from 'axios';
+import {
+    AUTHENTICATE_STARTED,
+    AUTHENTICATE_SUCCESS,
+    AUTHENTICATE_ERROR,
+    LOGOUT
+} from '../types/authenticate'; 
 import config from '../../config';
 
 export const logOut = () => dispatch =>
     dispatch({
-        type: 'LOGOUT'
+        type: LOGOUT
     });
 
-export const authenticate = (userName, password) => dispatch => {
+export const authenticate = (userName, password) => async dispatch => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
-    dispatch(authenticateStarted());
-    axios.post(`${apiUrl}/auth/local`, {
-        identifier: userName,
-        password: password
-    }).then(res => {
-        console.log('Success', res.data);
+    try {
+        dispatch(authenticateStarted());
+        const res = await axios.post(`${apiUrl}/auth/local`, {
+            identifier: userName,
+            password: password
+        });
         dispatch(authenticateSuccess(res.data));
-    }).catch(err => {
-        console.log('Error', err);
+    } catch (err) {
+        console.error('Error', err);
         dispatch(authenticateError(err));
-    });
+    }
 }
 
-const authenticateStarted = () => {
-    return {
-        type: "AUTHENTICATE_STARTED"
-    }
-};
+const authenticateStarted = () => ({
+    type: AUTHENTICATE_STARTED
+});
 
-const authenticateSuccess = (userData) => {
-    return {
-        type: "AUTHENTICATE_SUCCESS",
-        payload: {
-            ...userData
-        }
+const authenticateSuccess = userData => ({
+    type: AUTHENTICATE_SUCCESS,
+    payload: {
+        ...userData
     }
-};
+});
 
-const authenticateError = (error) => {
-    return {
-        type: "AUTHENTICATE_ERROR",
-        payload: {
-            error
-        }
+const authenticateError = error => ({
+    type: AUTHENTICATE_ERROR,
+    payload: {
+        error
     }
-};
+});
