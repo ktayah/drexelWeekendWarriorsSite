@@ -100,7 +100,6 @@ const MedicalForm = ({formikProps}) => {
                                     type='checkbox' 
                                     id={`preexistingConditions-${condition}`}
                                     name={`medicalInfo.preexistingConditions.${condition}`}
-                                    checked={medicalInfo.preexistingConditions.condition}
                                     value={true} 
                                     onChange={handleChange} 
                                     onBlur={handleBlur}
@@ -177,7 +176,6 @@ const MedicalForm = ({formikProps}) => {
                                         id={`epiPen-${option}`}
                                         name='medicalInfo.epiPen'
                                         value={option}
-                                        checked={medicalInfo.epiPen === option}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
@@ -228,14 +226,13 @@ const MedicalForm = ({formikProps}) => {
 
             <div className='form-row'>
                 <div className='col form-group'>
-                    <div className='form-radio form-radio-inline' id='certified'>
+                    <div className='form-radio form-radio-inline'>
                         <input 
                             className='form-radio-input' 
                             type='checkbox'
                             id='certified'
                             name='medicalInfo.certified'
                             value={true}
-                            checked={medicalInfo.certified}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
@@ -249,19 +246,18 @@ const MedicalForm = ({formikProps}) => {
 
             <div className='form-row'>
                 <div className='col form-group'>
-                    <small id='beforeYouPayCertifyHelpBlock' htmlFor='beforeYouPayCertify' className='form-text mx-1 mb-1'>I understand this is an Alcohol/Drug free trip and this trip ticket is not transferable to another person. I understand that I have to Attend one Pre-trip or I will not be authorized to attend the Trip. I understand that the refund policy is 100% refund if notified 7 days before the trip, 50% if notified within 7 days AND a replacement is found. If a refund is issued, it must be claimed within 2 weeks of the request.</small>
-                    <div className='form-radio form-radio-inline my-1' id='beforeYouPayCertify'>
+                    <small className='form-text mx-1 mb-1'>I understand this is an Alcohol/Drug free trip and this trip ticket is not transferable to another person. I understand that I have to Attend one Pre-trip or I will not be authorized to attend the Trip. I understand that the refund policy is 100% refund if notified 7 days before the trip, 50% if notified within 7 days AND a replacement is found. If a refund is issued, it must be claimed within 2 weeks of the request.</small>
+                    <div className='form-radio form-radio-inline my-1'>
                         <input 
-                            className='form-radio-input mr-1' 
+                            className='form-radio-input' 
                             type='checkbox' 
                             name='medicalInfo.beforeYouPayCertify'
                             id='beforeYouPayCertify'
                             value={true}
-                            checked={medicalInfo.beforeYouPayCertify}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        <label className='form-radio-label' htmlFor='beforeYouPayCertify'>Yes, I have read the statement above and understand what is required</label>
+                        <label className='form-radio-label ml-1' htmlFor='beforeYouPayCertify'>Yes, I have read the statement above and understand what is required</label>
                     </div>
                     <small className='form-text text-danger'>
                         {printError('beforeYouPayCertify')}

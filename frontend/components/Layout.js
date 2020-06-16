@@ -1,7 +1,7 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import Navbar from './Navbar';
 import Footer from './Footer'
-
 
 const Layout = ({children, activePage, showNavBar = true}) => (
     <main className="d-flex flex-column overflow-hidden h-100">
@@ -29,7 +29,7 @@ const Layout = ({children, activePage, showNavBar = true}) => (
         </Head>
         {showNavBar ? 
             <Navbar title="Weekend Warriors" activePage={activePage}/>
-            : <img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' />
+            : <Link href='/'><a><img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' /></a></Link>
         }
         <div id="children">
             {children}

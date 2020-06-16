@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import tripSpecificQuestions from './tripSpecificQuestions';
 import { capitalizeFirstLetter } from '../../utils/formUtils';
 import { FieldArray } from 'formik';
@@ -158,13 +158,12 @@ const ParticipantForm = ({activity, formikProps}) => {
                             
                             return (
                                 <div className='form-radio form-check d-flex justify-content-center align-items-center mr-2' id='class' key={`class-${studentClass}`}>
-                                    <input 
+                                    <input
                                         className='form-control form-radio-input' 
                                         type='radio' 
                                         name='participantInfo.class'
                                         id={studentClassId}
                                         value={modifiedClass}
-                                        checked={participantInfo.class === studentClass}
                                         onChange={handleChange} 
                                         onBlur={handleBlur}
                                     />
@@ -193,7 +192,6 @@ const ParticipantForm = ({activity, formikProps}) => {
                                     name='participantInfo.firstTrip'
                                     id={`firstTrip-${option}`}
                                     value={option}
-                                    checked={participantInfo.firstTrip === option}
                                     onChange={handleChange} 
                                     onBlur={handleBlur} 
                                 />
@@ -227,11 +225,9 @@ const ParticipantForm = ({activity, formikProps}) => {
                                     </div>
                                     <div className='row mx-auto'>
                                         {answers.map((answer, answerIndex) => {
-                                            const handleRelatedQuestionChange = () => arrayHelpers.push({question: questionData.question, answer});
+                                            const handleRelatedQuestionChange = () => arrayHelpers.replace(questionIndex, {question: questionData.question, answer});
                                             const answerId = `question${questionIndex}-answer${answerIndex}`;
-                                            const checkedValue = participantInfo.tripRelatedQuestions[questionIndex]
-                                                && participantInfo.tripRelatedQuestions[questionIndex]?.answer === answer;
-                                            
+
                                             return (
                                                 <div className='form-check d-flex justify-content-center align-items-center mr-2' id='answer' key={answerId}>
                                                     <input 
@@ -239,7 +235,6 @@ const ParticipantForm = ({activity, formikProps}) => {
                                                         type='radio'
                                                         name={questionName}
                                                         id={answerId}
-                                                        checked={checkedValue}
                                                         onChange={handleRelatedQuestionChange}
                                                         onBlur={handleBlur} 
                                                     />
@@ -281,7 +276,6 @@ const ParticipantForm = ({activity, formikProps}) => {
                                         type='checkbox'
                                         value={true}
                                         name={name}
-                                        checked={participantInfo.howYouFoundUs[wayOfFindUs]}
                                         id={id}
                                         onChange={handleChange} 
                                         onBlur={handleBlur}

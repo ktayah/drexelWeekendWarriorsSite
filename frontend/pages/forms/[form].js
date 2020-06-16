@@ -79,12 +79,12 @@ const validationSchema = Yup.object({
         lastName: Yup.string().required('Required'),
         email: Yup.string().email('Invalid email address').required('Required'),
         confirmEmail: Yup.string().email('Invalid email address').required('Required'),
-        phoneNumber: Yup.number().min(10, 'Not a long enough for a phone number').required('Required'),
+        phoneNumber: Yup.number().typeError('Must be a valid phone number').min(10, 'Not a long enough for a phone number').required('Required'),
         emergencyName: Yup.string().required('Required'),
-        emergencyNumber: Yup.number().min(10, 'Not a long enough for a phone number').required('Required'),
+        emergencyNumber: Yup.number().typeError('Must be a valid phone number').min(10, 'Not a long enough for a phone number').required('Required'),
         class: Yup.string().required('Required'),
         firstTrip: Yup.string().required('Required'),
-        tripRelatedQuestions: Yup.array().required('Required').of(Yup.object().shape({
+        tripRelatedQuestions: Yup.array().of(Yup.object().shape({
             question: Yup.string().required('Required'),
             answer: Yup.string().required('Required')
         })),
@@ -130,7 +130,8 @@ const validationSchema = Yup.object({
 const Form = ({formToken, event, isValid}) => {
     const activity = event.tripType;
     const router = useRouter();
-    const submitForm = async (values, { setSubmitting, resetForm }) => {
+
+    const submitForm = async (values, { setSubmitting }) => {
         try {
             setSubmitting(true);
             const apiUrl = config.development ? config.apiDevelopment : config.api;
@@ -142,56 +143,63 @@ const Form = ({formToken, event, isValid}) => {
                 participantInfo: modifiedParticipantInfo,
                 medicalInfo: modifiedMedicalInfo
             }
-            console.log(formData);
+            window.scrollTo({ // Scroll to top for user ux
+                top: 0,
+                behavior: "smooth"
+            });
             await axios.post(`${apiUrl}/forms`, formData);
             setSubmitting(false);
-
-            resetForm();
-            router.push('/forms/[form]', `/forms/${formToken}`);
+            router.reload();
         } catch (err) {
             console.error(err);
         }
     };
 
-    return (
-        <Layout showNavBar={false}>
-            {isValid ?
-                <div className='container'>
-                    <div className='jumbotron py-4'>
-                        <h1 className="display-4 text-center h-25">{event.tripName} Signup Form</h1>
-                    </div>
-                        <Formik
-                            initialValues={initialFormValues}
-                            validate={validateFunc}
-                            validationSchema={validationSchema}
-                            onSubmit={submitForm}
-                        >
-                            {formikProps =>
-                                <LoadingOverlay
-                                    active={formikProps.isSubmitting}
-                                    spinner
-                                    text='Submitting form'
-                                >
-                                    <div>
-                                        <ParticipantForm activity={activity} formikProps={formikProps} />
-                                        <hr />
-                                        <MedicalForm formikProps={formikProps} />
-                                        <div className='row mb-4'>
-                                            <button className='btn btn-primary w-50 mx-auto ' type='button' disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>Submit</button>
-                                        </div>
-                                    </div>
-                                </LoadingOverlay>
-                            }
-                        </Formik>
-                </div>
-                :
-                <div className='container'>
-                    <div className='jumotron py-4 my-5'>
-                        <h1 className='display-4 text-center'>This form link has been submitted</h1>
-                        <p className='lead text-center'>If you think this is an error, please contact Weekend Warriors by email or our website. See <Link href='/'><a>drexelww.com</a></Link> for more information</p>
-                    </div>
-                </div>    
+    return (isValid ?
+        <Formik
+            initialValues={initialFormValues}
+            validate={validateFunc}
+            validationSchema={validationSchema}
+            onSubmit={submitForm}
+        >
+            {formikProps =>
+                <LoadingOverlay
+                    active={formikProps.isSubmitting}
+                    spinner
+                    styles={{
+                        content: base => ({
+                            ...base,
+                            margin: ' 25% auto 0% auto',
+                        })
+                    }}
+                    text='Submitting form...'
+                >
+                    <Layout showNavBar={false}>
+                        <div className='container'>
+                            <div className='jumbotron py-4'>
+                                <h1 className="display-4 text-center h-25">{event.tripName} Signup Form</h1>
+                            </div>
+                            <div>
+                                <ParticipantForm activity={activity} formikProps={formikProps} />
+                                <hr />
+                                <MedicalForm formikProps={formikProps} />
+                                <div className='row mb-4'>
+                                    <button className='btn btn-primary w-50 mx-auto ' type='submit' disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </Layout>
+                </LoadingOverlay>
             }
+        </Formik>
+        :
+        <Layout showNavBar={false}>
+            <div className='container'>
+                <div className='jumotron py-4 my-5'>
+                    <h1 className='display-4 text-center'>This form link has been submitted</h1>
+                    <p className='lead text-center'>If you think this is an error, please contact Weekend Warriors by email or our website. See <Link href='/'><a>drexelww.com</a></Link> for more information</p>
+                </div>
+            </div>
         </Layout>
     );
 }
