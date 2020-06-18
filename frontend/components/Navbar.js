@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { authenticate, logOut } from '../redux/actions/authenticate';
 import { connect } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 const NavbarNavigationLinks = ({activePage, navLink}) => {
     const isActive = useCallback((activePage, navLink) => {
@@ -28,7 +30,7 @@ const NavbarNavigationLinks = ({activePage, navLink}) => {
 }
 
 const NavbarSocialIcons = () => (
-        <div className="form-inline py-1 my-lg-0 mr-4">
+    <div className={`form-inline py-1 my-lg-0 ${useMediaQuery({query: '(min-width: 1224px)'}) && 'mr-4'}`}>
         <a href="https://www.facebook.com/DrexelWeekendWarriors">
             <ion-icon name="logo-facebook" size="large" class="img-hover-border rounded" />
         </a>
@@ -54,13 +56,17 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
     }, [emailAddress, password]);
 
     return (
-        <div className="dropdown-menu dropdown-menu-both">
+        <DropdownMenu right>
             <div className="px-4 py-3">
                 {isLoading 
-                    ? <div className="spinner-border" role="status">
-                        <span className="sr-only">Loading...</span>
+                    ?
+                    <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                        </div>
                     </div>
-                    : <> 
+                    : 
+                    <> 
                         <div className="form-group">
                             <label htmlFor="dropdownFormUsername">User Name</label>
                             <input 
@@ -81,7 +87,7 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
                                 onChange={e => setPassword(e.target.value)} 
                             />
                         </div>
-                        <br/>
+                        <br />
                         <div className="form-group">
                             <div className="form-check">
                                 <input type="checkbox" className="form-check-input" id="dropdownCheck" />
@@ -90,51 +96,64 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
                                 </label>
                             </div>
                         </div>
-                        <br/>
-                        <button 
-                            type="button" 
-                            className="btn btn-primary" 
-                            onClick={login}>
-                            Sign in
-                        </button>
+                        <DropdownItem divider />
+                        <div className='form-group'>
+                            <button 
+                                type="button" 
+                                className="btn btn-primary" 
+                                onClick={login}
+                                disabled={isLoading}
+                            >
+                                Sign in
+                            </button>
+                        </div>
                     </>
                 }
             </div>
             <div className="dropdown-divider"></div>
             <a className="dropdown-item">New around here? Sign up</a>
             <a className="dropdown-item">Forgot password?</a>
-        </div>
+        </DropdownMenu>
     );
 }
 
-const NavbarSignInDropdown = ({ onLogin, onLogout, authenticate}) => (
-    <form className="form-inline my-1 my-lg-0">
-        <div className="dropdown">
-            {authenticate.jwt 
-                ? <div>
+const NavbarSignInDropdown = ({ onLogin, onLogout, authenticate}) => {
+    const { loading } = authenticate;
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const toggle = () => setDropdownOpen(prevState => !loading && !prevState);
+    
+    return (
+        <form className="form-inline my-1 my-lg-0">
+            <Dropdown isOpen={dropdownOpen} toggle={toggle} inNavbar={true}>
+                {authenticate.jwt 
+                    ?
                     <button 
                         className="btn btn-outline-danger my-2 my-sm-0" 
                         type="button"
                         onClick={onLogout}>
                         Sign Out
                     </button>
-                </div> 
-                : <div>
-                    <button 
-                        className="btn dropdown-toggle btn-outline-success my-2 my-sm-0" 
-                        data-toggle="dropdown" 
-                        type="button">
-                        Sign in
-                    </button>
-                    <NavbarSignInDropdownContent isLoading={authenticate.loading} onLogin={onLogin} onLogout={onLogout} />
-                </div> 
-            }
-        </div>
-    </form>
-);
+                    : 
+                    <>
+                        <DropdownToggle 
+                            className="btn dropdown-toggle btn-outline-success my-2 my-sm-0" 
+                            disabled={loading}
+                            caret>
+                            Sign In
+                        </DropdownToggle>
+                        <NavbarSignInDropdownContent isLoading={loading} onLogin={onLogin} onLogout={onLogout} />
+                    </>
+                }
+            </Dropdown>
+        </form>
+    );
+}
 
-const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => (
-    <div>
+const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => { 
+    const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'});
+    const isMobileOrTablet = useMediaQuery({query: '(max-width: 1224px)'});
+
+    return (
         <nav className="navbar navbar-expand-md navbar-light bg-light">
             <Link href="/index"><a className="navbar-brand">{title}</a></Link>
             <button 
@@ -148,14 +167,32 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => (
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarToggler">
-                <NavbarNavigationLinks activePage={activePage} />
-                <NavbarSocialIcons />
-                <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout}/>
-            </div>
+            {isDesktopOrLaptop &&
+                <div className="collapse navbar-collapse" id="navbarToggler">
+                    <NavbarNavigationLinks activePage={activePage} />
+                    <NavbarSocialIcons />
+                    <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout}/>
+                </div>
+            }
+
+            {isMobileOrTablet && 
+                <div className="collapse navbar-collapse" id="navbarToggler">
+                    <div className='row'>
+                        <div className='col'>
+                            <NavbarNavigationLinks activePage={activePage} />
+                        </div>
+                        <div className='col'>
+                            <div className='d-flex h-100 flex-column justify-content-end align-items-end'>
+                                <NavbarSocialIcons />
+                                <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </nav>
-    </div>
-);
+    );
+}
 
 const mapDispatchToProps = dispatch => ({
     onLogin: (userName, password) => dispatch(authenticate(userName, password)),

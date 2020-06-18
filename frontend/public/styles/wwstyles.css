@@ -5,15 +5,3 @@
    border-color: black; 
    border-width: 1px;
 }
-@media (min-width: 768px) {
-    .dropdown-menu-both {
-       right: 0;
-       left: auto;
-    }
-}
-@media (max-width: 767px) {
-    .dropdown-menu-both {
-       right: auto;
-       left: 0;
-    }
-}

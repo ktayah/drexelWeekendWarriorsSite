@@ -8,7 +8,6 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk'
 import config from '../config';
 
-
 let store;
 
 const persistConfig = {
