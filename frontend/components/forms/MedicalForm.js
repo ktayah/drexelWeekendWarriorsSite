@@ -28,7 +28,7 @@ const MedicalForm = ({formikProps}) => {
             <h1 className='display-4'>Medical Info</h1>
             <div className='form-row my-2'>
                 <div className='col form-group'>
-                    <label htmlFor='insuranceNumber'>Insurance Policy and Number (If you do not have this information with you, type NA, and be sure to bring it to the pretrip meeting)</label>
+                    <label htmlFor='insuranceNumber'>Insurance Policy and Number (If you do not have this information with you, type NA, and be sure to bring it to the pretrip meeting)<span className='text-danger'>*</span></label>
                     <input 
                         type='text'
                         name='medicalInfo.insuranceNumber'
@@ -46,7 +46,7 @@ const MedicalForm = ({formikProps}) => {
             <div className='form-row my-2'>
                 <div className='col form-group'>
                     <div className='row mx-auto'>
-                        <label htmlFor='sex'>What is your sex?</label>
+                        <label htmlFor='sex'>What is your sex?<span className='text-danger'>*</span></label>
                     </div>
                     <div className='row'>
                         {sexes.map(sex =>
@@ -236,7 +236,7 @@ const MedicalForm = ({formikProps}) => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        <label className='form-radio-label ml-1' htmlFor='certified'>I have filled out this form to the best of my ability</label>
+                        <label className='form-radio-label ml-1' htmlFor='certified'>I have filled out this form to the best of my ability<span className='text-danger'>*</span></label>
                     </div>
                     <small className='form-text text-danger'>
                         {printError('certified')}
@@ -257,7 +257,7 @@ const MedicalForm = ({formikProps}) => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        <label className='form-radio-label ml-1' htmlFor='beforeYouPayCertify'>Yes, I have read the statement above and understand what is required</label>
+                        <label className='form-radio-label ml-1' htmlFor='beforeYouPayCertify'>Yes, I have read the statement above and understand what is required<span className='text-danger'>*</span></label>
                     </div>
                     <small className='form-text text-danger'>
                         {printError('beforeYouPayCertify')}

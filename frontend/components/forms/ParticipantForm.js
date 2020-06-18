@@ -36,7 +36,7 @@ const ParticipantForm = ({activity, formikProps}) => {
             </div>
             <div className='form-row'>
                 <div className='col form-group'>
-                    <label htmlFor='firstName'>First Name</label>
+                    <label htmlFor='firstName'>First Name<span className='text-danger'>*</span></label>
                     <input 
                         type='text' 
                         name='participantInfo.firstName' 
@@ -50,7 +50,7 @@ const ParticipantForm = ({activity, formikProps}) => {
                     </small>
                 </div>
                 <div className='col form-group'>
-                    <label htmlFor='lastName'>Last Name</label>
+                    <label htmlFor='lastName'>Last Name<span className='text-danger'>*</span></label>
                     <input 
                         type='text' 
                         name='participantInfo.lastName'
@@ -67,7 +67,7 @@ const ParticipantForm = ({activity, formikProps}) => {
 
             <div className='form-row'>
                 <div className='col form-group'>
-                    <label htmlFor='email'>Email</label>
+                    <label htmlFor='email'>Email<span className='text-danger'>*</span></label>
                     <input 
                         type='email' 
                         className={validTextInputClassname('email', 'confirmEmail')}
@@ -82,7 +82,7 @@ const ParticipantForm = ({activity, formikProps}) => {
                     </small>
                 </div>
                 <div className='col form-group'>
-                    <label htmlFor='confirmEmail'>Confirm Email</label>
+                    <label htmlFor='confirmEmail'>Confirm Email<span className='text-danger'>*</span></label>
                     <input 
                         type='email' 
                         className={validTextInputClassname('email', 'confirmEmail')} 
@@ -97,7 +97,7 @@ const ParticipantForm = ({activity, formikProps}) => {
 
             <div className='form-row'>
                 <div className='col form-group'>
-                    <label htmlFor='phoneNumber'>Phone Number</label>
+                    <label htmlFor='phoneNumber'>Phone Number<span className='text-danger'>*</span></label>
                     <input 
                         type='text' 
                         name='participantInfo.phoneNumber' 
@@ -114,7 +114,7 @@ const ParticipantForm = ({activity, formikProps}) => {
 
             <div className='form-row'>
                 <div className='col form-group'>
-                    <label htmlFor='emergencyName'>Emergency Contact Name</label>
+                    <label htmlFor='emergencyName'>Emergency Contact Name<span className='text-danger'>*</span></label>
                     <input 
                         type='text' 
                         name='participantInfo.emergencyName' 
@@ -131,7 +131,7 @@ const ParticipantForm = ({activity, formikProps}) => {
                     </small>
                 </div>
                 <div className='col form-group'>
-                    <label htmlFor='emergencyNumber'>Emergency Contact Number</label>
+                    <label htmlFor='emergencyNumber'>Emergency Contact Number<span className='text-danger'>*</span></label>
                     <input 
                         type='text' 
                         name='participantInfo.emergencyNumber' 
@@ -149,7 +149,7 @@ const ParticipantForm = ({activity, formikProps}) => {
             <div className='form-row'>
                 <div className='col form-group'>
                     <div className='row mx-auto'>
-                        <label htmlFor='class'>What year are you?</label>
+                        <label htmlFor='class'>What year are you?<span className='text-danger'>*</span></label>
                     </div>
                     <div className='row'>
                         {classes.map(studentClass => {
@@ -181,7 +181,7 @@ const ParticipantForm = ({activity, formikProps}) => {
             <div className='form-row'>
                 <div className='col form-group'>
                     <div className='row mx-auto'>
-                        <label htmlFor='firstTrip'>Is this your first Weekend Warriors trip?</label>
+                        <label htmlFor='firstTrip'>Is this your first Weekend Warriors trip?<span className='text-danger'>*</span></label>
                     </div>
                     <div className='row mx-auto'>
                         {yesNo.map(option => 
@@ -221,7 +221,7 @@ const ParticipantForm = ({activity, formikProps}) => {
                             <div className='form-row'>
                                 <div className='col form-group'>
                                     <div className='row mx-auto'>
-                                        <label htmlFor={questionId}>{question}</label>
+                                        <label htmlFor={questionId}>{question}<span className='text-danger'>*</span></label>
                                     </div>
                                     <div className='row mx-auto'>
                                         {answers.map((answer, answerIndex) => {
@@ -260,7 +260,7 @@ const ParticipantForm = ({activity, formikProps}) => {
             <div className='form-row'>
                 <div className='col form-group'>
                     <div className='row mx-auto'>
-                        <label htmlFor='howYouFoundUs'>Select all that apply</label>
+                        <label htmlFor='howYouFoundUs'>Select all that apply<span className='text-danger'>*</span></label>
                     </div>
                     <div className='row mx-auto'>
                         {howYouFoundUs.map(wayOfFindUs => {
