@@ -38,11 +38,10 @@ const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink})
 	</Layout>
 );
 
-Index.getInitialProps = async ({store, isServer, pathname, query}) => {
+Index.getInitialProps = async () => {
 	const { clubDescription, upcomingTrips, announcementMessage, announcementLink} = await getAboutUs();
 	const orderedEvents = orderEventsByTripDate(upcomingTrips);
 	return {
-		...store.getState(),
 		aboutUs: clubDescription,
 		upcomingEvents: orderedEvents,
 		announcementMessage,

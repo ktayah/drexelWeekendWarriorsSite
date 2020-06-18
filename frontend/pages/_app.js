@@ -1,28 +1,17 @@
-import React from 'react'
-import { withReduxCookiePersist } from "next-redux-cookie-wrapper";
-import { Provider } from 'react-redux'
-import App from 'next/app';
-import makeStore from '../redux/store';
+import { useStore } from '../redux/store';
+import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
-class MyApp extends App {
+export default function App({ Component, pageProps }) {
+    const store = useStore(pageProps.initialReduxState);
+    const persistor = persistStore(store);
 
-    static async getInitialProps({Component, ctx}) {
-        const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-        return { pageProps }
-    }
-
-    render () {
-        const { Component, pageProps, store } = this.props;
-        return (
-            <Provider store={store}>
+    return (
+        <Provider store={store}>
+            <PersistGate loading={<Component {...pageProps} />} persistor={persistor}>
                 <Component {...pageProps} />
-            </Provider>
-        );
-    }
+            </PersistGate>
+        </Provider>
+    )
 }
-
-export default withReduxCookiePersist(makeStore, {
-    persistConfig: {
-        whitelist: [],
-    }
-})(MyApp);

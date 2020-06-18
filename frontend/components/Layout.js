@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from './Navbar';
-import Footer from './Footer'
+import Footer from './Footer';
+import { initializeStore } from '../redux/store';
 
 const Layout = ({children, activePage, showNavBar = true}) => (
     <main className="d-flex flex-column overflow-hidden h-100">
@@ -46,5 +47,12 @@ const Layout = ({children, activePage, showNavBar = true}) => (
         `}</style>
     </main>
 );
+
+export async function getStaticProps() {
+    initializeStore();
+    return {
+        props: {}
+    }
+}
 
 export default Layout;
