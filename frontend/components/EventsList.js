@@ -1,11 +1,5 @@
 import EventCard from './EventCard';
 
-const NoEventsScreen = () => (
-    <div className='container'>
-        <h1>No Events available, check at another time.</h1>
-    </div>
-);
-
 const EventCards = ({events}) => (
     <center>
         <div className='card-deck'>
@@ -23,17 +17,15 @@ const EventCards = ({events}) => (
 const EventsList = ({events}) => (
     <div className="mb-4">
         {events.length > 0 ? (
-            <EventCards events={events} />
+            <>
+                <h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Join us for our Events!</h1>
+                <hr className='my-4' />
+                <EventCards events={events} />
+            </>
         ) : (
-            <NoEventsScreen />
+            <img className='w-100' src='/images/no-events.jpg' />
         )}
     </div>
 );
-
-EventsList.getInitialProps = (props) => {
-    return {
-        ...props
-    }
-}
 
 export default EventsList;

@@ -15,14 +15,12 @@ const Events = ({events}) => (
 	<Layout activePage='events'>
 		<div className='container'>
 			<br />
-			<h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Join us for our Events!</h1>
-			<hr className='my-4' />
 			<EventList events={events} />
 		</div>
 	</Layout>
 );
 
-Events.getInitialProps = async ({store, isServer, pathname, query}) => {
+Events.getInitialProps = async () => {
 	const events = await getEvents();
 	return {
 		events
