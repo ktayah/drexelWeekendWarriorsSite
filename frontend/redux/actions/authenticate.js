@@ -3,6 +3,7 @@ import {
     AUTHENTICATE_STARTED,
     AUTHENTICATE_SUCCESS,
     AUTHENTICATE_ERROR,
+    AUTHENTICATE_REMEMBER_ME,
     LOGOUT
 } from '../types/authenticate'; 
 import config from '../../config';
@@ -12,7 +13,15 @@ export const logOut = () => dispatch =>
         type: LOGOUT
     });
 
-export const authenticate = (userName, password) => async dispatch => {
+export const setRememberMe = expireTime => dispatch => 
+    dispatch({
+        type: AUTHENTICATE_REMEMBER_ME,
+        payload: {
+            expireTime
+        }
+    });
+
+    export const authenticate = (userName, password) => async dispatch => {
     const apiUrl = config.development ? config.apiDevelopment : config.api;
     try {
         dispatch(authenticateStarted());

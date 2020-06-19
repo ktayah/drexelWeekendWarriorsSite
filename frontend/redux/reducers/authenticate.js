@@ -2,6 +2,7 @@ import {
     AUTHENTICATE_STARTED,
     AUTHENTICATE_SUCCESS,
     AUTHENTICATE_ERROR,
+    AUTHENTICATE_REMEMBER_ME,
     LOGOUT
 } from '../types/authenticate';
 
@@ -9,7 +10,8 @@ const initialState = {
     loading: false,
     error: null,
     jwt: null,
-    user: null
+    user: null,
+    expireTime: 0
 }
 
 const authenticate = (state = initialState, action) => {
@@ -33,6 +35,11 @@ const authenticate = (state = initialState, action) => {
                 loading: false,
                 error: action.payload.error
             };
+        case AUTHENTICATE_REMEMBER_ME:
+            return {
+                ...state,
+                expireTime: action.payload.expireTime
+            }
         case LOGOUT:
             return initialState;
         default:

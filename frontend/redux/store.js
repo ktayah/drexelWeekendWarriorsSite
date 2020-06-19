@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer } from 'redux-persist';
+import expireReducer from 'redux-persist-expire';
 import storage from 'redux-persist/lib/storage';
 import rootReducer from './reducers';
 import logger from 'redux-logger';
@@ -13,7 +14,13 @@ let store;
 const persistConfig = {
     key: 'drexelww',
     whitelist: ['authenticate'],
-    storage
+    storage,
+    transforms: [
+        expireReducer('authenticate', {
+            persistedAtKey: 'expireTime',
+            expireSeconds: 3600 // By default set to expire in one hour
+        })
+    ]
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

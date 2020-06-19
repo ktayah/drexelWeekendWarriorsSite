@@ -1,9 +1,12 @@
-import { useState, useCallback } from 'react';
-import Link from 'next/link';
+import { useState, useCallback, useEffect } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { authenticate, logOut } from '../redux/actions/authenticate';
+import { authenticate, logOut, setRememberMe } from '../redux/actions/authenticate';
+import Link from 'next/link';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import axios from 'axios';
+import config from '../config';
 
 const NavbarNavigationLinks = ({activePage, navLink}) => {
     const isActive = useCallback((activePage, navLink) => {
@@ -46,58 +49,90 @@ const NavbarSocialIcons = () => (
     </div>
 );
 
-const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
-    const [emailAddress, setEmailAddress] = useState(null);
-    const [password, setPassword] = useState(null);
-    const login = useCallback(() => {
-        if (emailAddress && password) {
-            onLogin(emailAddress, password);
+const NavbarSignInDropdownContent = ({onLogin, isLoading, error, onRememberMe}) => {
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    // const [isLoadingReset, setLoadingReset] = useState(false);
+    // const [resetSent, setResetSent] = useState(false);
+    const formClassName = `form-control ${error && 'is-invalid'}`;
+
+    // const resetPasswordCall = useCallback(async () => { // Probably will live somewhere else, here meanwhile
+    //     try {
+    //         setLoadingReset(true);
+    //         const apiUrl = config.development ? config.apiDevelopment : config.api;
+    //         await axios.post(`${apiUrl}/auth/forgot-password`, {
+    //             email: userName
+    //         });
+    //         setLoadingReset(false);
+    //         setResetSent(true);
+    //     } catch (err) {
+    //         setLoadingReset(false);
+    //         console.error(err);
+    //     }
+    // }, []);
+    
+    const rememberMe = useCallback(e => {
+        if (e.target.checked) {
+            onRememberMe(moment().add(14, 'days')); // Set to 2 weeks
+        } else {
+            onRememberMe(moment());
         }
-    }, [emailAddress, password]);
+    }, []);
+
+    const login = useCallback(() => onLogin(userName, password), [userName, password]);
+
+    useEffect(() => {
+        onRememberMe(moment()); // Set the remember me value to current time, therefore default expire time is set
+    }, []);
 
     return (
         <DropdownMenu right>
-            <div className="px-4 py-3">
-                {isLoading 
+            <div className="px-4 pt-3 pb-1">
+                {isLoading || isLoadingReset
                     ?
                     <div className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
                                 <span className="sr-only">Loading...</span>
                         </div>
                     </div>
-                    : 
-                    <> 
-                        <div className="form-group">
+                    :
+                    <>
+                        <div className="form-group mb-2">
                             <label htmlFor="dropdownFormUsername">User Name</label>
                             <input 
                                 type="text" 
-                                className="form-control" 
+                                className={formClassName}
                                 id="dropdownFormUsername" 
                                 placeholder="User Name" 
-                                onChange={e => setEmailAddress(e.target.value)}
+                                onChange={e => setUserName(e.target.value)}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group my-2">
                             <label htmlFor="dropdownFormPassword">Password</label>
                             <input 
                                 type="password" 
-                                className="form-control" 
+                                className={formClassName}
                                 id="dropdownFormPassword" 
                                 placeholder="Password"
                                 onChange={e => setPassword(e.target.value)} 
                             />
                         </div>
-                        <br />
-                        <div className="form-group">
+                        {error && <p className='form-text text-danger my-2'>Invalid username or password</p>}
+                        <div className="form-group my-2">
                             <div className="form-check">
-                                <input type="checkbox" className="form-check-input" id="dropdownCheck" />
+                                <input 
+                                    type="checkbox" 
+                                    className="form-check-input" 
+                                    id="dropdownCheck" 
+                                    onChange={rememberMe} 
+                                />
                                 <label className="form-check-label" htmlFor="dropdownCheck">
                                 Remember me
                                 </label>
                             </div>
                         </div>
                         <DropdownItem divider />
-                        <div className='form-group'>
+                        <div className='form-group mt-3'>
                             <button 
                                 type="button" 
                                 className="btn btn-primary" 
@@ -110,15 +145,14 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading}) => {
                     </>
                 }
             </div>
-            <div className="dropdown-divider"></div>
+            <DropdownItem divider />
             <a className="dropdown-item">New around here? Sign up</a>
-            <a className="dropdown-item">Forgot password?</a>
         </DropdownMenu>
     );
 }
 
-const NavbarSignInDropdown = ({ onLogin, onLogout, authenticate}) => {
-    const { loading } = authenticate;
+const NavbarSignInDropdown = ({ onLogin, onLogout, onRememberMe, authenticate}) => {
+    const { loading, error } = authenticate;
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !loading && !prevState);
     
@@ -141,7 +175,7 @@ const NavbarSignInDropdown = ({ onLogin, onLogout, authenticate}) => {
                             caret>
                             Sign In
                         </DropdownToggle>
-                        <NavbarSignInDropdownContent isLoading={loading} onLogin={onLogin} onLogout={onLogout} />
+                        <NavbarSignInDropdownContent isLoading={loading} error={error} onLogin={onLogin} onLogout={onLogout} onRememberMe={onRememberMe} />
                     </>
                 }
             </Dropdown>
@@ -149,7 +183,7 @@ const NavbarSignInDropdown = ({ onLogin, onLogout, authenticate}) => {
     );
 }
 
-const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => { 
+const Navbar = ({authenticate, title, activePage, onLogin, onLogout, onRememberMe}) => { 
     const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'});
     const isMobileOrTablet = useMediaQuery({query: '(max-width: 1224px)'});
 
@@ -171,7 +205,7 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => {
                 <div className="collapse navbar-collapse" id="navbarToggler">
                     <NavbarNavigationLinks activePage={activePage} />
                     <NavbarSocialIcons />
-                    <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout}/>
+                    <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout} onRememberMe={onRememberMe} />
                 </div>
             }
 
@@ -184,7 +218,7 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => {
                         <div className='col'>
                             <div className='d-flex h-100 flex-column justify-content-end align-items-end'>
                                 <NavbarSocialIcons />
-                                <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout}/>
+                                <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout} onRememberMe={onRememberMe} />
                             </div>
                         </div>
                     </div>
@@ -196,7 +230,8 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout}) => {
 
 const mapDispatchToProps = dispatch => ({
     onLogin: (userName, password) => dispatch(authenticate(userName, password)),
-    onLogout: () => dispatch(logOut())
+    onLogout: () => dispatch(logOut()),
+    onRememberMe: expireTime => dispatch(setRememberMe(expireTime))
 });
 
 const mapStateToProps = state => ({
