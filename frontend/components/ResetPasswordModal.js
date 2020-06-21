@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 const ResetPasswordModal = ({modalOpen, toggleModal}) => {
     const [email, setEmail] = useState('');
+    const [forgotEmail, setForgotEmail] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [resetSent, setResetSent] = useState(false);
     const [error, setError] = useState(false);
@@ -46,26 +47,33 @@ const ResetPasswordModal = ({modalOpen, toggleModal}) => {
                     <ModalBody>
                         {isLoading 
                             ? <Spinner color='success' /> 
-                            : <>
-                                <Label for='email'>Enter the email you have your account set up with. If you also forget this, please contact the Weekend Warriors IT Officer for help.</Label>
-                                <InputGroup>
-                                    <InputGroupAddon addonType='prepend'>
-                                        <InputGroupText>@</InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input 
-                                        type='email'
-                                        placeholder='Enter a email'
-                                        invalid={error}
-                                        value={email}
-                                        onChange={e => setEmail(e.target.value)}
-                                    />
-                                    {error && <FormFeedback invalid>An error occured, make sure the email entered is corrected. Otherwise contact the IT Officer</FormFeedback>}
-                                </InputGroup>
-                            </>
+                            : forgotEmail 
+                                ? <p>Please contact the Weekend Warriors IT Officer for help at drexelweekendwarriors@gmail.com</p>
+                                : <>
+                                    <Label for='email'>Enter your account email</Label>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType='prepend'>
+                                            <InputGroupText>@</InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input 
+                                            type='email'
+                                            placeholder='Enter a email'
+                                            invalid={error}
+                                            value={email}
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
+                                        {error && <FormFeedback invalid>An error occured, make sure the email entered is corrected. Otherwise contact the IT Officer</FormFeedback>}
+                                    </InputGroup>
+                                </>
                         }
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={resetPasswordCall}>Send Reset Link</Button>
+                        {!forgotEmail ? <>
+                            <Button color='primary' onClick={() => setForgotEmail(true)}>Forgot your email?</Button>
+                            <Button color='primary' onClick={resetPasswordCall}>Send Reset Link</Button>
+                        </> : <>
+                            <Button color='danger' onClick={toggleModal}>Close</Button>
+                        </>}
                     </ModalFooter>
                 </>
             }
