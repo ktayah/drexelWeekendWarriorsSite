@@ -1,12 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { authenticate, logOut, setRememberMe } from '../redux/actions/authenticate';
+import ResetPasswordModal from '../components/ResetPasswordModal';
 import Link from 'next/link';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import axios from 'axios';
-import config from '../config';
 
 const NavbarNavigationLinks = ({activePage, navLink}) => {
     const isActive = useCallback((activePage, navLink) => {
@@ -52,25 +51,11 @@ const NavbarSocialIcons = () => (
 const NavbarSignInDropdownContent = ({onLogin, isLoading, error, onRememberMe}) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    // const [isLoadingReset, setLoadingReset] = useState(false);
-    // const [resetSent, setResetSent] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const formClassName = `form-control ${error && 'is-invalid'}`;
 
-    // const resetPasswordCall = useCallback(async () => { // Probably will live somewhere else, here meanwhile
-    //     try {
-    //         setLoadingReset(true);
-    //         const apiUrl = config.development ? config.apiDevelopment : config.api;
-    //         await axios.post(`${apiUrl}/auth/forgot-password`, {
-    //             email: userName
-    //         });
-    //         setLoadingReset(false);
-    //         setResetSent(true);
-    //     } catch (err) {
-    //         setLoadingReset(false);
-    //         console.error(err);
-    //     }
-    // }, []);
-    
+    const toggleModal = () => setModalOpen(!modalOpen);
+    const login = useCallback(() => onLogin(userName, password), [userName, password]);
     const rememberMe = useCallback(e => {
         if (e.target.checked) {
             onRememberMe(moment().add(14, 'days')); // Set to 2 weeks
@@ -79,8 +64,6 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading, error, onRememberMe}) 
         }
     }, []);
 
-    const login = useCallback(() => onLogin(userName, password), [userName, password]);
-
     useEffect(() => {
         onRememberMe(moment()); // Set the remember me value to current time, therefore default expire time is set
     }, []);
@@ -88,7 +71,7 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading, error, onRememberMe}) 
     return (
         <DropdownMenu right>
             <div className="px-4 pt-3 pb-1">
-                {isLoading || isLoadingReset
+                {isLoading
                     ?
                     <div className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
@@ -146,7 +129,8 @@ const NavbarSignInDropdownContent = ({onLogin, isLoading, error, onRememberMe}) 
                 }
             </div>
             <DropdownItem divider />
-            <a className="dropdown-item">New around here? Sign up</a>
+            <a className='dropdown-item' onClick={toggleModal}>Forget your password?</a>
+            <ResetPasswordModal modalOpen={modalOpen} toggleModal={toggleModal} />
         </DropdownMenu>
     );
 }

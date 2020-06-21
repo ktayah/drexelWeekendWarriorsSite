@@ -32,13 +32,13 @@ const Layout = ({children, activePage, showNavBar = true}) => (
             <Navbar title="Weekend Warriors" activePage={activePage}/>
             : <Link href='/'><a><img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' /></a></Link>
         }
-        <div id="children">
+        <div id='children'>
             {children}
         </div>
         <Footer />
         <style jsx>{`
             #children {
-                min-height: 81.8vh;
+                min-height: 81.8vh; // 92.4vh;
             }
             img {
                 width: 64px;
