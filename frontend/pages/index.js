@@ -38,14 +38,16 @@ const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink})
 	</Layout>
 );
 
-Index.getInitialProps = async () => {
+export async function getStaticProps() {
 	const { clubDescription, upcomingTrips, announcementMessage, announcementLink} = await getAboutUs();
 	const orderedEvents = orderEventsByTripDate(upcomingTrips);
 	return {
-		aboutUs: clubDescription,
-		upcomingEvents: orderedEvents,
-		announcementMessage,
-		announcementLink
+		props: {
+			aboutUs: clubDescription,
+			upcomingEvents: orderedEvents,
+			announcementMessage,
+			announcementLink
+		}
     }
 }
 

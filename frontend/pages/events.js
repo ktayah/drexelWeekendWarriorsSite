@@ -20,11 +20,13 @@ const Events = ({events}) => (
 	</Layout>
 );
 
-Events.getInitialProps = async () => {
+export async function getStaticProps() {
 	const events = await getEvents();
 	return {
-		events
-    }
+		props: {
+			events
+		}
+	}
 }
 
 export default Events;
