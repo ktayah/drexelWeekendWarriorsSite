@@ -2,17 +2,20 @@ import Layout from "../components/Layout";
 import axios from 'axios';
 import config from '../config';
 
+const initialState = {
+    firstName: '',
+    lastName : '',
+    email: '',
+    subject: '',
+    message: ''
+}
+
 class ContactForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            firstName: null,
-            lastName : null,
-            email: null,
-            subject: null,
-            message: null
-        }
+        this.state = initialState;
     }
+
     handleChange = (event) => {
         const target = event.target;
         const value = target.value;
@@ -21,23 +24,22 @@ class ContactForm extends React.Component {
             [name]: value
         });
     }
+
     sendEmail = async () => {
-        const apiUrl = config.development ? config.apiDevelopment : config.api;
-        const { firstName, lastName, email, subject, message } = this.state;
-        return await axios({
-            method: 'post',
-            url: `${apiUrl}/sendEmail`,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: {
-                email,
-                firstName,
-                lastName,
-                subject,
-                message
-            }
-        });
+        try {
+            const apiUrl = config.development ? config.apiDevelopment : config.api;
+            const { firstName, lastName, email, subject, message } = this.state;
+            await axios.post(`${apiUrl}/email`, {
+                to: 'help@drexelww.com',
+                replyTo: email,
+                from: email,
+                subject: `${subject} - From Drexelww.com`,
+                text: `From ${firstName} ${lastName}\n ${message}`
+            });
+            this.setState(initialState);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     render() {
@@ -46,34 +48,34 @@ class ContactForm extends React.Component {
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label htmlFor="inputFirstName">First Name</label>
-                        <input type="text" name="firstName" onChange={this.handleChange} className="form-control" id="inputFirstName" placeholder="First Name" />
+                        <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange} className="form-control" id="inputFirstName" placeholder="First Name" />
                     </div>
                     <div className="form-group col-md-6">
                         <label htmlFor="inputLastName">Last Name</label>
-                        <input type="text" name="lastName" onChange={this.handleChange} className="form-control" id="inputLastName" placeholder="Last Name" />
+                        <input type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} className="form-control" id="inputLastName" placeholder="Last Name" />
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-12">
                         <label htmlFor="inputEmail">Email</label>
-                        <input type="email" name="email" onChange={this.handleChange} className="form-control" id="inputEmail" placeholder="Email" />
+                        <input type="email" name="email" value={this.state.email} onChange={this.handleChange} className="form-control" id="inputEmail" placeholder="Email" />
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-12">
                         <label htmlFor="inputSubject">Subject</label>
-                        <input type="text" name="subject" onChange={this.handleChange} className="form-control" id="inputSubject" placeholder="Subject" />
+                        <input type="text" name="subject" value={this.state.subject} onChange={this.handleChange} className="form-control" id="inputSubject" placeholder="Subject" />
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-12">
                         <label htmlFor="inputMessage">Message</label>
-                        <textarea name="message" onChange={this.handleChange} className="form-control" id="inputMessage" placeholder="Enter your Message" rows="5" />
+                        <textarea name="message" value={this.state.message} onChange={this.handleChange} className="form-control" id="inputMessage" placeholder="Enter your Message" rows="5" />
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-12">
-                    <button className="btn btn-primary" type="Submit" onClick={this.sendEmail}>Send an Email</button>
+                    <button className="btn btn-primary" type="button" onClick={this.sendEmail}>Send an Email</button>
                     </div>
                 </div>
             </form>
@@ -91,10 +93,5 @@ const Contact = () => (
         </div>
     </Layout>
 );
-
-Contact.getInitialProps = () => {
-    return {
-    }
-}
 
 export default Contact;
