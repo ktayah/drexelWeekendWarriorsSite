@@ -1,6 +1,5 @@
 const Footer = () => (
     <footer id="footer" className="p-3 mt-auto text-center bg-primary">
-        {/* TODO: add tiny ww logo */}
         <span className="col-auto pr-0 pl-4 my-auto">
             <img src="/images/logo-tiny.png" alt="logo-tiny" className="img-fluid" style={{maxHeight: "3em"}}/>
         </span>
