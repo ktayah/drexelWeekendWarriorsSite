@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "cryptr": "^6.0.2",
+    "dotenv": "^8.2.0",
     "knex": "latest",
     "lodash": "^4.17.15",
     "sqlite3": "latest",
