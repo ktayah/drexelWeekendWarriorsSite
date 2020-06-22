@@ -38,7 +38,7 @@ const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink})
 	</Layout>
 );
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const { clubDescription, upcomingTrips, announcementMessage, announcementLink} = await getAboutUs();
 	const orderedEvents = orderEventsByTripDate(upcomingTrips);
 	return {

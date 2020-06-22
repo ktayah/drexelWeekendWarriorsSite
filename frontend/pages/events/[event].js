@@ -92,10 +92,12 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
     );
 }
 
-Event.getInitialProps = async ({query}) => {
+export async function getServerSideProps({ query }) {
     const eventData = await getEventData(query.event);
     return {
-        eventData
+        props: {
+            eventData
+        }
     }
 }
 

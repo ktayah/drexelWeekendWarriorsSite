@@ -204,7 +204,7 @@ const Form = ({formToken, event, isValid}) => {
     );
 }
 
-Form.getInitialProps = async ({query}) => {
+export async function getServerSideProps({ query }) { 
     const formToken = query.form;
     const checkFormTokenRes = await axios.post(`${apiUrl}/forms/checkFormToken`, {
         formToken
@@ -212,9 +212,11 @@ Form.getInitialProps = async ({query}) => {
     const { isValid, event } = checkFormTokenRes.data;
 
     return {
-        formToken,
-        event,
-        isValid
+        props: {
+            formToken,
+            event,
+            isValid
+        }
     }
 }
 
