@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import { useRouter } from 'next/router'
 import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
+import FormPicker from '../../components/FormPicker';
+import { Row } from 'reactstrap';
 import axios from 'axios';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
@@ -17,7 +19,18 @@ const getEventData = async (eventId) => {
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
 const Event = ({eventData, userPrivilege, userName, userJwt}) => {
-    const { id: tripId, tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto, isOnlineEvent, ticketLink } = eventData;
+    const { 
+        id: tripId, 
+        tripName, 
+        tripDescription, 
+        tripDate, 
+        ticketSales, 
+        importantDocuments, 
+        tripPhoto, 
+        isOnlineEvent, 
+        ticketLink, 
+        participantForms 
+    } = eventData;
     const tripLeaders = eventData.tripLeaders.map(leader => leader.username);
     const router = useRouter();
 
@@ -80,11 +93,16 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                         }
                     </div>
                     <div className='col'>
-                            {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
-                             <div>
-                                <button className='btn btn-primary' type='button' onClick={() => openForm(false)}>Generate Single Sign Up Form</button>
-                                <button className='btn btn-primary mx-4' type='button' onClick={() => openForm(true)}>Generate Multi-sign Up Form</button>
-                            </div>}
+                            <Row>
+                                {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
+                                <div>
+                                    <button className='btn btn-primary' type='button' onClick={() => openForm(false)}>Generate Single Sign Up Form</button>
+                                    <button className='btn btn-primary mx-4' type='button' onClick={() => openForm(true)}>Generate Multi-sign Up Form</button>
+                                </div>}
+                            </Row>
+                            <Row>
+                                <FormPicker formData={participantForms} />
+                            </Row>
                     </div>
                 </div>
             </div>
