@@ -18,7 +18,6 @@ const validateFunc = values => {
         errors.password = 'Passwords do not match';
     } else if ((values.password.length < 7 && values.password.length !== 0) 
         || (values.passwordConfirmation.length < 7 && values.passwordConfirmation.length !== 0)) {
-        console.log('we here')
         errors.password = 'Password is not long enough';
     }
     return errors;
