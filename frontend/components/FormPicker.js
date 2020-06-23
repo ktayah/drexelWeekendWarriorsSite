@@ -106,7 +106,7 @@ const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter}) =
 }
 
 const FormPicker = ({ formData: nonModifiedFormData }) => {
-    const [modalOpen, setModalOpen] = useState(true);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const filterTypes = useMemo(() => ({
         text: (rows, id, filterValue) => {
