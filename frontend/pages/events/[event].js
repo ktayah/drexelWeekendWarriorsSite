@@ -47,10 +47,10 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
             <br />
             <div className='container'>
                 <div className='row'>
-                    <div className='col'>
+                    <div className='col-lg'>
                         <img className='img-fluid' src={`${apiUrl + tripPhoto.url}`} alt='trip image cap' />
                     </div>
-                    <div className='col'>
+                    <div className='col-lg my-2'>
                         <h1>{tripName}</h1>
                         <p>{getDateTime(tripDate)}</p>
                         <p>{ticketSales && 
@@ -65,9 +65,8 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                         <ReactMarkdown source={tripDescription} />
                     </div>
                 </div>
-                <br />
-                <div className='row'>
-                    <div className='col'>
+                <div className='row my-2'>
+                    <div className='col-lg'>
                         {importantDocuments.length ?
                             <>
                                 <h1 className='text-center'>Important Documents for Trip Participants</h1>
@@ -79,11 +78,11 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                             <div></div>               
                         }
                     </div>
-                    <div className='col'>
+                    <div className='col-lg my-2'>
                             {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
                              <div>
-                                <button className='btn btn-primary' type='button' onClick={() => openForm(false)}>Generate Single Sign Up Form</button>
-                                <button className='btn btn-primary mx-4' type='button' onClick={() => openForm(true)}>Generate Multi-sign Up Form</button>
+                                <button className='btn btn-primary w-100 my-1' type='button' onClick={() => openForm(false)}>Generate Single Sign Up Form</button>
+                                <button className='btn btn-primary w-100 my-1' type='button' onClick={() => openForm(true)}>Generate Multi-sign Up Form</button>
                             </div>}
                     </div>
                 </div>

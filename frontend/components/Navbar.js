@@ -32,7 +32,7 @@ const NavbarNavigationLinks = ({activePage, navLink}) => {
 }
 
 const NavbarSocialIcons = () => (
-    <div className={`form-inline py-1 my-lg-0 ${useMediaQuery({query: '(min-width: 1224px)'}) && 'mr-4'}`}>
+    <div className={`form-inline my-2 py-1 my-lg-0 ${useMediaQuery({query: '(min-width: 992px)'}) && 'mr-4'}`}>
         <a href="https://www.facebook.com/DrexelWeekendWarriors">
             <ion-icon name="logo-facebook" size="large" class="img-hover-border rounded" />
         </a>
@@ -168,8 +168,8 @@ const NavbarSignInDropdown = ({ onLogin, onLogout, onRememberMe, authenticate}) 
 }
 
 const Navbar = ({authenticate, title, activePage, onLogin, onLogout, onRememberMe}) => { 
-    const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'});
-    const isMobileOrTablet = useMediaQuery({query: '(max-width: 1224px)'});
+    const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 992px)'});
+    const isMobileOrTablet = useMediaQuery({query: '(max-width: 992px)'});
 
     return (
         <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -182,7 +182,7 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout, onRememberM
                 aria-controls="navbarToggler" 
                 aria-expanded="false" 
                 aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
+                <span className="navbar-toggler-icon" />
             </button>
 
             {isDesktopOrLaptop &&
@@ -196,14 +196,12 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout, onRememberM
             {isMobileOrTablet && 
                 <div className="collapse navbar-collapse" id="navbarToggler">
                     <div className='row'>
-                        <div className='col'>
+                        <div className='col d-flex align-items-center'>
                             <NavbarNavigationLinks activePage={activePage} />
                         </div>
-                        <div className='col'>
-                            <div className='d-flex h-100 flex-column justify-content-end align-items-end'>
-                                <NavbarSocialIcons />
-                                <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout} onRememberMe={onRememberMe} />
-                            </div>
+                        <div className='col d-flex h-100 flex-column justify-content-end align-items-end'>
+                            <NavbarSocialIcons />
+                            <NavbarSignInDropdown authenticate={authenticate} onLogin={onLogin} onLogout={onLogout} onRememberMe={onRememberMe} />
                         </div>
                     </div>
                 </div>
