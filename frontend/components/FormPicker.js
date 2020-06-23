@@ -2,14 +2,64 @@ import React, { useState, useCallback, useMemo, forwardRef, useRef, useEffect, F
 import { Badge, Modal, ModalHeader, Button, ModalBody, ModalFooter, Table, InputGroupAddon, InputGroup, InputGroupText, Input } from 'reactstrap';
 import {  
     useTable,
-    // useSortBy,
-    useFilters,
     useGlobalFilter,
     useAsyncDebounce,
     useExpanded,
     useRowSelect 
 } from 'react-table';
 import { formalizeCamelCaseString } from '../utils/formUtils';
+
+const parseTrueFalseObjectIntoStringObject = (object, objectName) => Object.assign(
+    {},
+    {
+        [objectName]: Object.keys(object).length 
+            ? Object.keys(object).reduce(
+                (objectString, key) => {
+                    if (object[key] && objectString.length) {
+                        return `${objectString}, ${formalizeCamelCaseString(key)}`
+                    } else if (object[key]) {
+                        return formalizeCamelCaseString(key);
+                    } else {
+                        return objectString;
+                    }
+            }, '')
+            : ''
+    }
+);
+
+const modifyFormData = formData => {
+    const { 
+        id: participantId, 
+        tripRelatedQuestions, 
+        howYouFoundUs, 
+        ...participantInfoRest
+    } = formData.participantInfo;
+    const {
+        id: medicalId,
+        preexistingConditions, 
+        ...medicalInfoRest 
+    } = formData.medicalInfo || { 
+        id: 0,
+        preexistingConditions: {}
+    }; 
+
+    const modifiedTripRelatedQuestions = Object.assign(
+        {}, 
+        ...tripRelatedQuestions.map(tripRelatedQuestion => ({
+            [tripRelatedQuestion.question]: tripRelatedQuestion.answer
+        })
+    ));
+    const modifiedHowYouFoundUs = parseTrueFalseObjectIntoStringObject(howYouFoundUs, 'howYouFoundUs');
+    const modifiedPreexistingConditions = formData?.medicalInfo && parseTrueFalseObjectIntoStringObject(preexistingConditions, 'preexistingConditions');
+
+    return Object.assign(
+        participantInfoRest,
+        medicalInfoRest,
+        modifiedTripRelatedQuestions,
+        modifiedHowYouFoundUs,
+        modifiedPreexistingConditions
+    );
+};
 
 const hookFunc = hooks => {
     hooks.visibleColumns.push(columns => [
@@ -68,19 +118,14 @@ const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter}) =
                 }}
             />
         </InputGroup>
-    )
+    );
 }
 
-const FormPicker = () => {
-// const FormPicker = ({ formData }) => { // Faking formData for now
+const FormPicker = ({ formData }) => {
     const [modalOpen, setModalOpen] = useState(true);
     
     const openModal = useCallback(() => setModalOpen(true), [modalOpen]);
     const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
-
-    // const downloadForm = () => {
-
-    // };
 
     const filterTypes = useMemo(() => ({
         text: (rows, id, filterValue) => {
@@ -119,138 +164,6 @@ const FormPicker = () => {
         accessor: 'phoneNumber'
     }], []);
 
-    const formData = [{
-        participantInfo: {
-            firstName: 'Kevin',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Kevin',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Kevin',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Chris',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Chris',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Phil',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Chris',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Chris',
-            lastName: 'Tayah',
-            email: 'chris@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Chris',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }, {
-        participantInfo: {
-            firstName: 'Chris',
-            lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
-            phoneNumber: 2675467901,
-            someData: 'someData',
-            someMoreData: 'someMoreData'
-        },
-        medicalInfo: {
-            insuranceNumber: 123456,
-            sex: 'male'
-        }
-    }]
-
     const data = useMemo(
         () => formData.map(
             ({ participantInfo: { firstName, lastName, phoneNumber, email }}) => ({
@@ -270,7 +183,7 @@ const FormPicker = () => {
         selectedFlatRows, // Probably not needed
         preGlobalFilteredRows,
         setGlobalFilter,
-        state: { selectedRowIds, globalFilter }
+        state: { globalFilter }
     } = useTable(
         { columns, data, filterTypes}, 
         useGlobalFilter,
@@ -279,10 +192,17 @@ const FormPicker = () => {
         hookFunc
     );
 
+    const downloadForms = useCallback(allForms => {
+        // console.log(allForms);
+        // selectedFlatRows.map(({ id }) => console.log(formData[id]));
+    }, [selectedFlatRows]);
+
+    const downloadSelectedForms = useCallback(() => downloadForms(false), [selectedFlatRows]);
+    const downloadAllForms = useCallback(() => downloadForms(true), []);
+
+
     const renderExtraRowInfo = useCallback(({ id }) => {
-        const { participantInfo, medicalInfo } = formData[id];
-        const {firstName, lastName, email, phoneNumber, ...extraParticipantData} = participantInfo
-        const extraData = Object.assign(extraParticipantData, medicalInfo);
+        const {firstName, lastName, email, phoneNumber, ...extraData} = modifyFormData(formData[id])
         return (
             <div>
                 <p className='lead mx-1'>Extra Participant Info</p>
@@ -351,8 +271,8 @@ const FormPicker = () => {
                 </ModalBody>
                 <ModalFooter>
                         <Badge color='info' className='mr-auto' pill>{selectedFlatRows.length} forms selected out of {rows.length}</Badge>
-                    <Button color='primary' outline>Download selected forms</Button>
-                    <Button color='primary'>Download all forms</Button>
+                    <Button color='primary' onClick={downloadSelectedForms} outline>Download selected forms</Button>
+                    <Button color='primary' onClick={downloadAllForms}>Download all forms</Button>
                 </ModalFooter>
             </Modal>
             <style jsx>{`
