@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_carousel_carousel_photos",
+  "info": {
+    "name": "CarouselPhotos",
+    "icon": "camera"
+  },
+  "options": {},
+  "attributes": {
+    "photo": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

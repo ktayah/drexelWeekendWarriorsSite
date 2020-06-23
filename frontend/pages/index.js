@@ -12,12 +12,12 @@ const getAboutUs = async () => {
 	return res.data;
 }
 
-const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink}) => (
+const Index = ({upcomingEvents, manuallySetCarouselPhotos, aboutUs, announcementMessage, announcementLink}) => (
 	<Layout activePage='index'>
 		{announcementMessage && 
 			<Announcment announcementMessage={announcementMessage} announcementLink={announcementLink} />
 		}
-		<Carousel id="carousel" upcomingTrips={upcomingEvents}/>
+		<Carousel id="carousel" upcomingEvents={upcomingEvents} manuallySetPhotos={manuallySetCarouselPhotos} />
 		<div className='container'>
 			<hr className='my-4' />
 			<h1 className='display-5 text-center'>About Us</h1>
@@ -39,12 +39,13 @@ const Index = ({upcomingEvents, aboutUs, announcementMessage, announcementLink})
 );
 
 export async function getServerSideProps() {
-	const { clubDescription, upcomingTrips, announcementMessage, announcementLink} = await getAboutUs();
-	const orderedEvents = orderEventsByTripDate(upcomingTrips);
+	const { clubDescription, upcomingEvents, announcementMessage, announcementLink, manuallySetCarouselPhotos = {}} = await getAboutUs();
+	// const orderedEvents = orderEventsByTripDate(upcomingTrips); // If we need ordering again
 	return {
 		props: {
 			aboutUs: clubDescription,
-			upcomingEvents: orderedEvents,
+			upcomingEvents,
+			manuallySetCarouselPhotos,
 			announcementMessage,
 			announcementLink
 		}

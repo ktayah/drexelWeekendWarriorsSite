@@ -22,8 +22,13 @@
     "announcementLink": {
       "type": "string"
     },
-    "upcomingTrips": {
+    "upcomingEvents": {
       "collection": "trip"
+    },
+    "manuallySetCarouselPhotos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "carousel.carousel-photos"
     }
   }
 }
