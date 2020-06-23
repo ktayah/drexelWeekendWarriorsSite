@@ -105,8 +105,7 @@ const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter}) =
     );
 }
 
-const FormPicker = ({ formData: nonModifiedFormData }) => {
-    const [modalOpen, setModalOpen] = useState(false);
+const FormPicker = ({ toggleModal, modalOpen, formData: nonModifiedFormData }) => {
 
     const filterTypes = useMemo(() => ({
         text: (rows, id, filterValue) => {
@@ -174,9 +173,6 @@ const FormPicker = ({ formData: nonModifiedFormData }) => {
         hookFunc
     );
 
-    const openModal = useCallback(() => setModalOpen(true), [modalOpen]);
-    const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
-
     const downloadForms = useCallback(async allForms => {
         try {
             const formDataToDownload = allForms ? formData : selectedFlatRows.map(row => formData[row.id]);
@@ -206,8 +202,8 @@ const FormPicker = ({ formData: nonModifiedFormData }) => {
                 <p className='lead mx-1'>Extra Participant Info</p>
                 <Table size='sm' className='table'>
                     <tbody>
-                        {Object.keys(extraData).map(data => (
-                            <tr>
+                        {Object.keys(extraData).map((data, i) => (
+                            <tr key={i}>
                                 <td>{formalizeCamelCaseString(data)}</td>
                                 <td>{formalizeCamelCaseString(extraData[data])}</td>
                             </tr>
@@ -219,61 +215,59 @@ const FormPicker = ({ formData: nonModifiedFormData }) => {
     }, [])
     
     return (
-        <>
-            <Button color='info' className='m-2' onClick={openModal}>View Participant Forms</Button>
-            <Modal autoFocus={false} scrollable size='xl' centered keyboard={false} isOpen={modalOpen} toggle={toggleModal}>
-                <ModalHeader toggle={toggleModal}>Search for a participant form</ModalHeader>
-                <ModalBody>
-                    <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-                    <Table className='overflow-auto' {...getTableProps()} hover>
-                        <thead>
-                            {headerGroups.map(headerGroup => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map(column => (
-                                        <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {rows.length ? 
-                                rows.map(row => {
-                                    const className = row.isSelected ? 'border-left border-info' : null; // Causes small bug where everything shifts right
-                                    prepareRow(row);
-                                    return (
-                                        <Fragment {...row.getRowProps()}>
-                                            <tr className={className}>
-                                                {row.cells.map(cell => (
-                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                ))}
+        <Modal autoFocus={false} scrollable size='xl' centered keyboard={false} isOpen={modalOpen} toggle={toggleModal}>
+            <ModalHeader toggle={toggleModal}>Search for a participant form</ModalHeader>
+            <ModalBody>
+                <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+                <Table className='overflow-auto' {...getTableProps()} hover>
+                    <thead>
+                        {headerGroups.map(headerGroup => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                ))}
+                            </tr>
+                        ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                        {rows.length ? 
+                            rows.map(row => {
+                                const className = row.isSelected ? 'border-left border-info' : null; // Causes small bug where everything shifts right
+                                prepareRow(row);
+                                const fragmentKey = row.getRowProps().key;
+                                return (
+                                    <Fragment key={fragmentKey}>
+                                        <tr className={className}>
+                                            {row.cells.map(cell => (
+                                                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                            ))}
+                                        </tr>
+                                        {row.isExpanded ? (
+                                            <tr className='bg-secondary'>
+                                                <td colSpan={visibleColumns.length}>
+                                                    {renderExtraRowInfo(row)}
+                                                </td>
                                             </tr>
-                                            {row.isExpanded ? (
-                                                <tr className='bg-secondary'>
-                                                    <td colSpan={visibleColumns.length}>
-                                                        {renderExtraRowInfo(row)}
-                                                    </td>
-                                                </tr>
-                                            ): null}
-                                        </Fragment>
-                                    )
-                                })
-                                :
-                                <tr className='bg-secondary'>
-                                    <td colSpan={visibleColumns.length}>
-                                        <p className='text-center'>There are no forms available to show</p>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </Table>
-                </ModalBody>
-                <ModalFooter>
-                        <Badge color='info' className='mr-auto' pill>{selectedFlatRows.length} forms selected out of {rows.length}</Badge>
-                    <Button color='primary' onClick={downloadSelectedForms} outline>Download selected forms</Button>
-                    <Button color='primary' onClick={downloadAllForms}>Download all forms</Button>
-                </ModalFooter>
-            </Modal>
-        </>
+                                        ): null}
+                                    </Fragment>
+                                )
+                            })
+                            :
+                            <tr className='bg-secondary'>
+                                <td colSpan={visibleColumns.length}>
+                                    <p className='text-center'>There are no forms available to show</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </Table>
+            </ModalBody>
+            <ModalFooter>
+                    <Badge color='info' className='mr-auto' pill>{selectedFlatRows.length} forms selected out of {rows.length}</Badge>
+                <Button color='primary' onClick={downloadSelectedForms} outline>Download selected forms</Button>
+                <Button color='primary' onClick={downloadAllForms}>Download all forms</Button>
+            </ModalFooter>
+        </Modal>
     )
 }
 
