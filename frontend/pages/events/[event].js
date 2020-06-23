@@ -1,7 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router'
 import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
+import FormPicker from '../../components/FormPicker';
+import { Row, Button } from 'reactstrap';
 import axios from 'axios';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
@@ -17,8 +19,20 @@ const getEventData = async (eventId) => {
 const getDateTime = dateString => moment(dateString).format('dddd, MMMM Do YYYY, h:mm a');
 
 const Event = ({eventData, userPrivilege, userName, userJwt}) => {
-    const { id: tripId, tripName, tripDescription, tripDate, ticketSales, importantDocuments, tripPhoto, isOnlineEvent, ticketLink } = eventData;
+    const { 
+        id: tripId, 
+        tripName, 
+        tripDescription, 
+        tripDate, 
+        ticketSales, 
+        importantDocuments, 
+        tripPhoto, 
+        isOnlineEvent, 
+        ticketLink, 
+        participantForms 
+    } = eventData;
     const tripLeaders = eventData.tripLeaders.map(leader => leader.username);
+    const [modalOpen, setModalOpen] = useState(false);
     const router = useRouter();
 
     const openForm = useCallback(
@@ -40,7 +54,9 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
             }
         },
         [tripId, userJwt],
-    )
+    );
+
+    const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
 
     return (
         <Layout activePage='events'>
@@ -79,11 +95,21 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                         }
                     </div>
                     <div className='col-lg my-2'>
-                            {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
-                             <div>
-                                <button className='btn btn-primary w-100 my-1' type='button' onClick={() => openForm(false)}>Generate Single Sign Up Form</button>
-                                <button className='btn btn-primary w-100 my-1' type='button' onClick={() => openForm(true)}>Generate Multi-sign Up Form</button>
-                            </div>}
+                        {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
+                            <>
+                                <Row>
+                                    <p className='h3'>Leader Tools</p>
+                                </Row>
+                                <Row>
+                                    <Button color='info' className='w-100 my-1' onClick={toggleModal}>View Participant Forms</Button>
+                                    <FormPicker toggleModal={toggleModal} modalOpen={modalOpen} formData={participantForms} />
+                                </Row>
+                                <Row>
+                                    <Button color='primary' className='w-100 my-1' onClick={() => openForm(false)}>Generate Single Sign Up Form</Button>
+                                    <Button color='primary' className='w-100 my-1' onClick={() => openForm(true)}>Generate Multi-sign Up Form</Button>
+                                </Row>
+                            </>
+                        }
                     </div>
                 </div>
             </div>
