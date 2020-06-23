@@ -232,7 +232,7 @@ const FormPicker = ({ toggleModal, modalOpen, formData: nonModifiedFormData }) =
                     <tbody {...getTableBodyProps()}>
                         {rows.length ? 
                             rows.map(row => {
-                                const className = row.isSelected ? 'border-left border-info' : null; // Causes small bug where everything shifts right
+                                const className = row.isSelected ? 'table-active border-left border-info' : ''; // Causes small bug where everything shifts right
                                 prepareRow(row);
                                 const fragmentKey = row.getRowProps().key;
                                 return (

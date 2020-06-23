@@ -99,7 +99,10 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                         {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
                             <>
                                 <Row>
-                                    <Button color='info' className='m-2' onClick={toggleModal}>View Participant Forms</Button>
+                                    <p className='h3'>Leader Tools</p>
+                                </Row>
+                                <Row>
+                                    <Button color='info' className='my-2' onClick={toggleModal}>View Participant Forms</Button>
                                     <FormPicker toggleModal={toggleModal} modalOpen={modalOpen} formData={participantForms} />
                                 </Row>
                                 <Row>
