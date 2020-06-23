@@ -33,6 +33,17 @@ const ResetPasswordModal = ({modalOpen, toggleModal}) => {
         }
     }, [email]);
 
+    const closeResetSent = useCallback(() => {
+        toggleModal();
+        setResetSent(false);
+        setEmail('');
+    }, [modalOpen, resetSent]);
+
+    const closeForgotEmail = useCallback(() => {
+        toggleModal();
+        setForgotEmail(false);
+    }, [modalOpen, forgotEmail]);
+
     return (
         <Modal autoFocus={false} centered keyboard={false} isOpen={modalOpen} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal}>Password Recovery</ModalHeader>
@@ -41,12 +52,14 @@ const ResetPasswordModal = ({modalOpen, toggleModal}) => {
                         <p>Recovery link was sent, email may take a few minutes to appear in your inbox, may also be in your spam. Follow the instructions found in the email once you receive it.</p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='danger' onClick={toggleModal}>Close</Button>
+                        <Button color='danger' onClick={closeResetSent}>Close</Button>
                     </ModalFooter>
                 </> : <> 
                     <ModalBody>
                         {isLoading 
-                            ? <Spinner color='success' /> 
+                            ? <div className='d-flex justify-content-center'>
+                                    <Spinner color='success' />
+                                </div> 
                             : forgotEmail 
                                 ? <p>Please contact the Weekend Warriors IT Officer for help at drexelweekendwarriors@gmail.com</p>
                                 : <>
@@ -72,7 +85,7 @@ const ResetPasswordModal = ({modalOpen, toggleModal}) => {
                             <Button color='primary' onClick={() => setForgotEmail(true)}>Forgot your email?</Button>
                             <Button color='primary' onClick={resetPasswordCall}>Send Reset Link</Button>
                         </> : <>
-                            <Button color='danger' onClick={toggleModal}>Close</Button>
+                            <Button color='danger' onClick={closeForgotEmail}>Close</Button>
                         </>}
                     </ModalFooter>
                 </>
