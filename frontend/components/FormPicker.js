@@ -7,38 +7,22 @@ import {
     useExpanded,
     useRowSelect 
 } from 'react-table';
-import { formalizeCamelCaseString } from '../utils/formUtils';
+import { formalizeCamelCaseString, parseTrueFalseObjectIntoStringObject } from '../utils/formUtils';
+import jsonexport from 'jsonexport';
+import fileDownload from 'js-file-download';
 
-const parseTrueFalseObjectIntoStringObject = (object, objectName) => Object.assign(
-    {},
-    {
-        [objectName]: Object.keys(object).length 
-            ? Object.keys(object).reduce(
-                (objectString, key) => {
-                    if (object[key] && objectString.length) {
-                        return `${objectString}, ${formalizeCamelCaseString(key)}`
-                    } else if (object[key]) {
-                        return formalizeCamelCaseString(key);
-                    } else {
-                        return objectString;
-                    }
-            }, '')
-            : ''
-    }
-);
-
-const modifyFormData = formData => {
+const modifyFormData = formData => formData.map(form => {
     const { 
         id: participantId, 
         tripRelatedQuestions, 
         howYouFoundUs, 
         ...participantInfoRest
-    } = formData.participantInfo;
+    } = form.participantInfo;
     const {
         id: medicalId,
         preexistingConditions, 
         ...medicalInfoRest 
-    } = formData.medicalInfo || { 
+    } = form.medicalInfo || { 
         id: 0,
         preexistingConditions: {}
     }; 
@@ -50,7 +34,7 @@ const modifyFormData = formData => {
         })
     ));
     const modifiedHowYouFoundUs = parseTrueFalseObjectIntoStringObject(howYouFoundUs, 'howYouFoundUs');
-    const modifiedPreexistingConditions = formData?.medicalInfo && parseTrueFalseObjectIntoStringObject(preexistingConditions, 'preexistingConditions');
+    const modifiedPreexistingConditions = form?.medicalInfo && parseTrueFalseObjectIntoStringObject(preexistingConditions, 'preexistingConditions');
 
     return Object.assign(
         participantInfoRest,
@@ -59,7 +43,7 @@ const modifyFormData = formData => {
         modifiedHowYouFoundUs,
         modifiedPreexistingConditions
     );
-};
+});
 
 const hookFunc = hooks => {
     hooks.visibleColumns.push(columns => [
@@ -121,11 +105,8 @@ const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter}) =
     );
 }
 
-const FormPicker = ({ formData }) => {
+const FormPicker = ({ formData: nonModifiedFormData }) => {
     const [modalOpen, setModalOpen] = useState(true);
-    
-    const openModal = useCallback(() => setModalOpen(true), [modalOpen]);
-    const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
 
     const filterTypes = useMemo(() => ({
         text: (rows, id, filterValue) => {
@@ -164,9 +145,10 @@ const FormPicker = ({ formData }) => {
         accessor: 'phoneNumber'
     }], []);
 
+    const formData = useMemo(() => modifyFormData(nonModifiedFormData), []);
     const data = useMemo(
         () => formData.map(
-            ({ participantInfo: { firstName, lastName, phoneNumber, email }}) => ({
+            ({ firstName, lastName, phoneNumber, email }) => ({
             firstName,
             lastName,
             phoneNumber,
@@ -180,7 +162,7 @@ const FormPicker = ({ formData }) => {
         rows,
         prepareRow,
         visibleColumns,
-        selectedFlatRows, // Probably not needed
+        selectedFlatRows,
         preGlobalFilteredRows,
         setGlobalFilter,
         state: { globalFilter }
@@ -192,17 +174,33 @@ const FormPicker = ({ formData }) => {
         hookFunc
     );
 
-    const downloadForms = useCallback(allForms => {
-        // console.log(allForms);
-        // selectedFlatRows.map(({ id }) => console.log(formData[id]));
+    const openModal = useCallback(() => setModalOpen(true), [modalOpen]);
+    const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
+
+    const downloadForms = useCallback(async allForms => {
+        try {
+            const formDataToDownload = allForms ? formData : selectedFlatRows.map(row => formData[row.id]);
+            const preparedFormDataForCsv = formDataToDownload.map(form =>
+                Object.assign(
+                    {}, 
+                    ...Object.keys(form).map(key => ({
+                        [formalizeCamelCaseString(key)]: form[key]
+                    }))
+                )
+            );            
+            const csv = await jsonexport(preparedFormDataForCsv, {lang: 'Node.js', module: 'jsonexport'});
+            fileDownload(csv, 'tripParticipantForm.csv');
+        } catch (err) {
+            console.error(err);
+        }
     }, [selectedFlatRows]);
 
     const downloadSelectedForms = useCallback(() => downloadForms(false), [selectedFlatRows]);
     const downloadAllForms = useCallback(() => downloadForms(true), []);
 
-
     const renderExtraRowInfo = useCallback(({ id }) => {
-        const {firstName, lastName, email, phoneNumber, ...extraData} = modifyFormData(formData[id])
+        const { firstName, lastName, email, phoneNumber, ...extraData } = formData[id];
+
         return (
             <div>
                 <p className='lead mx-1'>Extra Participant Info</p>
@@ -222,8 +220,8 @@ const FormPicker = ({ formData }) => {
     
     return (
         <>
-            <Button color='primary' className='m-2' onClick={openModal}>View Participant Forms</Button>
-            <Modal autoFocus={false} className='modal' scrollable size='xl' centered keyboard={false} isOpen={modalOpen} toggle={toggleModal}>
+            <Button color='info' className='m-2' onClick={openModal}>View Participant Forms</Button>
+            <Modal autoFocus={false} scrollable size='xl' centered keyboard={false} isOpen={modalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Search for a participant form</ModalHeader>
                 <ModalBody>
                     <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
@@ -275,11 +273,6 @@ const FormPicker = ({ formData }) => {
                     <Button color='primary' onClick={downloadAllForms}>Download all forms</Button>
                 </ModalFooter>
             </Modal>
-            <style jsx>{`
-                .modal {
-                    height: 80%;
-                }
-            `}</style>
         </>
     )
 }

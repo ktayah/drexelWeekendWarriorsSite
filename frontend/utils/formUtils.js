@@ -15,3 +15,20 @@ export const formalizeCamelCaseString = word => {
     }
     return word;
 }
+export const parseTrueFalseObjectIntoStringObject = (object, objectName) => Object.assign(
+    {},
+    {
+        [objectName]: Object.keys(object).length 
+            ? Object.keys(object).reduce(
+                (objectString, key) => {
+                    if (object[key] && objectString.length) {
+                        return `${objectString}, ${formalizeCamelCaseString(key)}`
+                    } else if (object[key]) {
+                        return formalizeCamelCaseString(key);
+                    } else {
+                        return objectString;
+                    }
+            }, '')
+            : ''
+    }
+);
