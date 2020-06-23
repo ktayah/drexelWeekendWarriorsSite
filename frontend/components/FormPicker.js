@@ -2,14 +2,14 @@ import React, { useState, useCallback, useMemo, forwardRef, useRef, useEffect, F
 import { Badge, Modal, ModalHeader, Button, ModalBody, ModalFooter, Table, InputGroupAddon, InputGroup, InputGroupText, Input } from 'reactstrap';
 import {  
     useTable,
-    usePagination,
-    useSortBy,
+    // useSortBy,
     useFilters,
+    useGlobalFilter,
+    useAsyncDebounce,
     useExpanded,
     useRowSelect 
 } from 'react-table';
 import { formalizeCamelCaseString } from '../utils/formUtils';
-import moment from 'moment';
 
 const hookFunc = hooks => {
     hooks.visibleColumns.push(columns => [
@@ -46,11 +46,34 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
     );
 });
 
+const GlobalFilter = ({ preGlobalFilteredRows, globalFilter, setGlobalFilter}) => {
+    const count = preGlobalFilteredRows.length;
+    const [searchValue, setSearchValue] = useState(globalFilter);
+    const onChange = useAsyncDebounce(value => {
+        setGlobalFilter(value || undefined);
+    }, 200);
+
+    return (
+        <InputGroup className='mb-2'>
+            <InputGroupAddon addonType='prepend'>
+                <InputGroupText>Search</InputGroupText>
+            </InputGroupAddon>
+            <Input 
+                type='text'
+                placeholder={`Search through ${count} forms, by name, phone number, or email`}
+                value={searchValue}
+                onChange={e => {
+                    setSearchValue(e.target.value);
+                    onChange(e.target.value);
+                }}
+            />
+        </InputGroup>
+    )
+}
+
 const FormPicker = () => {
 // const FormPicker = ({ formData }) => { // Faking formData for now
     const [modalOpen, setModalOpen] = useState(true);
-    const [selectedFormIds, setSelectedFormIds] = useState([])
-    const [searchValue, setSearchValue] = useState('');
     
     const openModal = useCallback(() => setModalOpen(true), [modalOpen]);
     const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
@@ -58,6 +81,17 @@ const FormPicker = () => {
     // const downloadForm = () => {
 
     // };
+
+    const filterTypes = useMemo(() => ({
+        text: (rows, id, filterValue) => {
+            return rows.filter(row => {
+                const rowValue = row.values[id];
+                return rowValue !== undefined
+                    ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase())
+                    : true
+            });
+        }
+    }), []);
 
     const columns = useMemo(() => [{
         id: 'expander',
@@ -180,7 +214,7 @@ const FormPicker = () => {
         participantInfo: {
             firstName: 'Chris',
             lastName: 'Tayah',
-            email: 'ktayah@yahoo.com',
+            email: 'chris@yahoo.com',
             phoneNumber: 2675467901,
             someData: 'someData',
             someMoreData: 'someMoreData'
@@ -234,11 +268,14 @@ const FormPicker = () => {
         prepareRow,
         visibleColumns,
         selectedFlatRows, // Probably not needed
-        state: { selectedRowIds, expanded }
+        preGlobalFilteredRows,
+        setGlobalFilter,
+        state: { selectedRowIds, globalFilter }
     } = useTable(
-        { columns, data}, 
+        { columns, data, filterTypes}, 
+        useGlobalFilter,
         useExpanded,
-        useRowSelect, 
+        useRowSelect,
         hookFunc
     );
 
@@ -269,17 +306,7 @@ const FormPicker = () => {
             <Modal autoFocus={false} className='modal' scrollable size='xl' centered keyboard={false} isOpen={modalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Search for a participant form</ModalHeader>
                 <ModalBody>
-                    <InputGroup className='mb-2'>
-                        <InputGroupAddon addonType='prepend'>
-                            <InputGroupText>Search</InputGroupText>
-                        </InputGroupAddon>
-                        <Input 
-                            type='text'
-                            placeholder='Search for a item by name, phone number, or email'
-                            value={searchValue}
-                            onChange={e => setSearchValue(e.target.value)}
-                        />
-                    </InputGroup>
+                    <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
                     <Table className='overflow-auto' {...getTableProps()} hover>
                         <thead>
                             {headerGroups.map(headerGroup => (
@@ -291,35 +318,48 @@ const FormPicker = () => {
                             ))}
                         </thead>
                         <tbody {...getTableBodyProps()}>
-                            {rows.map((row, i) => {
-                                const className = row.isSelected ? 'border-left border-info' : null; // Causes small bug where everything shifts right
-                                prepareRow(row);
-                                return (
-                                    <Fragment {...row.getRowProps()}>
-                                        <tr className={className}>
-                                            {row.cells.map(cell => (
-                                                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                            ))}
-                                        </tr>
-                                        {row.isExpanded ? (
-                                            <tr className='bg-secondary'>
-                                                <td colSpan={visibleColumns.length}>
-                                                    {renderExtraRowInfo(row)}
-                                                </td>
+                            {rows.length ? 
+                                rows.map(row => {
+                                    const className = row.isSelected ? 'border-left border-info' : null; // Causes small bug where everything shifts right
+                                    prepareRow(row);
+                                    return (
+                                        <Fragment {...row.getRowProps()}>
+                                            <tr className={className}>
+                                                {row.cells.map(cell => (
+                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                                ))}
                                             </tr>
-                                        ): null}
-                                    </Fragment>
-                                )
-                            })}
+                                            {row.isExpanded ? (
+                                                <tr className='bg-secondary'>
+                                                    <td colSpan={visibleColumns.length}>
+                                                        {renderExtraRowInfo(row)}
+                                                    </td>
+                                                </tr>
+                                            ): null}
+                                        </Fragment>
+                                    )
+                                })
+                                :
+                                <tr className='bg-secondary'>
+                                    <td colSpan={visibleColumns.length}>
+                                        <p className='text-center'>There are no forms available to show</p>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </Table>
                 </ModalBody>
                 <ModalFooter>
-                    <Badge color='info' className='mx-2' pill>{selectedFlatRows.length} forms selected</Badge>
+                        <Badge color='info' className='mr-auto' pill>{selectedFlatRows.length} forms selected out of {rows.length}</Badge>
                     <Button color='primary' outline>Download selected forms</Button>
                     <Button color='primary'>Download all forms</Button>
                 </ModalFooter>
             </Modal>
+            <style jsx>{`
+                .modal {
+                    height: 80%;
+                }
+            `}</style>
         </>
     )
 }
