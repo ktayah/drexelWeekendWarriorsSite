@@ -5,7 +5,7 @@ import Footer from './Footer';
 import { initializeStore } from '../redux/store';
 
 const Layout = ({children, activePage, showNavBar = true}) => (
-    <main className="d-flex flex-column overflow-hidden h-100">
+    <main className='d-flex flex-column overflow-hidden h-100'>
         <Head>
             <title>Weekend Warriors</title>
             <link rel='stylesheet' href='/styles/lux.css' />
@@ -29,16 +29,25 @@ const Layout = ({children, activePage, showNavBar = true}) => (
             <script noModule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js" />
         </Head>
         {showNavBar ? 
-            <Navbar title="Weekend Warriors" activePage={activePage}/>
-            : <Link href='/'><a><img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' /></a></Link>
+            <>
+                <Navbar title="Weekend Warriors" className='header' activePage={activePage}/>
+                <div id='childrenNav'>
+                    {children}
+                </div>
+            </> : <>
+                <Link href='/'><a><img className='m-3 float-left fixed-top' src='/images/logo-tiny.png' /></a></Link>
+                <div id='childrenNoNav'>
+                    {children}
+                </div>
+            </>
         }
-        <div id='children'>
-            {children}
-        </div>
         <Footer />
         <style jsx>{`
-            #children {
-                min-height: 81.8vh; // 92.4vh;
+            #childrenNoNav {
+                min-height: 92.4vh; // 82.5vh;
+            }
+            #childrenNav {
+                min-height: 82.5vh;
             }
             img {
                 width: 64px;

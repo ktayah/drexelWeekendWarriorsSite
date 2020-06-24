@@ -33,13 +33,13 @@ const NavbarNavigationLinks = ({activePage, navLink}) => {
 
 const NavbarSocialIcons = () => (
     <div className={`form-inline my-2 py-1 my-lg-0 ${useMediaQuery({query: '(min-width: 992px)'}) && 'mr-4'}`}>
-        <a href="https://www.facebook.com/DrexelWeekendWarriors">
+        <a href="https://www.facebook.com/DrexelWeekendWarriors" target='_blank'>
             <ion-icon name="logo-facebook" size="large" class="img-hover-border rounded" />
         </a>
-        <a href="https://www.instagram.com/DrexelWeekendWarriors" className="mx-2">
+        <a href="https://www.instagram.com/DrexelWeekendWarriors" target='_blank' className="mx-2">
             <ion-icon name="logo-instagram" size="large" class="img-hover-border rounded" />
         </a>
-        <a href="https://dragonlink.drexel.edu/organization/drexelweekendwarriors">
+        <a href="https://dragonlink.drexel.edu/organization/drexelweekendwarriors" target='_blank'>
             <img 
                 src="https://dragonlink.drexel.edu/favicon.ico" 
                 className="img-hover-border rounded p-1 mb-1" 
