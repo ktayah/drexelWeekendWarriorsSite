@@ -75,7 +75,7 @@ class ContactForm extends React.Component {
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-12">
-                    <button className="btn btn-primary" type="button" onClick={this.sendEmail}>Send an Email</button>
+                    <button className="btn btn-primary w-100 mx-auto" type="button" onClick={this.sendEmail}>Send an Email</button>
                     </div>
                 </div>
             </form>

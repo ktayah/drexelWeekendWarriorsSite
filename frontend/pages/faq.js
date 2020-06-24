@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import { Jumbotron } from "reactstrap";
 
 const questions = [
     {
@@ -89,16 +90,16 @@ const Faq = ({ questions }) => {
         <Layout activePage='faq'>
             <div className="container">
                 <br />
-                <h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Frequently Asked Questions</h1>
+                <h1 className='alert alert-dark display-5 rounded shadow-lg text-center p-3 mx-5'>Frequently Asked Questions</h1>
                 <ul>
                 <hr style={{padding:'0.25em'}}/>
-                {
-                    questions.map((faq, faqIndex) => {
-                        return <li key={faqIndex}>
+                <Jumbotron className='pl-5 pt-3 pb-3 rounded'>
+                    {questions.map((faq, faqIndex) => 
+                        <li key={faqIndex}>
                             <FaqCard question={faq.question} answer={faq.answer} />
                         </li>
-                    })
-                }
+                    )}
+                </Jumbotron>
                 </ul>
             </div>
         </Layout>

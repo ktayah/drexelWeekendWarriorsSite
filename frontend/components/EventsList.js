@@ -18,7 +18,7 @@ const EventsList = ({events}) => (
     <div className="mb-4">
         {events.length ? (
             <>
-                <h1 className='display-5 text-center shadow-lg bg-white rounded p-3 mx-5'>Join us for our Events!</h1>
+                <h1 className='alert alert-dark display-5 rounded text-center shadow-lg p-3 mx-5'>Join us for our Events!</h1>
                 <hr className='my-4' />
                 <EventCards events={events} />
             </>

@@ -67,9 +67,9 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #55595c;
+  color: #2b2d30;
   text-align: left;
-  background-color: #fff;
+  background: linear-gradient( #dfdfdf, 60%, #f5faf4);
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {

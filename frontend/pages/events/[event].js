@@ -61,12 +61,12 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
     return (
         <Layout activePage='events'>
             <br />
-            <div className='container'>
+            <div className='container-fluid w-75'>
                 <div className='row'>
-                    <div className='col-lg'>
+                    <div className='col-xl'>
                         <img className='img-fluid' src={`${apiUrl + tripPhoto.url}`} alt='trip image cap' />
                     </div>
-                    <div className='col-lg my-2'>
+                    <div className='col-xl my-3'>
                         <h1>{tripName}</h1>
                         <p>{getDateTime(tripDate)}</p>
                         <p>{ticketSales && 
@@ -82,7 +82,7 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                     </div>
                 </div>
                 <div className='row my-2'>
-                    <div className='col-lg'>
+                    <div className='col-xl'>
                         {importantDocuments.length ?
                             <>
                                 <h1 className='text-center'>Important Documents for Trip Participants</h1>
@@ -94,7 +94,7 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                             <div></div>               
                         }
                     </div>
-                    <div className='col-lg my-2'>
+                    <div className='col-xl my-2'>
                         {((userPrivilege === 'leader' && tripLeaders.includes(userName)) || userPrivilege === 'admin') && 
                             <>
                                 <Row>

@@ -146,7 +146,7 @@ const NavbarSignInDropdown = ({ onLogin, onLogout, onRememberMe, authenticate}) 
                 {authenticate.jwt 
                     ?
                     <button 
-                        className="btn btn-outline-danger my-2 my-sm-0" 
+                        className="btn btn-danger my-2 my-sm-0" 
                         type="button"
                         onClick={onLogout}>
                         Sign Out
@@ -154,7 +154,7 @@ const NavbarSignInDropdown = ({ onLogin, onLogout, onRememberMe, authenticate}) 
                     : 
                     <>
                         <DropdownToggle 
-                            className="btn dropdown-toggle btn-outline-success my-2 my-sm-0" 
+                            className="btn dropdown-toggle btn-success my-2 my-sm-0" 
                             disabled={loading}
                             caret>
                             Sign In
@@ -172,7 +172,7 @@ const Navbar = ({authenticate, title, activePage, onLogin, onLogout, onRememberM
     const isMobileOrTablet = useMediaQuery({query: '(max-width: 992px)'});
 
     return (
-        <nav className="navbar navbar-expand-md navbar-light bg-light">
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark">
             <Link href="/index"><a className="navbar-brand">{title}</a></Link>
             <button 
                 className="navbar-toggler" 

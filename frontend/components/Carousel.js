@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import config from '../config';
+import { Jumbotron } from 'reactstrap';
 import { useMediaQuery } from 'react-responsive';
 import ReactMarkdown from 'react-markdown';
 
@@ -68,25 +69,25 @@ const CarouselThumbnails = ({ upcomingEvents, manuallySetPhotos }) => {
         <div id="carousel_pictures" className="row mx-5">
         {/** Adapt below to a card element to provide even displaying */}
         {manuallySetPhotos && manuallySetPhotos.map(photoObj => 
-            <div className='eventThumbnail'>
-                <a key={`manuallySetPhoto-${photoObj.id}`} className="col-sm mx-auto">
+            <div className='eventThumbnail' key={`manuallySetPhoto-${photoObj.id}`}>
+                <a className="col-sm mx-auto">
                     <h1 className='h3 text-center'>{photoObj?.name}</h1>
                     <img src={`${apiUrl + photoObj.photo.url}`} alt={photoObj.name} />
                 </a>
             </div>
         )}
         {upcomingEvents.map(event =>
-            <div className="eventThumbnail">
-                <Link key={event.id} href='/events/[event]' as={`/events/${event.id}`}>
-                    <a key={event.id} className="col-sm mx-auto">
-                        <h1 className='h3 text-center'>{event.tripName}</h1>
-                        <img src={`${apiUrl + event.tripPhoto.url}`} alt={event.tripName} />
-                    </a>
+            <Jumbotron className='eventThumbnail rounded p-0' key={event.id} fluid>
+                <Link href='/events/[event]' as={`/events/${event.id}`}>
+                        <a key={event.id} className="col-sm mx-auto">
+                            <h1 className='h3 text-center'>{event.tripName}</h1>
+                            <img src={`${apiUrl + event.tripPhoto.url}`} alt={event.tripName} />
+                        </a>
                 </Link>
                 <div className="m-4">
-                    <ReactMarkdown id="description" classname="text-center" source={event.tripDescription} />
+                    <ReactMarkdown id="description" classname="text-primary text-center" source={event.tripDescription} />
                 </div>
-            </div>
+            </Jumbotron>
         )}
         <style jsx>{`
                 .eventThumbnail {
@@ -118,7 +119,7 @@ const Carousel = ({ upcomingEvents, manuallySetPhotos }) => {
             }
             {isMobileOrTablet &&
                 <>
-                    <h1 className='display-5 my-3 text-center rounded mx-5'>Take a look at our upcoming events</h1>
+                    <h1 className='alert alert-primary display-5 my-3 text-center shadow-lg rounded mx-5'>Take a look at our upcoming events</h1>
                     <hr className="mx-5" />
                     <CarouselThumbnails upcomingEvents={upcomingEvents} manuallySetPhotos={manuallySetPhotos} />
                 </>
