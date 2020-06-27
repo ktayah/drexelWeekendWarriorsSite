@@ -263,7 +263,7 @@ const FormPicker = ({ toggleModal, modalOpen, formData: nonModifiedFormData }) =
                 </Table>
             </ModalBody>
             <ModalFooter>
-                    <Badge color='info' className='mr-auto' pill>{selectedFlatRows.length} forms selected out of {rows.length}</Badge>
+                <Badge color='info' className='mr-auto' pill>{selectedFlatRows.length} forms selected out of {rows.length}</Badge>
                 <Button color='primary' onClick={downloadSelectedForms} outline>Download selected forms</Button>
                 <Button color='primary' onClick={downloadAllForms}>Download all forms</Button>
             </ModalFooter>

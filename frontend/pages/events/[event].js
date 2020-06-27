@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
 import FormPicker from '../../components/FormPicker';
-import { Row, Button } from 'reactstrap';
+import { Row, Button, Badge, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
@@ -27,34 +27,40 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
         ticketSales, 
         importantDocuments, 
         tripPhoto, 
-        isOnlineEvent, 
+        isOnlineEvent,
+        isOnlineSale,
         ticketLink, 
-        participantForms 
+        participantForms,
+        maxParticipantAmount
     } = eventData;
-    const tripLeaders = eventData.tripLeaders.map(leader => leader.username);
     const [modalOpen, setModalOpen] = useState(false);
+    const [verifyFormCreateModal, setVerifyFormCreateModal] = useState(false);
+    const tripLeaders = eventData.tripLeaders.map(leader => leader.username);
     const router = useRouter();
 
-    const openForm = useCallback(
-        async (isMultiSignUp) => {
-            try {
-                const formTokenRes = await axios.post(`${apiUrl}/forms/getFormToken`, {
-                    isMultiSignUp,
-                    tripId
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${userJwt}`
-                    }
-                });
-                const { formToken } = formTokenRes.data;
-                router.push('/forms/[form]', `/forms/${formToken}`);
-            } catch (err) {
-                console.error(err);
-                return null;
+    const toggleVerifyForm = useCallback(() => setVerifyFormCreateModal(!verifyFormCreateModal), [verifyFormCreateModal]);
+    
+    const openForm = useCallback(async isMultiSignUp => {
+        try {
+            if (participantForms.length >= maxParticipantAmount && !verifyFormCreateModal) {
+                setVerifyFormCreateModal(true);
+                return;
             }
-        },
-        [tripId, userJwt],
-    );
+
+            const formTokenRes = await axios.post(`${apiUrl}/forms/getFormToken`, {
+                isMultiSignUp,
+                tripId
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userJwt}`
+                }
+            });
+            const { formToken } = formTokenRes.data;
+            router.push('/forms/[form]', `/forms/${formToken}`);
+        } catch (err) {
+            console.error(err);
+        }
+    }, [tripId, userJwt, verifyFormCreateModal, participantForms, maxParticipantAmount]);
 
     const toggleModal = useCallback(() => setModalOpen(!modalOpen), [modalOpen]);
 
@@ -79,6 +85,18 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                             <p>Registration link: <a href={ticketLink}>{ticketLink}</a></p>
                         }
                         <ReactMarkdown source={tripDescription} />
+                        {/* Insert code below once there is a good method of handling users generating multiple trip forms
+                            Ideas: - IP check
+                                   - Code that comes from somewhere else to verify the submission
+                                   - Verfied and Signed Cookies (might be problems if the user decides to delete cookies) 
+                        */}
+                        {/* {participantForms.length < maxParticipantAmount 
+                            && moment(ticketSales).isBefore(moment()) 
+                            && isOnlineSale
+                            ? <Button className='w-100' color='success' onClick={() => openForm(false)}>Sign up!</Button>
+                            : participantForms.length < maxParticipantAmount 
+                                && <Badge color='info' className='p-2' pill>A sign up link will appear here at the day and time of the ticket sales. Come back later and check then.</Badge>
+                        } */}
                     </div>
                 </div>
                 <div className='row my-2'>
@@ -99,6 +117,7 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                             <>
                                 <Row>
                                     <p className='h3'>Leader Tools</p>
+                                    <Badge color='danger' className='my-auto mx-3' pill>There are {participantForms.length} forms submitted out of {maxParticipantAmount} that could be completed.</Badge>
                                 </Row>
                                 <Row>
                                     <Button color='info' className='w-100 my-1' onClick={toggleModal}>View Participant Forms</Button>
@@ -111,6 +130,20 @@ const Event = ({eventData, userPrivilege, userName, userJwt}) => {
                             </>
                         }
                     </div>
+                    <Modal size='lg' isOpen={verifyFormCreateModal} toggle={toggleVerifyForm} centered>
+                        <ModalHeader toggle={toggleVerifyForm}>
+                            Verify Form Creation
+                        </ModalHeader>
+                        <ModalBody>
+                            The max participant limit has been reached. There are {participantForms.length} forms submitted out of the {maxParticipantAmount} available spots. 
+                            Are you sure you want to create a form?
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color='danger' onClick={() => openForm(false)}>Continue to create single sign up form</Button>
+                            <Button color='danger' onClick={() => openForm(true)}>Continue to create multi-sign up form</Button>
+                            <Button color='primary' onClick={toggleVerifyForm}>Close</Button>
+                        </ModalFooter>
+                    </Modal>
                 </div>
             </div>
         </Layout>
