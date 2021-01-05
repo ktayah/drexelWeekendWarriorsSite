@@ -546,7 +546,7 @@ const leaders = () => {
                         {/* <br /> */}
                         <CardSubtitle>Fun Fact</CardSubtitle>
                         <CardText className="text-black-50">
-                            I once ... while ... in ... .
+                            I once [REDACTED] while [REDACTED] in [REDACTED].
                         </CardText>
                         </CardBody>
                     </Card>
