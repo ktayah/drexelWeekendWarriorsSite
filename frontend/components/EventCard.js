@@ -2,6 +2,8 @@ import config from '../config';
 import Link from 'next/link';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
+import {render} from 'react-dom'
+import gfm from 'remark-gfm'
 
 const apiUrl = config.development ? config.apiDevelopment : config.api;
 
