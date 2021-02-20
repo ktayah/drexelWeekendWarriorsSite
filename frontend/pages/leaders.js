@@ -16,12 +16,12 @@ const LeadersList = ({leaders}) => {
         <Layout activePage='leaders'>
             <div className="container" >
                 <br />
-                <h1 className='alert alert-dark display-5 rounded shadow-lg text-center p-3 mx-5'>Meet The Leaders</h1>
+                <h1 className='alert alert-dark display-5 rounded shadow-lg text-center p-3 mx-3'>Meet The Leaders</h1>
                 <div class="row row-cols-3">
                     {leaders.map(leader =>(
                         <div class="card text-center my-1 rounded">
                             <div class="col">
-                                <img className="card-img-top p-0 mx-0 rounded" src={`${apiUrl + leader.ProfilePicture.formats.large.url}`} alt='trip image cap' />
+                                <img className="card-img-top mt-2 rounded" src={`${apiUrl + leader.ProfilePicture.formats.large.url}`} alt='trip image cap' />
                                 <div className='card-body'>
                                     <h4 class="card-title">{leader.FirstName} {leader.LastName}</h4>
                                     <h6 class="card-title">{leader.Position}</h6>
