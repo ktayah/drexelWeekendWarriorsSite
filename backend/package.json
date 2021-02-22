@@ -1,1 +1,49 @@
-{}
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Weekend Warriors Backend",
+  "scripts": {
+    "dev": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-react": "^7.19.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cryptr": "^6.0.2",
+    "knex": "latest",
+    "lodash": "^4.17.15",
+    "next": "^10.0.7",
+    "sqlite3": "latest",
+    "strapi": "3.0.4",
+    "strapi-admin": "3.0.4",
+    "strapi-connector-bookshelf": "3.0.4",
+    "strapi-plugin-content-manager": "3.0.4",
+    "strapi-plugin-content-type-builder": "3.0.4",
+    "strapi-plugin-email": "3.0.4",
+    "strapi-plugin-upload": "3.0.4",
+    "strapi-plugin-users-permissions": "3.0.4",
+    "strapi-provider-email-sendgrid": "^3.0.4",
+    "strapi-utils": "3.0.4"
+  },
+  "author": {
+    "name": "Kevin Tayah"
+  },
+  "strapi": {
+    "uuid": "ea34abb9-5ad6-42a5-a57f-0fb28c60cde1"
+  },
+  "engines": {
+    "node": ">= 10.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "license": "MIT"
+}
