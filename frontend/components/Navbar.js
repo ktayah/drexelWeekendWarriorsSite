@@ -21,6 +21,9 @@ const NavbarNavigationLinks = ({activePage, navLink}) => {
             <li className={`nav-item ${isActive(activePage, 'events') ? 'active' : ''}`}>
                 <Link href="/events"><a className="nav-link">Events</a></Link>
             </li>
+            <li className={`nav-item ${isActive(activePage, 'leaders') ? 'active' : ''}`}>
+                <Link href="/leaders"><a className="nav-link">Leaders</a></Link>
+            </li>
             <li className={`nav-item ${isActive(activePage, 'contact') ? 'active' : ''}`}>
                 <Link href="/contact"><a className="nav-link">Contact Us</a></Link>
             </li>
