@@ -21,7 +21,7 @@
     "axios": "^0.21.1",
     "cryptr": "^6.0.2",
     "knex": "latest",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "sqlite3": "latest",
     "strapi": "3.0.4",
     "strapi-admin": "3.0.4",
